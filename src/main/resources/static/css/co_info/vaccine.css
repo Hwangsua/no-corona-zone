@@ -1,0 +1,59 @@
+/*********************************************************************/
+@media (min-width: 940px) {
+    .vaccine-main {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .vaccine-left {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+    }
+    .vaccine-status {
+
+    }
+    .vaccine-status-border {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 10px 30px;
+        height: 100px;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        font-size: 1rem;
+    }
+    .first {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .first-num {
+        font-size: 1.2rem;
+    }
+    .first-plus svg {
+        /*stroke: rgba(125, 204, 171, 1);*/
+        transform: rotate(90deg);
+    }
+    /********************************/
+    .vaccine-right {
+        display: flex;
+        width: 700px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .news-thumbnail-img {
+        height: 112px;
+        width: 112px;
+    }
+    .news-content {
+        display: flex;
+        flex-direction: column;
+        gap: 7px 0;
+        margin: 5px;
+    }
+    .news-content-headline {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+}

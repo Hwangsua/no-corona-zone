@@ -1,0 +1,54 @@
+.container{
+    text-align: center;
+    border: none;
+}
+.login-header{
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+.login-title{
+    font-size: 20px;
+}
+.login-style{
+    width: 100%;
+}
+.buttons{
+    width: 280px;
+    height: 40px;
+    border: none;
+}
+.item{
+    margin-top: 15px;
+}
+.login-buttons{
+}
+.form-group{
+    width: 280px;
+    height: 40px;
+    text-align: center;
+}
+.form-control{
+    height: 40px;
+    border: 1px solid darkgrey;
+}
+.form-check{
+    float: left;
+    color: darkgrey;
+}
+.find-info {
+    float: right;
+}
+.checks{
+    width: 280px;
+    height: 30px;
+}
+.id-password-check{
+    color: darkgrey;
+    text-decoration: none;
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

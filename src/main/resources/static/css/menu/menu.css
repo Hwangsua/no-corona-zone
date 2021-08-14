@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+.cross-icon {
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    border: 1px solid black;
+}
+
+.cross1 {
+    height: 25px;
+    width: 2px;
+    margin-left: 12px;
+    background-color: black;
+    transform: rotate(45deg);
+    Z-index: 1;
+}
+
+.cross2 {
+    height: 25px;
+    width: 2px;
+    background-color: black;
+    transform: rotate(90deg);
+    Z-index: 2;
+}

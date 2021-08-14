@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='vaccine', title='Vaccine'">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/co_info/vaccine.css}" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="vaccine-main">
+        <div class="vaccine-left">
+            <div class="vaccine-status">
+                <div class="vaccine-status-border">
+                    <div class="first">
+                        <span class="first-num">22,226,384</span>
+                        <span class="first-percent">(43.3%)</span>
+                        <div class="first-plus">
+                            <span>241,514</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24"><path d="M19 12H6m6-7l-7 7 7 7"></path></svg>
+                        </div>
+                    </div>
+                    <div class="second">
+                        <span>9,552,662</span>
+                    </div>
+                </div>
+            </div>
+            <div class="vaccine-graph">
+                <div class="vaccine-graph-border"></div>
+            </div>
+        </div>
+        <div class="vaccine-right">
+            <div class="news-thumbnail">
+                <img class="news-thumbnail-img" src="" alt="">
+            </div>
+            <div class="news-content">
+                <div class="news-content-headline">
+                    <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+                </div>
+                <div class="news-content-content">
+                    <span>
+                        경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
+                    </span>
+                </div>
+                <div class="news-content-source">
+                    <span>출처: news1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

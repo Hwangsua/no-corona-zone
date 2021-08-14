@@ -1,0 +1,22 @@
+/*********************************************************************/
+@media (min-width: 940px) {
+    .article {
+        display: flex;
+        width: 700px;
+        margin-bottom: 10px;
+    }
+    .article-thumbnail-img {
+        height: 112px;
+        width: 112px;
+    }
+    .article-content {
+        display: flex;
+        flex-direction: column;
+        gap: 7px 0;
+        margin: 5px;
+    }
+    .article-content-headline {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+}

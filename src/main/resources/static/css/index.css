@@ -1,0 +1,89 @@
+.home {
+
+}
+.home-left {
+    display: block;
+}
+.map-collect {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 3.5vw;
+}
+.map-collect-item {
+    height: 25px;
+    width: 60px;
+    margin-left: 5px;
+    line-height: 25px;
+    text-align: center;
+    background: lightgray;
+    border-radius: 5px;
+}
+.infection-info {
+    display: none;
+}
+.home-map {
+    width: 100%;
+}
+.home-map .map {
+    display: block;
+    max-height: 800px;
+    max-width: 100%;
+    margin: 10px auto;
+}
+.home-right {
+    display: none;
+}
+/*********************************************************************/
+@media (min-width: 940px) {
+    .home {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .home-left {
+        display: block;
+        width: 250px;
+        margin-top: 10px;
+    }
+    .map-collect {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        font-size: 1.2rem;
+    }
+    .map-collect-item {
+        height: 35px;
+        width: 80px;
+        margin: 0;
+        line-height: 35px;
+        text-align: center;
+        background: lightgray;
+        border-radius: 5px;
+    }
+    .infection-info {
+        display: block;
+    }
+    .total-infection {
+        height: 100px;
+        width: 100%;
+        margin-top: 10px;
+        background: lightgray;
+        border-radius: 5px;
+    }
+    .home-map {
+        max-width: 650px;
+    }
+    .home-map .map {
+        display: block;
+        max-height: 800px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .home-right {
+        display: block;
+        width: 250px;
+    }
+
+}

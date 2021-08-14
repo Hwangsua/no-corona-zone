@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='article', title='Article'">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/co_info/article.css}" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="article">
+        <div class="article-thumbnail">
+            <img class="article-thumbnail-img" src="" alt="">
+        </div>
+        <div class="article-content">
+            <div class="article-content-headline">
+                <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+            </div>
+            <div class="article-content-content">
+                    <span>
+                        경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
+                    </span>
+            </div>
+            <div class="article-content-source">
+                <span>출처: news1</span>
+            </div>
+        </div>
+    </div>
+</div>

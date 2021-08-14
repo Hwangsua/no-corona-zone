@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="headerFragment(activeTab)">
+    <!-- 상단 바 -->
+    <div class="container-header">
+        <nav class="global-nav">
+            <!-- 좌측 메뉴 (데스크탑) -->
+            <div class="global-nav-menus">
+                <a th:href="@{/vaccine}" class="global-nav-item">백신</a>
+                <a th:href="@{/clinic}" class="global-nav-item">선별진료소</a>
+                <a href="#" class="global-nav-item">NEWS</a>
+            </div>
+            <!-- 좌측 메뉴 (모바일) -->
+            <div th:onclick="|location.href='@{/menu}'|" class="mobile-nav-menus">
+                <div class="icon-menu"></div>
+                <div class="icon-menu"></div>
+                <div class="icon-menu"></div>
+            </div>
+            <!-- 메인으로 -->
+            <div class="global-nav-home">
+<!--                <a href="/" class="home-btn">코로나안전지대</a>-->
+                <img onclick="location.href='/'" src="img/ncz_logo.png" alt="" class="icon-home">
+            </div>
+            <!-- 우측 메뉴 (데스크탑) -->
+            <div class="global-nav-users">
+                <a th:href="@{/cosns}" class="global-nav-item">CO-SNS</a>
+                <a th:href="@{/signup}" class="global-nav-item">회원가입</a>
+                <a th:href="@{/login}" class="global-nav-item">로그인</a>
+                <!-- <a th:classappend="${activeTab == 'logout'} ? active" th:action="@{/logout}" th:method="post" sec:authorize="!isAuthenticated()" class="global-nav-item">로그아웃</a> -->
+            </div>
+            <!-- 우측 메뉴 (모바일) -->
+            <div class="mobile-nav-users">
+                <a th:href="@{/timeline}">
+                <img src="img/social-icon.png" alt="" class="icon-social">
+                </a>
+            </div>
+        </nav>
+    </div>
+</th:block>
+</html>

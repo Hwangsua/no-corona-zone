@@ -1,0 +1,77 @@
+.signup-header{
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+.kakao-signup{
+    width: 280px;
+    height: 50px;
+    border: none;
+}
+.naver-signup{
+    width: 280px;
+    height: 50px;
+    border: none;
+}
+.signup-complete{
+    margin-top: 10px;
+    width: 280px;
+    height: 50px;
+    border: none;
+}
+.item{
+    margin-top: 15px;
+}
+.none{
+    height: 30px;
+    visibility: hidden;
+}
+.container{
+    text-align: center;
+    border: none;
+}
+.signup-form2{
+    text-align: center;
+    margin-top: 10px;
+}
+.signup-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-group{
+    width: 280px;
+    height: 40px;
+    text-align: center;
+}
+.form-control{
+    height: 40px;
+    border: 1px solid darkgrey;
+}
+.signup-title{
+    font-size: 20px;
+}
+.privacy-contents{
+    border: 1px solid lightgray;
+    width:280px;
+    height: 250px;
+    padding: 5px;
+    font-size: 6px;
+    text-align: left;
+    overflow: auto;
+    border-radius: 2px;
+
+}
+.privacy{
+    margin-bottom: 3px;
+    font-size: 0.5rem;
+    text-align: left;
+    font-weight: bold;
+}
+.agree-box{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    font-size: 10px;
+
+}

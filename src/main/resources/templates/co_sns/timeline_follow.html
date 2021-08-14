@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='timeline', title='Timeline'">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/co_sns/timeline.css}" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="timeline">
+            <div class="timeline-header">
+                <div class="timeline-collect">
+                    <a href="#" class="follow">팔로우 타임라인</a>
+                    <a href="#" class="location">위치기반 타임라인</a>
+                </div>
+                <div class="mention-btn">
+                    <p class="mention-btn-text">말하기</p>
+                </div>
+            </div>
+            <div class="hr"></div>
+            <div class="timeline-content">
+                <div class="mention-write">
+                    <div class="mention-write-text">
+                        <textarea name="content" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>
+                    </div>
+                    <div class="mention-write-submit">
+                        <div class="mention-location">
+                            <div class="location-btn">
+                                <p class="location-btn-text">위치</p>
+                            </div>
+<!--                            <input type="text" class="location-text" placeholder="위치 검색">-->
+                        </div>
+                        <div class="mention-btn">
+                            <p class="mention-btn-text">말하기</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 멘션 목록 -->
+                <div class="mention-list">
+                    <div class="mention-each">
+                        <div class="mention-left">
+                            <div class="profile-img"></div>
+                        </div>
+                        <div class="mention-right">
+                            <div class="mention-info">
+                                <div class="nickname">닉네임</div>
+                                <div class="vaccine">
+                                    <img src="img/vaccine.png" alt="" class="vaccine">
+                                </div>
+                                <div class="location">롯데월드</div>
+                                <div class="dot">·</div>
+                                <div class="upload-time">20시간</div>
+                            </div>
+                            <div class="content">가나다라마바다아자차카타파하!!!!!!!!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="search">
+
+                    <input type="textarea" class="search-text" placeholder="검색하기">
+
+            </div>
+            <div class="trend">
+                <div class="trend-box">
+                    <div class="trend-head">
+                        실시간 트렌드
+                    </div>
+                    <div class="trend-rank 1">1</div>
+                    <div class="trend-rank 2">2</div>
+                    <div class="trend-rank 3">3</div>
+                    <div class="trend-rank 4">4</div>
+                    <div class="trend-rank 5">5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

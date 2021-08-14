@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}"  th:with="activeTab='signup', title='Sign Up'">
+
+<head>
+    <script th:src="@{/js/user/form-validation.js}"></script>
+    <script th:src="@{/js/user/daum-address.js}"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link th:href="@{/css/user/signup.css}" rel="stylesheet">
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+
+        </div>
+    </div>
+</body>
