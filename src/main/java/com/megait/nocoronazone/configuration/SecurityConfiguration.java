@@ -12,12 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        
         http.authorizeRequests()
-                .mvcMatchers("/", "/login", "/signup",
-                        "/clinic", "/news", "/vaccine", "/article",
-                        "/cosns", "/timeline_location",
-                        "/check-email", "/email-check-token").permitAll()
+                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
+                        "/infection", "/density", "/distancing", "/clinic",
+                        "/vaccine", "/news",  "/news/article", "/news/video",
+                        "/cosns", "/timeline_location","/mention/write","/mention_detail",
+                        "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
 
                 .mvcMatchers("/css/**","/img/**", "/js/**").permitAll()
 
