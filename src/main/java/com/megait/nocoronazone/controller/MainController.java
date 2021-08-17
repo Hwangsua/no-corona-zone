@@ -29,6 +29,11 @@ public class MainController {
         return "member/login";
     }
 
+    @GetMapping("/signup")
+    public String signup() {
+        return "member/signup";
+    }
+
 
     @GetMapping("/cosns")
     public String timelineFollow(){
