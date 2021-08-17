@@ -3,6 +3,7 @@ package com.megait.nocoronazone.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -32,10 +33,22 @@ public class Member {
 
     private String emailCheckToken;
 
+    private boolean emailVerified;
+
     @Enumerated
     private YellowCard yellowCard;
 
     @Enumerated
     private MemberType memberType;
 
+    public void generateEmailCheckToken(){
+        emailCheckToken = UUID.randomUUID().toString();
+    }
+
+    public boolean isValidToken(String token) {
+        return emailCheckToken.equals(token);
+    }
+    public void completeSignup(){
+        emailVerified = true;
+    }
 }

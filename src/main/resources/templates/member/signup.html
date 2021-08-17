@@ -8,7 +8,90 @@
     <script th:src="@{/js/member/form-validation.js}"></script>
     <script th:src="@{/js/member/daum-address.js}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <link th:href="@{/css/member/signup.css}" rel="stylesheet">
+    <link th:href="@{/css/user/signup.css}" rel="stylesheet">
+
+    <script th:inline="javascript">
+        $(document).ready(function (){
+            let nicknameRegexCheck = true;
+            let nicknameDuplicateCheck = false;
+
+            $("#nickname").on('focus',function (){
+                nicknameDuplicateCheck = false;
+                nicknameRegexCheck = false;
+            });
+            $("#nickname").on('blur',function (){
+
+                let nickname = $('#nickname').val();
+
+                const nicknameRegex = /^[a-zA-Z가-힣]+[0-9a-zA-Z가-힣]{3,7}$/;
+                if(nicknameRegex.test(nickname)){
+                    $('#nicknameCheck').text('');
+                    nicknameRegexCheck = true;
+                }else{
+                    $('#nicknameCheck').text('닉네임은 영어 또는 한글로 시작하는 4자 이상 8자 이하여야합니다.');
+                    $('#nicknameCheck').css('color','red');
+                }
+            });
+            $("#nicknameDuplicateCheck").click(function () {
+
+                let nickname = $('#nickname').val();
+                console.log(nickname);
+
+                if(!nicknameRegexCheck){
+                    alert('닉네임 양식에 맞추세요.');
+                    return false;
+                }
+
+                $.ajax({
+                    url : '/nicknameCk',
+                    type : 'GET',
+                    data : {'nickname':nickname},
+                    contentType : 'application/json',
+                    dataType: 'json',
+                    success:function (result){
+                        alert(result.message);
+                        nicknameDuplicateCheck = true;
+                    },
+                    error:function (){
+                        alert('error');
+                    }
+                });
+
+            });
+
+            $('.signup-complete').click(function (){
+                let email = $('#email').val();
+                let password = $('#password').val();
+                let passwordCheck = $('#passwordCheck').val();
+
+                if(email == ''){
+                    alert('이메일을 입력하세요');
+                    return false;
+                }
+
+                if(password == '' || passwordCheck == '') {
+                    alert('패스워드 입력하세요');
+                    return false;
+                }
+
+                if(password != passwordCheck){
+                    alert('두 패스워드가 일치하지 않습니다.');
+                    return false;
+                }
+
+                if(!nicknameDuplicateCheck){
+                    alert('닉네임 중복 확인해주세요.');
+                    return false;
+                }
+
+                $('form[name=signup]').submit();
+
+            });
+
+
+        });
+    </script>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -27,18 +110,20 @@
         </div>
         <div class="none"></div>
         <div class="signup-form">
-            <form action="" method="post" name="signup">
+            <form action="" method="post" name="signup" th:object="${signUpForm}" th:action="@{signup}">
                 <div class="form-group">
-                    <input type="text" name="userEmail" class="form-control" id="email" placeholder="아이디(이메일)을 입력하세요.">
+                    <input type="text" th:field="*{email}" name="userEmail" class="form-control" id="email" placeholder="아이디(이메일)을 입력하세요.">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="userPw" class="form-control" id="password" placeholder="비밀번호를 입력하세요.">
+                    <input type="password" th:field="*{password}" name="userPw" class="form-control" id="password" placeholder="비밀번호를 입력하세요.">
                 </div>
                 <div class="form-group">
                     <input type="password" name="userPwCheck" class="form-control" id="passwordCheck" placeholder="비밀번호를 다시 입력하세요.">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="userNickname" class="form-control" id="nickname" placeholder="닉네임을 입력하세요.">
+                    <input type="text" th:field="*{nickname}" name="userNickname" class="form-control" id="nickname" placeholder="닉네임을 입력하세요.">
+                    <button type="button" id ="nicknameDuplicateCheck">중복확인</button>
+                    <div class = "check_font" id="nicknameCheck"></div>
                 </div>
                 <div class="none" style="visibility: hidden;height: 10px"></div>
                 <div class="privacy">이용약관</div>
@@ -75,9 +160,12 @@
                     ⑥ No-Corona-Zone은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.
                 </div>
                 <div class="signup-form2">
-                    <div class="agree-box"> <input type="checkbox"/>[필수] 약관에 동의합니다.</div>
-                    <button type="submit" class="signup-complete">회원가입 완료</button>
+                    <div class="agree-box"> <input type="checkbox" th:field="*{agreeTermsOfService}" th:value="true">[필수] 약관에 동의합니다.</div>
+                    <!--<button type="submit" class="signup-complete">회원가입 완료</button>-->
+                    <button type="button" class="signup-complete">회원가입 완료</button>
+
                 </div>
+
             </form>
         </div>
     </div>
