@@ -8,19 +8,24 @@
         <nav class="global-nav">
             <!-- 좌측 메뉴 (데스크탑) -->
             <div class="global-nav-menus">
-                <a th:href="@{/vaccine}" class="global-nav-item">백신</a>
-                <a th:href="@{/clinic}" class="global-nav-item">선별진료소</a>
-                <a href="#" class="global-nav-item">NEWS</a>
+                <a href="#" class="global-nav-item">백신</a>
+                <a href="#" class="global-nav-item">선별진료소</a>
+                <a id="dropdownMenuLink" data-toggle="dropdown" class="global-nav-item dropdown-toggle">NEWS</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" th:href="@{/news}">전체보기</a>
+                    <a class="dropdown-item" th:href="@{/news}">기사</a>
+                    <a class="dropdown-item" th:href="@{/video}">영상</a>
+                </div>
             </div>
             <!-- 좌측 메뉴 (모바일) -->
-            <div th:onclick="|location.href='@{/menu}'|" class="mobile-nav-menus">
+            <div onclick="location.href='templates/menu/mobile_menu.html'" class="mobile-nav-menus">
                 <div class="icon-menu"></div>
                 <div class="icon-menu"></div>
                 <div class="icon-menu"></div>
             </div>
             <!-- 메인으로 -->
             <div class="global-nav-home">
-<!--                <a href="/" class="home-btn">코로나안전지대</a>-->
+                <!--                <a href="/" class="home-btn">코로나안전지대</a>-->
                 <img onclick="location.href='/'" src="img/ncz_logo.png" alt="" class="icon-home">
             </div>
             <!-- 우측 메뉴 (데스크탑) -->
@@ -32,8 +37,8 @@
             </div>
             <!-- 우측 메뉴 (모바일) -->
             <div class="mobile-nav-users">
-                <a th:href="@{/timeline}">
-                <img src="img/social-icon.png" alt="" class="icon-social">
+                <a href="templates/menu/mobile_member_menu.html">
+                    <img src="img/social-icon.png" alt="" class="icon-social">
                 </a>
             </div>
         </nav>

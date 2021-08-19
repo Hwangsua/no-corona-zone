@@ -5,9 +5,13 @@ spring.datasource.username=sa
 spring.datasource.password=
 
 # jpa 설정
+<<<<<<< HEAD
+spring.jpa.hibernate.ddl-auto=create
+=======
 
 spring.jpa.hibernate.ddl-auto=create
 
+>>>>>>> 567e4ebb67fc0eec72ef4e823295e864ed4af75f
 spring.jpa.properties.hibernate.fomat_sql=true
 
 # 로그레벨 설정
@@ -23,6 +27,7 @@ server.servlet.session.timeout=30m
 
 spring.profiles.active=local
 
+<<<<<<< HEAD
 # SMTP 구글 메일 서비스
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
@@ -32,3 +37,13 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.timeout=5000
 spring.mail.properties.mail.smtp.starttls.enable=true
 
+=======
+# google 메일 서비스
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=lien.myhome@gmail.com
+spring.mail.password=kwavnwdjwsbmejjt
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.timeout=5000
+spring.mail.properties.mail.smtp.starttls.enable=true
+>>>>>>> 567e4ebb67fc0eec72ef4e823295e864ed4af75f

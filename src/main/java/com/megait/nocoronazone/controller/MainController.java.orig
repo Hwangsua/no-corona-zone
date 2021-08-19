@@ -137,6 +137,8 @@ public class MainController {
     @GetMapping("/news")
     public String co_info_news() { return "/co_info/main";}
 
+<<<<<<< HEAD
+=======
     @GetMapping("/video")
     public String co_info_video() { return "/co_info/video";}
 
@@ -146,6 +148,7 @@ public class MainController {
     }
 
 
+>>>>>>> 567e4ebb67fc0eec72ef4e823295e864ed4af75f
 
     // ================= co_sns ============================
 
