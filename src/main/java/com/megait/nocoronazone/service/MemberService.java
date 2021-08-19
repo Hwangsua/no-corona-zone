@@ -1,11 +1,15 @@
 package com.megait.nocoronazone.service;
 
+
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,7 +43,7 @@ public class MemberService implements UserDetailsService {
                 .nickname("하하")
                 .build();
 
-        Member newMember = memberRepository.save(member);
+        memberRepository.save(member);
 
     }
 
@@ -93,5 +97,19 @@ public class MemberService implements UserDetailsService {
         }
 
         member.completeSignup();
+    }
+
+    public void login(Member member) {
+        MemberUser memberUser = new MemberUser(member);
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(
+                        memberUser,
+                        memberUser.getMember().getPassword(),
+                        memberUser.getAuthorities()
+                );
+
+        SecurityContext ctx = SecurityContextHolder.getContext();
+        ctx.setAuthentication(token);
     }
 }

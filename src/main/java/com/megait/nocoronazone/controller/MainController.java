@@ -6,6 +6,8 @@ import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,6 +21,8 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -80,6 +84,7 @@ public class MainController {
 
         if(errors.hasErrors()){
             System.out.println("에러발생");
+            System.out.println(errors);
             return "member/signup";
         }
 
@@ -105,8 +110,14 @@ public class MainController {
 //        return "redirect:/";
 //    }
 
-    @GetMapping("/logout")
-    public String logout(){
+//    @GetMapping("/logout")
+//    public String logout(){
+//        return "redirect:/";
+//    }
+
+    @GetMapping(value = "/logout")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/";
     }
 
