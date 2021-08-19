@@ -11,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -140,15 +139,6 @@ public class MainController {
         return "co_info/main";
     }
 
-    @GetMapping("/news/article")
-    public String article() {
-        return "co_info/article";
-    }
-
-    @GetMapping("/news/video")
-    public String video() {
-        return "co_info/article";
-    }
 
     // ================= co_sns ============================
 

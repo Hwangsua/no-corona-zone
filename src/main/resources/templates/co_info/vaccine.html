@@ -119,9 +119,6 @@
             document.getElementById('vaccine-chart-date-5').innerHTML = e;
 
             /* 일주일 단위 백신 1차 접종자수 json */
-
-
-
             $(function () {
                 let date0 = new Date();
                 var day2 = date0.getDate();
@@ -146,9 +143,11 @@
                             firstCnt = parseInt(data.firstCnt);
                             weekTotalFirstCnt = 0;
                             weekTotalFirstCnt = weekTotalFirstCnt + firstCnt;
+                            console.log(firstCnt);
+                            console.log(weekTotalFirstCnt);
                         });
-                        console.log(firstCnt);
-                        console.log(weekTotalFirstCnt);
+                        // console.log(firstCnt);
+                        // console.log(weekTotalFirstCnt);
                     }
                 })
 

@@ -14,24 +14,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-<<<<<<< HEAD
-                .mvcMatchers("/", "/login", "/signup",
-                        "/clinic", "/news", "/vaccine", "/article",
-                        "/cosns", "/timeline_location",
-                        "/check-email", "/email-check-token",
-                        "/xml").permitAll()
 
-                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**").permitAll()
-=======
-                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
+                .mvcMatchers("/", "/img/**", "/svg/**",
+                        "/login", "/signup", "/nicknameCk","/logout","/settings",
                         "/infection", "/density", "/distancing", "/clinic",
-                        "/vaccine", "/news",  "/news/article", "/news/video",
+                        "/vaccine", "/news",  "/article", "/video",
                         "/timeline_follow", "/timeline_location","/mention/write","/mention_detail",
                         "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
->>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
 
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
-                .mvcMatchers("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff").permitAll()
 
                 .anyRequest().authenticated()
 

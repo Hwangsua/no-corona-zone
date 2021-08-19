@@ -35,10 +35,10 @@ public class Member {
 
     private boolean emailVerified;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private YellowCard yellowCard;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
     public void generateEmailCheckToken(){
@@ -48,6 +48,7 @@ public class Member {
     public boolean isValidToken(String token) {
         return emailCheckToken.equals(token);
     }
+
     public void completeSignup(){
         emailVerified = true;
     }
