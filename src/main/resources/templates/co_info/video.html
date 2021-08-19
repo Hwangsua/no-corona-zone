@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='video', title='NEWS_VIDEO'">
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+  <script th:src="@{/js/youtube.js}"></script>
+  <link th:href="@{/css/co_info/video.css}" rel="stylesheet">
+  <!--  <script>-->
+  <!--    let apikey = "AIzaSyAl3Cd1dxfvABLMjNJx6IcK1q9m9YY_zjA"-->
+  <!--    let keyword = "코로나"-->
+  <!--    let maxResults = 30-->
+
+  <!--    $.ajax({-->
+  <!--      type : "GET",-->
+  <!--      dataType : "JSON",-->
+  <!--      url : "https://www.googleapis.com/youtube/v3/search",-->
+  <!--      data:{part:'snippet',key:apikey,q:keyword,maxResults,type:'video'},-->
+  <!--      contentType : "application/json",-->
+  <!--      success : function(data){-->
+  <!--        //console.log(data);-->
+  <!--        $.each(data.items, function(i, item){-->
+  <!--          url = "https://www.youtube.com/watch?v="+item.id.videoId;-->
+  <!--          thumbnail = item.snippet.thumbnails.medium.url;-->
+  <!--          $("#get_view").append("<p class=box>"+"<img class=thumbnail src="+thumbnail+">"+"<a href="+url+">"+"<br/>"+-->
+  <!--          "<span class=title>"+item.snippet.title+"</span></a></p>");-->
+
+  <!--          title = item.snippet.title;-->
+  <!--          videoId = item.id.videoId;-->
+
+  <!--          // console.log(thumbnail);-->
+  <!--          // console.log(videoId);-->
+  <!--          // console.log(title);-->
+  <!--        });-->
+  <!--      }-->
+  <!--    });-->
+  <!--  </script>-->
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container">
+    <div class="container-name">
+      <h4>영상</h4>
+    </div>
+    <div id="get_view"></div>
+  </div>
+</div>
+</body>

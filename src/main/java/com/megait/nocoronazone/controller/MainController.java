@@ -1,5 +1,7 @@
 package com.megait.nocoronazone.controller;
 
+import com.megait.nocoronazone.api.VaccineCountVo;
+import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.SignUpForm;
@@ -11,14 +13,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +23,8 @@ import javax.validation.Valid;
 @Slf4j
 @RequiredArgsConstructor
 public class MainController {
+
+    private final VaccineXml vaccineXml;
 
     private final MemberService memberService;
 
@@ -101,19 +97,6 @@ public class MainController {
         return "member/login";
     }
 
-//    @PostMapping("/login")
-//    public String loginSubmit(@Valid LoginForm loginForm, Errors errors){
-//        //TODO - 0808 LoginForm 구현하기
-//        if(errors.hasErrors()){
-//            return "/member/login";
-//        }
-//        return "redirect:/";
-//    }
-
-//    @GetMapping("/logout")
-//    public String logout(){
-//        return "redirect:/";
-//    }
 
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
@@ -121,6 +104,10 @@ public class MainController {
         return "redirect:/";
     }
 
+    @GetMapping("/profile")
+    public String coSns_mypage() {
+        return "co_sns/profile";
+    }
 
     @GetMapping("/settings")
     public String setUpForm(){
@@ -132,11 +119,14 @@ public class MainController {
         return "member/settings";
     }
 
-
     // ================= co_info ============================
 
     @GetMapping("/vaccine")
-    public String vaccine() {
+    public String vaccine(Model model) {
+        VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
+        int totalPopulation = vaccineXml.getTotalPopulation();
+        model.addAttribute("vaccineCountVo", vaccineCountVo);
+        model.addAttribute("totalPopulation", totalPopulation);
         return "co_info/vaccine";
     }
 
@@ -146,19 +136,17 @@ public class MainController {
     }
 
     @GetMapping("/news")
-    public String news() {
-        return "co_info/main";
-    }
+    public String co_info_news() { return "/co_info/main";}
 
-    @GetMapping("/news/article")
+    @GetMapping("/video")
+    public String co_info_video() { return "/co_info/video";}
+
+    @GetMapping("/article")
     public String article() {
         return "co_info/article";
     }
 
-    @GetMapping("/news/video")
-    public String video() {
-        return "co_info/article";
-    }
+
 
     // ================= co_sns ============================
 

@@ -1,6 +1,5 @@
 package com.megait.nocoronazone.service;
 
-
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
 import com.megait.nocoronazone.form.SignUpForm;

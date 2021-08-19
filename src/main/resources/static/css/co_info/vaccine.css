@@ -1,3 +1,94 @@
+.vaccine-main {
+    margin-top: 80px;
+}
+.vaccine-left {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
+.vaccine-status-border {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px 30px;
+    height: 120px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+.first,
+.second {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+}
+.first-head,
+.second-head {
+    color: rgba(125, 204, 171, 1);
+}
+.first-num,
+.second-num {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.first-plus,
+.second-plus {
+    display: flex;
+    justify-content: center;
+}
+.first-plus svg,
+.second-plus svg {
+    transform: rotate(90deg);
+}
+.vaccine-chart {
+    position: sticky;
+    top: 150px;
+}
+.vaccine-chart-border {
+    margin: 10px 30px;
+    height: 400px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}
+#vaccine-chart {
+    height: 350px;
+    width: auto;
+    max-width: 380px;
+    margin: 30px auto;
+}
+#vaccine-chart tr {
+    --color: rgba(125, 204, 171, 1);
+}
+#vaccine-chart td {
+    transition-duration: 0.3s;
+    opacity: 0.5;
+}
+#vaccine-chart td:hover {
+    opacity: 1;
+}
+.vaccine-right {
+    display: flex;
+    height: auto;
+    width: auto;
+    margin: 10px 20px;
+}
+.news-thumbnail-img {
+    height: 112px;
+    width: 112px;
+    margin-top: 10px;
+}
+.news-content {
+    display: flex;
+    flex-direction: column;
+    gap: 7px 0;
+    margin: 5px;
+}
+.news-content-headline {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
 /*********************************************************************/
 @media (min-width: 940px) {
     .vaccine-main {
@@ -11,31 +102,102 @@
         width: 500px;
     }
     .vaccine-status {
-
+        position: sticky;
+        top: 10px;
     }
     .vaccine-status-border {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
         margin: 10px 30px;
-        height: 100px;
+        height: 120px;
         border: 1px solid lightgray;
         border-radius: 10px;
         font-size: 1rem;
     }
-    .first {
+    .first,
+    .second {
         display: flex;
         flex-direction: column;
         gap: 5px;
+        text-align: center;
     }
-    .first-num {
+    .first-head,
+    .second-head {
+        color: rgba(125, 204, 171, 1);
+    }
+    .first-num,
+    .second-num {
         font-size: 1.2rem;
+        font-weight: bold;
     }
-    .first-plus svg {
-        /*stroke: rgba(125, 204, 171, 1);*/
+    .first-plus,
+    .second-plus {
+        display: flex;
+        justify-content: center;
+    }
+    .first-plus svg,
+    .second-plus svg {
         transform: rotate(90deg);
     }
-    /********************************/
+    .vaccine-chart {
+        position: sticky;
+        top: 150px;
+    }
+    .vaccine-chart-border {
+        margin: 10px 30px;
+        height: 450px;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+    }
+    .vaccine-chart-total-count {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
+        margin: 10px;
+    }
+    .count-date {
+        width: 130px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: gray;
+        margin-top: 3px;
+    }
+    .total-count {
+        width: 200px;
+        text-align: center;
+    }
+    .total-count .label {
+        color: gray;
+    }
+    .total-count .num {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    .total-count .tail {
+        font-size: 1rem;
+    }
+    #vaccine-chart {
+        height: 350px;
+        max-width: 380px;
+        margin-left: 30px;
+        margin-top: 20px;
+    }
+    #vaccine-chart tr {
+        --color: rgba(125, 204, 171, 1);
+    }
+    #vaccine-chart th {
+        color: gray;
+        font-size: 0.9rem;
+    }
+    #vaccine-chart td {
+        transition-duration: 0.3s;
+        opacity: 0.5;
+    }
+    #vaccine-chart td:hover {
+        opacity: 1;
+    }
     .vaccine-right {
         display: flex;
         width: 700px;
@@ -45,6 +207,7 @@
     .news-thumbnail-img {
         height: 112px;
         width: 112px;
+        margin: auto 0;
     }
     .news-content {
         display: flex;
