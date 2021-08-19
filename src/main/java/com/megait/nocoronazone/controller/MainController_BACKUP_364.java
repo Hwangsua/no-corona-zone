@@ -1,16 +1,22 @@
 package com.megait.nocoronazone.controller;
 
+<<<<<<< HEAD
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
+=======
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.MemberService;
+>>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+<<<<<<< HEAD
+=======
 import org.springframework.validation.Errors;
+>>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,11 +27,14 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class MainController {
 
+<<<<<<< HEAD
     private final VaccineXml vaccineXml;
 
+=======
     private final MemberService memberService;
 
     // ================= 메인 ============================
+>>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
     @RequestMapping("/")
     public String index() {
 
@@ -93,6 +102,8 @@ public class MainController {
         return "member/login";
     }
 
+<<<<<<< HEAD
+=======
 //    @PostMapping("/login")
 //    public String loginSubmit(@Valid LoginForm loginForm, Errors errors){
 //        //TODO - 0808 LoginForm 구현하기
@@ -107,6 +118,7 @@ public class MainController {
         return "redirect:/";
     }
 
+>>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
 
     @GetMapping("/settings")
     public String setUpForm(){
@@ -145,6 +157,8 @@ public class MainController {
         return "co_info/article";
     }
 
+<<<<<<< HEAD
+=======
     @GetMapping("/news/video")
     public String video() {
         return "co_info/article";
@@ -200,5 +214,6 @@ public class MainController {
 //    public String profile(@PathVariable String nickname){
 //        return "co_sns/profile";
 //    }
+>>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
 
 }

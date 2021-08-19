@@ -1,7 +1,5 @@
 package com.megait.nocoronazone.controller;
 
-import com.megait.nocoronazone.api.VaccineCountVo;
-import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.SignUpForm;
@@ -12,7 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,8 +25,6 @@ import javax.validation.Valid;
 @Slf4j
 @RequiredArgsConstructor
 public class MainController {
-
-    private final VaccineXml vaccineXml;
 
     private final MemberService memberService;
 
@@ -122,11 +125,7 @@ public class MainController {
     // ================= co_info ============================
 
     @GetMapping("/vaccine")
-    public String vaccine(Model model) {
-        VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
-        int totalPopulation = vaccineXml.getTotalPopulation();
-        model.addAttribute("vaccineCountVo", vaccineCountVo);
-        model.addAttribute("totalPopulation", totalPopulation);
+    public String vaccine() {
         return "co_info/vaccine";
     }
 
