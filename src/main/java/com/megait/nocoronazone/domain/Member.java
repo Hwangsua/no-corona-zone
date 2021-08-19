@@ -35,10 +35,10 @@ public class Member {
 
     private boolean emailVerified;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private YellowCard yellowCard;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
     public void generateEmailCheckToken(){

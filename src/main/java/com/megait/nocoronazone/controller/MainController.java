@@ -79,7 +79,7 @@ public class MainController {
     public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
 
         if(errors.hasErrors()){
-            System.out.println("에러발생");
+            System.out.println(errors);
             return "member/signup";
         }
 
