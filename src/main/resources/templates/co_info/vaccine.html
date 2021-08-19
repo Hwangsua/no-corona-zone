@@ -6,6 +6,7 @@
       layout:decorate="~{layout/common_layout}" th:with="activeTab='vaccine', title='Vaccine'">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
     <link th:href="@{/css/co_info/vaccine.css}" rel="stylesheet">
 </head>
 <body>
@@ -15,22 +16,147 @@
             <div class="vaccine-status">
                 <div class="vaccine-status-border">
                     <div class="first">
-                        <span class="first-num">22,226,384</span>
-                        <span class="first-percent">(43.3%)</span>
+                        <span class="first-head">1차 접종</span>
+                        <span class="first-num" th:text="${#numbers.formatInteger(vaccineCountVo.totalFirstCnt, 3, 'COMMA')}"></span>
+<!--                        <span class="first-percent" th:text="'(' + ${vaccineCountVo.totalFirstCnt} / ${totalPopulation} * 100 + '%)'"></span>-->
+                        <span class="first-percent" id="first-percent"></span>
                         <div class="first-plus">
-                            <span>241,514</span>
+                            <span th:text="${#numbers.formatInteger(vaccineCountVo.todayFirstCnt, 3, 'COMMA')}"></span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24"><path d="M19 12H6m6-7l-7 7 7 7"></path></svg>
                         </div>
                     </div>
                     <div class="second">
-                        <span>9,552,662</span>
+                        <span class="second-head">2차 접종</span>
+                        <span class="second-num" th:text="${#numbers.formatInteger(vaccineCountVo.totalSecondCnt, 3, 'COMMA')}"></span>
+                        <span class="second-percent" id="second-percent"></span>
+                        <div class="second-plus">
+                            <span th:text="${#numbers.formatInteger(vaccineCountVo.todaySecondCnt, 3, 'COMMA')}"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24"><path d="M19 12H6m6-7l-7 7 7 7"></path></svg>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="vaccine-graph">
-                <div class="vaccine-graph-border"></div>
+            <div class="vaccine-chart">
+                <div class="vaccine-chart-border">
+                    <div class="vaccine-chart-total-count">
+                        <span class="count-date">8월 11일 ~ 8월 17일</span>
+                        <div class="total-count">
+                            <span class="label">누적</span>
+                            <span class="num">3,292,888</span>
+                            <span class="tail">명</span>
+                        </div>
+                    </div>
+                    <table class="charts-css column show-4-secondary-axes data-spacing-20 show-labels" id="vaccine-chart">
+                        <tbody>
+                        <tr>
+                            <th id="vaccine-chart-date-5"></th>
+                            <td style="--start: 1.0; --size: 0.3"> <span class="data"></span> </td>
+                        </tr>
+                        <tr>
+                            <th id="vaccine-chart-date-4"></th>
+                            <td style="--start: 0.2; --size: 0.4"> <span class="data"></span> </td>
+                        </tr>
+                        <tr>
+                            <th id="vaccine-chart-date-3"></th>
+                            <td style="--start: 0.4; --size: 0.8"> <span class="data"></span> </td>
+                        </tr>
+                        <tr>
+                            <th id="vaccine-chart-date-2"></th>
+                            <td style="--start: 0.8; --size: 0.6"> <span class="data"></span> </td>
+                        </tr>
+                        <tr>
+                            <th id="vaccine-chart-date-1"></th>
+                            <td style="--start: 0.6; --size: 1.0"> <span class="data"></span> </td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
         </div>
+        <script th:inline="javascript">
+
+            /* 1,2차 접종 인구수 (%) */
+            var totalFirstCnt = [[${vaccineCountVo.totalFirstCnt}]];
+            var totalSecondCnt = [[${vaccineCountVo.totalSecondCnt}]];
+            var totalPopulation = [[${totalPopulation}]];
+
+            var percentVaccineFirstCnt = totalFirstCnt / totalPopulation * 100;
+            var percentVaccineSecondCnt = totalSecondCnt / totalPopulation * 100;
+
+            document.getElementById('first-percent').innerHTML = "(" + roundToOne(percentVaccineFirstCnt) + "%)";
+            document.getElementById('second-percent').innerHTML = "(" + roundToOne(percentVaccineSecondCnt) + "%)";
+
+            function roundToOne(num) {
+                return +(Math.round(num + "e+1")  + "e-1");
+            }
+
+            /* 그래프 날짜 (일주일 단위로 이틀 전까지) */
+            function minusWeek(e) {
+                var date2 = date.getTime() - ((e * 7) * 24 * 60 * 60 * 1000);
+                date.setTime(date2);
+                return ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + (date.getDate() - 2)).slice(-2);
+            }
+
+            var date = new Date();
+
+            var month = date.getMonth() + 1;
+            month = month < 10 ? '0' + month.toString() : month.toString();
+
+            var day = date.getDate();
+            day = (day - 2) < 10 ? '0' + day.toString() - 2 : day.toString() - 2;
+
+            var a = month + "/" + day;
+            var b = minusWeek(1);
+            var c = minusWeek(1);
+            var d = minusWeek(1);
+            var e = minusWeek(1);
+
+            document.getElementById('vaccine-chart-date-1').innerHTML = a;
+            document.getElementById('vaccine-chart-date-2').innerHTML = b;
+            document.getElementById('vaccine-chart-date-3').innerHTML = c;
+            document.getElementById('vaccine-chart-date-4').innerHTML = d;
+            document.getElementById('vaccine-chart-date-5').innerHTML = e;
+
+            /* 일주일 단위 백신 1차 접종자수 json */
+
+
+
+            $(function () {
+                let date0 = new Date();
+                var day2 = date0.getDate();
+                day2 = (day2 - 2) < 10 ? '0' + day2.toString() - 8 : day2.toString() - 8;
+                var month2 = date0.getMonth() + 1;
+                month2 = month2 < 10 ? '0' + month2.toString() : month2.toString();
+                console.log(date0.getFullYear().toString() + '-' + month2 + '-' + day2);
+                $.ajax({
+                    url: "https://api.odcloud.kr/api/15077756/v1/vaccine-stat",
+                    dataType: "json",
+                    async: false,
+                    data: {
+                        "page": 1,
+                        "perPage": 7,
+                        "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
+                        "cond[sido::EQ]": "경기도",
+                        "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $.each(data.data, function (i, data){
+                            firstCnt = parseInt(data.firstCnt);
+                            weekTotalFirstCnt = 0;
+                            weekTotalFirstCnt = weekTotalFirstCnt + firstCnt;
+                        });
+                        console.log(firstCnt);
+                        console.log(weekTotalFirstCnt);
+                    }
+                })
+
+
+            })
+
+
+        </script>
         <div class="vaccine-right">
             <div class="news-thumbnail">
                 <img class="news-thumbnail-img" src="" alt="">

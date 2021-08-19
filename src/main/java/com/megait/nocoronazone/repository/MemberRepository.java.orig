@@ -2,6 +2,7 @@ package com.megait.nocoronazone.repository;
 
 import com.megait.nocoronazone.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+<<<<<<< HEAD
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
+=======
 
 import java.util.Optional;
 
@@ -17,4 +19,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
     Optional<Member> findByNickname(String nickname);
+>>>>>>> da5365542455b6b635904878058913f559b22c6b
 }

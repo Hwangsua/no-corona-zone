@@ -122,10 +122,13 @@ public class MainController {
         return "member/settings";
     }
 
+<<<<<<< HEAD
     @GetMapping("/settings")
     public String settings() { return "member/settings"; }
+=======
 
     // ================= co_info ============================
+>>>>>>> da5365542455b6b635904878058913f559b22c6b
 
     @GetMapping("/vaccine")
     public String vaccine(Model model) {
@@ -142,6 +145,7 @@ public class MainController {
     }
 
     @GetMapping("/news")
+<<<<<<< HEAD
     public String co_info_news() { return "/co_info/main";}
 
     @GetMapping("/video")
@@ -151,6 +155,7 @@ public class MainController {
     public String article() {
         return "co_info/article";
     }
+=======
     public String news() {
         return "co_info/main";
     }
@@ -216,4 +221,5 @@ public class MainController {
 //        return "co_sns/profile";
 //    }
 
+>>>>>>> da5365542455b6b635904878058913f559b22c6b
 }

@@ -21,14 +21,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
 <<<<<<< HEAD
+                .mvcMatchers("/", "/login", "/signup",
+                        "/clinic", "/news", "/vaccine", "/article",
+                        "/cosns", "/timeline_location",
+                        "/check-email", "/email-check-token",
+                        "/xml").permitAll()
+
                 .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**").permitAll()
 =======
                 .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
                         "/infection", "/density", "/distancing", "/clinic",
 <<<<<<< HEAD
-                        "/video","/news","/article","/svg","/vaccine"
+                        "/vaccine", "/news",  "/article", "/video",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
 =======
+                        "/vaccine", "/news",  "/news/article", "/news/video",
                         "/timeline_follow", "/timeline_location","/mention/write","/mention_detail",
 >>>>>>> da5365542455b6b635904878058913f559b22c6b
                         "/remention", "/search", "/following","/follower","/{nickname}").permitAll()

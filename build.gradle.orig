@@ -48,11 +48,13 @@ dependencies {
 
 	implementation 'com.google.code.gson:gson'
 
+<<<<<<< HEAD
 	// https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis
 	implementation group: 'com.github.scribejava', name: 'scribejava-apis', version: '8.3.1'
 
 	// oauth
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+=======
 	// https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl
 	implementation group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
 
@@ -60,6 +62,7 @@ dependencies {
 	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.4'
 
 
+>>>>>>> da5365542455b6b635904878058913f559b22c6b
 }
 
 test {

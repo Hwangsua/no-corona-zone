@@ -6,13 +6,16 @@ import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+<<<<<<< HEAD
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+=======
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+>>>>>>> da5365542455b6b635904878058913f559b22c6b
 
 @SpringBootApplication
 public class NoCoronaZoneApplication {
@@ -24,6 +27,7 @@ public class NoCoronaZoneApplication {
 	@Profile("https")
 	public ServletWebServerFactory servletContainer() {
 
+<<<<<<< HEAD
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){
 			@Override
 			protected void postProcessContext(Context context) {
@@ -48,8 +52,10 @@ public class NoCoronaZoneApplication {
 		connector.setPort(8080);
 		connector.setRedirectPort(8443);
 		return connector;
+=======
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+>>>>>>> da5365542455b6b635904878058913f559b22c6b
 	}
 }

@@ -1,7 +1,5 @@
 package com.megait.nocoronazone.controller;
 
-import com.megait.nocoronazone.api.VaccineCountVo;
-import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.SignUpForm;
@@ -12,7 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,8 +25,6 @@ import javax.validation.Valid;
 @Slf4j
 @RequiredArgsConstructor
 public class MainController {
-
-    private final VaccineXml vaccineXml;
 
     private final MemberService memberService;
 
@@ -107,10 +110,6 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile")
-    public String coSns_mypage() {
-        return "co_sns/profile";
-    }
 
     @GetMapping("/settings")
     public String setUpForm(){
@@ -122,17 +121,11 @@ public class MainController {
         return "member/settings";
     }
 
-    @GetMapping("/settings")
-    public String settings() { return "member/settings"; }
 
     // ================= co_info ============================
 
     @GetMapping("/vaccine")
-    public String vaccine(Model model) {
-        VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
-        int totalPopulation = vaccineXml.getTotalPopulation();
-        model.addAttribute("vaccineCountVo", vaccineCountVo);
-        model.addAttribute("totalPopulation", totalPopulation);
+    public String vaccine() {
         return "co_info/vaccine";
     }
 
@@ -142,15 +135,6 @@ public class MainController {
     }
 
     @GetMapping("/news")
-    public String co_info_news() { return "/co_info/main";}
-
-    @GetMapping("/video")
-    public String co_info_video() { return "/co_info/video";}
-
-    @GetMapping("/article")
-    public String article() {
-        return "co_info/article";
-    }
     public String news() {
         return "co_info/main";
     }

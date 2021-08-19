@@ -9,11 +9,13 @@
     <script th:src="@{/js/user/daum-address.js}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link th:href="@{/css/user/signup.css}" rel="stylesheet">
+<<<<<<< HEAD
 </head>
 <body>
     <div layout:fragment="content">
         <div class="container">
 
+=======
 
     <script th:inline="javascript">
         $(document).ready(function (){
@@ -172,6 +174,7 @@
                 </div>
 
             </form>
+>>>>>>> 401ff989d92bdb2a280cef7493b52068d9021139
         </div>
     </div>
 </body>

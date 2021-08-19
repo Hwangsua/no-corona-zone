@@ -7,24 +7,55 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_info/article.css}" rel="stylesheet">
+    <script th:src="@{/js/co_info/article.js}"></script>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="article">
-        <div class="article-thumbnail">
-            <img class="article-thumbnail-img" src="" alt="">
+        <div class="article-region">
+            <div class="form-group">
+                <select name="main-city" id="main-city" class="form-control" onchange="cityKindChange(this)">
+                    <option value="a">서울</option>
+                    <option value="b">경기</option>
+                    <option value="c">인천</option>
+                    <option value="d">부산</option>
+                    <option value="e">대구</option>
+                    <option value="f">광주</option>
+                    <option value="g">대전</option>
+                    <option value="h">울산</option>
+                    <option value="i">세종</option>
+                    <option value="j">강원</option>
+                    <option value="k">경남</option>
+                    <option value="l">경북</option>
+                    <option value="m">전남</option>
+                    <option value="n">전북</option>
+                    <option value="o">충남</option>
+                    <option value="p">충북</option>
+                    <option value="q">제주</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="sub-city" id="sub-city" class="form-control">
+                    <option>서울전체</option>
+                </select>
+            </div>
         </div>
-        <div class="article-content">
-            <div class="article-content-headline">
-                <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+        <div class="article-list">
+            <div class="article-thumbnail">
+                <img class="article-thumbnail-img" src="" alt="">
             </div>
-            <div class="article-content-content">
-                    <span>
-                        경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
-                    </span>
-            </div>
-            <div class="article-content-source">
-                <span>출처: news1</span>
+            <div class="article-content">
+                <div class="article-content-headline">
+                    <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+                </div>
+                <div class="article-content-content">
+                        <span>
+                            경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
+                        </span>
+                </div>
+                <div class="article-content-source">
+                    <span>출처: news1</span>
+                </div>
             </div>
         </div>
     </div>
