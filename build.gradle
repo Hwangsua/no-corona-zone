@@ -47,6 +47,13 @@ dependencies {
 
 	implementation 'com.google.code.gson:gson'
 
+	// https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl
+	implementation group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.4'
+
+
 }
 
 test {

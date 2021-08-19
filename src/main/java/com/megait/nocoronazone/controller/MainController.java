@@ -1,22 +1,20 @@
 package com.megait.nocoronazone.controller;
 
+import com.megait.nocoronazone.api.VaccineCountVo;
+import com.megait.nocoronazone.api.VaccineXml;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class MainController {
+
+    private final VaccineXml vaccineXml;
 
     @RequestMapping("/")
     public String index() {
@@ -27,11 +25,6 @@ public class MainController {
     @GetMapping("/login")
     public String login() {
         return "member/login";
-    }
-
-    @GetMapping("/signup")
-    public String signup() {
-        return "member/signup";
     }
 
 
@@ -46,7 +39,11 @@ public class MainController {
     }
 
     @GetMapping("/vaccine")
-    public String vaccine() {
+    public String vaccine(Model model) {
+        VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
+        int totalPopulation = vaccineXml.getTotalPopulation();
+        model.addAttribute("vaccineCountVo", vaccineCountVo);
+        model.addAttribute("totalPopulation", totalPopulation);
         return "co_info/vaccine";
     }
 
@@ -65,5 +62,6 @@ public class MainController {
     public String article() {
         return "co_info/article";
     }
+
 
 }
