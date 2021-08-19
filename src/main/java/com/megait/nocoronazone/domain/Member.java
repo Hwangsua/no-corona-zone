@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+// @DynamicInsert : 현재 들어있는(설정되어있는) 값만 넣는다. @columnDefault로 값 설정
+// @DynamicUpdate : 현재 엔티티에 적용되어있는 설정된 값만 변경한다.
+
 @Entity
 @Getter
 @Setter

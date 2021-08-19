@@ -34,6 +34,10 @@ public class MainController {
         return "member/signup";
     }
 
+    @GetMapping("/profile")
+    public String coSns_mypage() {
+        return "co_sns/profile";
+    }
 
     @GetMapping("/cosns")
     public String timelineFollow(){
@@ -44,6 +48,9 @@ public class MainController {
     public String timelineLocation(){
         return "co_sns/timeline_location";
     }
+
+    @GetMapping("/settings")
+    public String settings() { return "member/settings"; }
 
     @GetMapping("/vaccine")
     public String vaccine() {
@@ -56,14 +63,13 @@ public class MainController {
     }
 
     @GetMapping("/news")
-    public String news() {
-        return "co_info/news";
-    }
+    public String co_info_news() { return "/co_info/main";}
 
+    @GetMapping("/video")
+    public String co_info_video() { return "/co_info/video";}
 
     @GetMapping("/article")
     public String article() {
         return "co_info/article";
     }
-
 }
