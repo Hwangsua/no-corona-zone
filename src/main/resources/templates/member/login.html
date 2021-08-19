@@ -3,83 +3,179 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='login', title='Login'">
-
 <head>
-<!--    -->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+    <!--    <script src="https: //ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+    <!--    <meta name="google-signin-scope" content="profile email">-->
+    <meta name="google-signin-client_id" content="725302808101-hqpnierbqp4r7eab210nqb4rskrods2f.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <link th:href="@{/css/member/login.css}" rel="stylesheet">
+    <script>
+        function onSuccess(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+        }
+        function onFailure(error){
+            console.log(error);
+        }
+        function renderButton(){
+            gapi.signin2.render('my-signin2',{
+                'scope': 'profile email',
+                'width': 280,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'light',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure
+            });
+        }
+    </script>
+    <script>
+        Kakao.init('165e95f2ff52a33799fe89ee3e10ea58');
+        console.log(Kakao.isInitialized());
+    </script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '2715633162061349',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v11.0'
+            });
+            FB.AppEvents.logPageView();
+            // FB.getLoginStatus(function(response) {
+            //     if(response.status === 'connected') {
+            //         document.querySelector('.fb-login-button').value = "Logout";
+            //     } else {
+            //         document.querySelector('.fb-login-button').value = "Login";
+            //     }
+            // })
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
-    <link th:href="@{/css/user/login.css}" rel="stylesheet">
+<!--    <script>-->
+<!--        //기존 로그인 상태를 가져오기 위해 Facebook에 대한 호출-->
+<!--        function statusChangeCallback(res){-->
+<!--            statusChangeCallback(response);-->
+<!--        }-->
+
+<!--        function fnFbCustomLogin(){-->
+<!--            FB.login(function(response) {-->
+<!--                if (response.status === 'connected') {-->
+<!--                    FB.api('/me', 'get', {fields: 'name,email'}, function(r) {-->
+<!--                        console.log(r);-->
+<!--                    })-->
+<!--                } else if (response.status === 'not_authorized') {-->
+<!--                    // 사람은 Facebook에 로그인했지만 앱에는 로그인하지 않았습니다.-->
+<!--                    alert('앱에 로그인해야 이용가능한 기능입니다.');-->
+<!--                } else {-->
+<!--                    // 그 사람은 Facebook에 로그인하지 않았으므로이 앱에 로그인했는지 여부는 확실하지 않습니다.-->
+<!--                    alert('페이스북에 로그인해야 이용가능한 기능입니다.');-->
+<!--                }-->
+<!--            }, {scope: 'public_profile,email'});-->
+<!--        }-->
+
+<!--        window.fbAsyncInit = function() {-->
+<!--            FB.init({-->
+<!--                appId      : '559450068740997', // 내 앱 ID를 입력한다.-->
+<!--                cookie     : true,-->
+<!--                xfbml      : true,-->
+<!--                version    : 'v10.0'-->
+<!--            });-->
+<!--            FB.AppEvents.logPageView();-->
+<!--        };-->
+<!--    </script>-->
 </head>
-
 <body>
+<div id="fb-root"></div>
+
+<script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v11.0&appId=2715633162061349&autoLogAppEvents=1"
+        nonce="ZfOAZ6z4"></script>
 <div layout:fragment="content">
     <div class="container">
-        <main>
-            <div class="py-5 text-center">
-                <h2>로그인</h2>
+        <div class="login-header">
+            <h3 class="login-title">로그인</h3>
+        </div>
+        <div class="info-check">
+            <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                <p>이메일 혹은 패스워드가 정확하지 않습니다.</p>
+                <p><a href="#" th:href="@{/signup}">회원 가입</a></p>
             </div>
-
-            <div class="row justify-content-center">
-                <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                    <p>이메일 혹은 패스워드가 정확하지 않습니다.</p>
-                    <p>
-                        <a href="#" th:href="@{/signup}">회원 가입</a>
-                    </p>
+        </div>
+        <div class="login-form">
+            <form action="" method="post" name="login">
+                <div class="form-group">
+                    <input type="text" name="userEmail" class="form-control"
+                           id="email" placeholder="아이디(이메일)을 입력하세요.">
                 </div>
-            </div>
+                <div class="form-group">
+                    <input type="text" name="userPw" class="form-control"
+                           id="password" placeholder="비밀번호를 입력하세요.">
+                </div>
+                <div class="checks">
+                    <div class="form-check"> <!-- 자동 로그인 -->
+                        <input type="checkbox" class="form-check-input" id="remember-me"
+                               name="remember-me" checked/>
+                        <label class="form-check-label" for="remember-me" aria-describedby="rememberMeHelp">아이디 저장</label>
+                    </div>
+                    <div class="find-info">
+                        <a href="#" class="id-password-check">아이디/비밀번호 찾기</a>
+                    </div>
+                </div>
+                <div class="login-buttons">
+                    <div class="item">
+                        <button type="submit" class="buttons">로그인</button>
+                    </div>
+                    <div class="item">
+                        <button type="submit" class="buttons" th:onclick="@{/signup}">회원가입</button>
+                    </div>
+                    <!--구글 로그인-->
+                    <div class="item">
+                        <div id="my-signin2"></div>
+                    </div>
+                    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+                    <!--페이스북 로그인-->
+                    <div class="item">
 
-            <div class="row g-10 justify-content-center">
-
-                <form class="needs-validation" th:action="@{/login}" method="post" name="loginForm" novalidate>
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" name="username" class="form-control" id="email" placeholder="you@example.com"
-                                   aria-describedby="email_help_text" required>
-                            <div class="invalid-feedback">필수 사항입니다.</div>
-                            <small id="email_help_text" class="form-text text-muted">
-                                가입 시 사용하신 이메일을 입력하세요.
-                            </small>
-                        </div>
+                    </div>
+                    <div class="fb-login-button" data-width="280" data-size="large" data-button-type="login_with"
+                         data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                    <div class="item">
+                        <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                            <img src="img/kakao_login_large_wide.png" width="280px" height="50px"/>
+                        </a>
                     </div>
 
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="password"
-                                   aria-describedby="password_help_text" required>
-                            <div class="invalid-feedback">필수 사항입니다.</div>
-                            <small id="password_help_text" class="form-text text-muted">
-                                패스워드가 기억나지 않으세요? <a href="#" th:href="@{/change-password}">패스워드 변경 링크 보내기</a>
-                                <!-- TODO find-password 구현하기-->
-                            </small>
-                        </div>
-                    </div>
-                    <!----------------- rememberMe ------------------>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe"
-                               name = "remember-me" checked/>
-                        <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">자동 로그인</label>
-                    </div>
-                    <!-- -------------------------------------------->
-                    <hr class="col-12 my-4">
-                    <div class="row g-3 justify-content-center">
-                        <button class="w-50 btn btn-dark btn-lg" type="submit">Login</button>
-                    </div>
-                </form>
-            </div>
-
-        </main>
-        <footer class="my-5 pt-5">
-
-        </footer>
-
-
+                    <script type="text/javascript">
+                        function loginWithKakao() {
+                            Kakao.Auth.login({
+                                success: function(authObj) {
+                                    alert(JSON.stringify(authObj))
+                                },
+                                fail: function(err) {
+                                    alert(JSON.stringify(err))
+                                },
+                            })
+                        }
+                    </script>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
 </body>
-</html>

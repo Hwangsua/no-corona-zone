@@ -1,5 +1,8 @@
 package com.megait.nocoronazone.configuration;
 
+import com.megait.nocoronazone.service.MemberService;
+//import com.megait.nocoronazone.service.SnsMemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,21 +12,36 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+//    private final SnsMemberService snsmemberService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+
+                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**").permitAll()
+
                 .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
                         "/infection", "/density", "/distancing", "/clinic",
-                        "/vaccine", "/news",  "/news/article", "/news/video",
-                        "/timeline_follow", "/timeline_location","/mention/write","/mention_detail",
-                        "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
+                        "/video","/news","/article","/svg","/vaccine",
+                        "/cosns", "/timeline_location","/mention/write","/mention_detail",
+                        "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
 
-                .mvcMatchers("/css/**","/img/**", "/js/**").permitAll()
+
+                .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
 
                 .anyRequest().authenticated()
 
+//                .and()
+//                .oauth2Login()
+//                .loginPage("/login")
+//                .userInfoEndpoint()
+//                .userService(snsmemberService)
+
+//                .and()
                 .and()
                 .formLogin()
                 .loginPage("/login")  // 안해도 기본값이 이미 '/login'임
@@ -33,7 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout") // 안해도 기본값이 이미 '/logout'임임
                 .invalidateHttpSession(true) // 로그아웃했을때 세션을 갱신
-                .logoutSuccessUrl("/"); // 로그아웃하면 메인으로 가게
+                .logoutSuccessUrl("/") // 로그아웃하면 메인으로 가게
+
+
+        ;
     }
 
     @Override
