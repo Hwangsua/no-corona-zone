@@ -19,7 +19,7 @@ public class SafetyIndex {
 
     private String city;
 
-    private double index;
+    private double index; // 밀집
 
-    private int confirmed;
+    private int confirmed; // 확진
 }

@@ -115,6 +115,7 @@ public class MainController {
 
     @PostMapping("/settings")
     public String setUpSubmit(){
+
         return "member/settings";
     }
 
