@@ -4,7 +4,10 @@ import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.repository.SafetyRepository;
+<<<<<<< HEAD
 import com.megait.nocoronazone.repository.SeoulSafetyRepository;
+=======
+>>>>>>> fb8d3dab329b670b8706854a8e6a57097b94e9e4
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -42,9 +45,12 @@ class LocaleCode {
 public class ApiController {
     @Autowired
     SafetyRepository safetyRepository;
-
+<<<<<<< HEAD
+    SeoulSafetyRepository seoul_safetyRepository;
+=======
     @Autowired
     DetailSafetyRepository detailSafetyRepository;
+>>>>>>> fb8d3dab329b670b8706854a8e6a57097b94e9e4
 
     int[] idx2 = new int[18];
     double[] contactDensityPercentile = new double[18];
@@ -86,6 +92,21 @@ public class ApiController {
                     idxCompare++;
                     continue;
                 }
+<<<<<<< HEAD
+                DayToDay[idx - idxCompare].location = obj.get("location").toString();
+                DayToDay[idx - idxCompare].localCnt = obj.get("localCnt").toString();
+                DayToDay[idx - idxCompare].totalConfirmedCnt = obj.get("totalConfirmedCnt").toString();
+                DayToDay[idx - idxCompare].dailyConfirmedCnt = obj.get("dailyConfirmedCnt").toString();
+                jsonInString += DayToDay[idx - idxCompare].location; //현재 지역
+                jsonInString += DayToDay[idx - idxCompare].localCnt; //국내 감염
+                jsonInString += DayToDay[idx - idxCompare].totalConfirmedCnt; //누적 감염
+                jsonInString += DayToDay[idx - idxCompare].dailyConfirmedCnt; //일일 감염
+                safetyRepository.save(SafetyIndex.builder()
+                        .no(idx - idxCompare)
+                        .city(DayToDay[idx - idxCompare].location)
+                        .confirmed(Integer.parseInt(DayToDay[idx - idxCompare].dailyConfirmedCnt))
+                        .build());
+=======
                 DayToDay[idx-idx_compare].location=obj.get("location").toString();
                 DayToDay[idx-idx_compare].localCnt=obj.get("localCnt").toString();
                 DayToDay[idx-idx_compare].totalConfirmedCnt=obj.get("totalConfirmedCnt").toString();
@@ -94,6 +115,7 @@ public class ApiController {
                 jsonInString+=DayToDay[idx-idx_compare].localCnt; //국내 감염
                 jsonInString+=DayToDay[idx-idx_compare].totalConfirmedCnt; //누적 감염
                 jsonInString+=DayToDay[idx-idx_compare].dailyConfirmedCnt; //일일 감염
+>>>>>>> fb8d3dab329b670b8706854a8e6a57097b94e9e4
                 idx++;
             }
 
@@ -177,10 +199,15 @@ public class ApiController {
         String jsonInString = "";
 
         for (int i = 0; i <= 16; i++) {
+<<<<<<< HEAD
+            int cnt = idx2[i];
+            contactDensityPercentile[i] = 0;
+=======
             int cnt= idx2[i];
             int detail=0;
             int cnt2=0;
             contactDensityPercentile[i]=0;
+>>>>>>> fb8d3dab329b670b8706854a8e6a57097b94e9e4
             for (int j = 0; j < idx2[i]; j++) {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
@@ -232,12 +259,17 @@ public class ApiController {
                     System.out.println(e.toString());
                 }
             }
+<<<<<<< HEAD
+            contactDensityPercentile[i] /= cnt;
+            safetyRepository.save(SafetyIndex.builder().no(i + 1).index(contactDensityPercentile[i]).build());
+=======
             contactDensityPercentile[i]/=cnt;
             safetyRepository.save(SafetyIndex.builder()
                     .no(i+1)
                     .city(DayToDay[i+1].location)
                     .confirmed(Integer.parseInt(DayToDay[i+1].dailyConfirmedCnt))
                     .index(contactDensityPercentile[i]).build());
+>>>>>>> fb8d3dab329b670b8706854a8e6a57097b94e9e4
         }
         return jsonInString;
     }

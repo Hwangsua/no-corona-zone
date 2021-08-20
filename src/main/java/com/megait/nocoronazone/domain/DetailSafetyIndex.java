@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 @Entity
 @Getter
 @Setter
@@ -13,13 +12,10 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SafetyIndexInSeoul {
-    @Id @GeneratedValue
-    private int no;
+public class DetailSafetyIndex {
 
+    @Id
     private String district;
 
     private double index;
-
-    private int confirmed;
 }

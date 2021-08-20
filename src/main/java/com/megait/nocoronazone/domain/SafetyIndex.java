@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 public class SafetyIndex {
-    @Id @GeneratedValue
+    @Id
     private int no;
 
     private String city;
