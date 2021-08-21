@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='settings', title='cosns'">
+
+<head>
+  <link th:href="@{/css/member/settings.css}" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container">
+    <form action="" method="post" name="settings">
+      <div class="settings-header">
+        <div class="header-item1">정보수정</div>
+        <div class="header-item2">
+          <button class="btn-style" type="submit">저장</button>
+        </div>
+      </div>
+      <div class="hr"></div>
+      <div class="none" style="visibility: hidden;height: 25px"></div>
+      <div class="content">
+        <div class="content-list">
+          <label for="email" class="content-name">아이디</label>
+          <div class="content-name-value">
+            <input type="text" class="form-control"
+                   id="email" name="user-email" disabled>
+          </div>
+        </div>
+        <div class="content-list">
+          <label for="nickname" class="content-name">닉네임</label>
+          <div class="content-name-value">
+            <input type="text" class="form-control"
+                   id="nickname" name="user-nickname">
+          </div>
+        </div>
+        <div class="content-list">
+          <label for="password" class="content-name">비밀번호</label>
+          <div class="content-name-value">
+            <input type="password" class="form-control"
+                   id="password" name="user-pw">
+          </div>
+        </div>
+        <div class="content-list">
+          <label for="password-ck" class="content-name">비밀번호 확인</label>
+          <div class="content-name-value">
+            <input type="password" class="form-control"
+                   id="password-ck" name="user-pw-ck">
+          </div>
+        </div>
+        <div class="content-list-small">
+          <span class="content-name">프로필 사진</span>
+        </div>
+        <div class="content-list content-img">
+          <div class="content-name">
+            <div class="profile"></div>
+          </div>
+          <div class="content-name-value">
+            <label for="profile-img" class="upload-btn">upload</label>
+            <input type="file" class="form-control"
+                   id="profile-img" name="user-img" style="display: none">
+          </div>
+        </div>
+        <div class="content-list-small">
+          <span class="content-name">백신 이미지</span>
+        </div>
+        <div class="content-list content-img">
+          <div class="content-name">
+            <div class="vaccine"></div>
+          </div>
+          <div class="content-name-value">
+            <label for="vaccine-img" class="upload-btn">upload</label>
+            <input type="file" class="form-control"
+                   id="vaccine-img" name="vaccine-img" style="display: none">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>

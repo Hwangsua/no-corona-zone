@@ -4,8 +4,10 @@ import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.Member;
+import com.megait.nocoronazone.dto.MentionDto;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.MemberService;
+import com.megait.nocoronazone.service.MentionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -27,6 +30,7 @@ public class MainController {
     private final VaccineXml vaccineXml;
 
     private final MemberService memberService;
+    private final MentionService mentionService;
 
     // ================= 메인 ============================
     @RequestMapping("/")
@@ -97,6 +101,12 @@ public class MainController {
         return "member/login";
     }
 
+    @PostMapping("/login")
+    public String login(Member member) {
+        memberService.login(member);
+        return "index";
+    }
+
 
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
@@ -150,20 +160,29 @@ public class MainController {
 
     // ================= co_sns ============================
 
+    //타임라인(팔로우)
     @GetMapping("/timeline_follow")
-    public String timelineFollow(){
+    public String list(Model model) {
+        List<MentionDto> mentionList = mentionService.getMentionlist();
+
+        model.addAttribute("mentionList", mentionList);
         return "co_sns/timeline_follow";
     }
 
+    //타임라인(위치)
     @GetMapping("/timeline_location")
     public String timelineLocation(){
         return "co_sns/timeline_location";
     }
 
-    @GetMapping("/mention/write")
-    public String writeTimeline(){
-        // ajax
-        return "success";
+
+    // 게시글 쓰기
+    @PostMapping("/mention")
+    public String write(MentionDto mentionDto) {
+        System.out.println("넘어오니?");
+        mentionService.savePost(mentionDto);
+
+        return "co_sns/timeline_follow";
     }
 
     @GetMapping("/mention_datail")
