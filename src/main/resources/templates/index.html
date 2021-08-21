@@ -79,8 +79,50 @@ m240 -135 l0 -165 -40 0 -40 0 0 55 0 55 -40 0 c-39 0 -40 1 -40 35 0 34 1 35
         <div class="home-right">
             <div class="news-img"></div>
             <div class="chat"></div>
+            <!-- 채팅 -->
+            <div>
+                <div id="username-page">
+                    <div class="username-page-container">
+                        <h2 class="title">채팅 아이디를 입력해주세요!</h2>
+                        <form id="usernameForm" name="usernameForm">
+                            <div class="form-group">
+                                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="accent username-submit">채팅 시작</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="chat-page" class="hidden">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h2>NCZ 채팅</h2>
+                        </div>
+                        <div class="connecting">
+                            Connecting...
+                        </div>
+                        <ul id="messageArea">
+
+                        </ul>
+                        <form id="messageForm" name="messageForm">
+                            <div class="form-group">
+                                <div class="input-group clearfix">
+                                    <input type="text" id="message" placeholder="메세지를 입력하세요" autocomplete="off" class="form-control"/>
+                                    <button type="submit" class="primary">보내기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- 채팅 끝 -->
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/co_info/chat.js"></script>
 </div>
 </body>
 </html>

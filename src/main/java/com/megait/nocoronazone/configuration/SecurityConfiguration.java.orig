@@ -22,15 +22,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
 
-                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**").permitAll()
+<<<<<<< HEAD
+                .mvcMatchers("/", "/img/**", "/svg/**",
+                        "/login", "/signup", "/nicknameCk","/logout","/settings",
+                        "/infection", "/density", "/distancing", "/clinic",
+                        "/vaccine", "/news",  "/article", "/video",
+                        "/timeline_follow", "/timeline_location","/mention/write","/mention_detail",
+                        "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
+=======
+                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**").permitAll()
 
                 .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
-                        "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}",
-                        "/chat", "/mention").permitAll()
+                        "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
 
+>>>>>>> 567e4ebb67fc0eec72ef4e823295e864ed4af75f
 
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
 

@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline.css}" rel="stylesheet">
+    <script src="/js/co_sns/timeline.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -25,14 +26,20 @@
             <div class="timeline-content">
                 <div class="mention-write">
                     <div class="mention-write-text">
-                        <textarea name="content" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>
+                        <!--                        <textarea name="content" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>-->
+                        <form th:action="@{/mention}" th:method="post">
+                            <textarea name="content" placeholder="무슨일이 있었나요?"></textarea><br>
+                            <input type="text" name="location" placeholder="위치를 입력해주세요">
+                            <input type="submit" value="등록">
+                        </form>
                     </div>
                     <div class="mention-write-submit">
                         <div class="mention-location">
+
                             <div class="location-btn">
                                 <p class="location-btn-text">위치</p>
                             </div>
-<!--                            <input type="text" class="location-text" placeholder="위치 검색">-->
+                            <!--                            <input type="text" class="location-text" placeholder="위치 검색">-->
                         </div>
                         <div class="mention-btn">
                             <p class="mention-btn-text">말하기</p>
@@ -48,7 +55,7 @@
                                     .identicon {height:70px; width:70px;}
                                 </style>
 
-                                <img class="identicon" data-id="hazsoo" />
+                                <img class="identicon" data-id="@{member.email}" />
 
                                 <script src="//code.jquery.com/jquery.min.js"></script>
                                 <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>
@@ -75,13 +82,49 @@
                             <div class="content">가나다라마바다아자차카타파하!!!!!!!!</div>
                         </div>
                     </div>
+                    <a th:href="@{/mention}">글쓰기</a>
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="one wide">번호</th>
+                            <th class="ten wide">글 내용</th>
+                            <th class="two wide">작성자</th>
+                            <th class="three wide">작성일</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        CONTENTS !
+                        <tr th:each="mention : ${mentionList}">
+                            <td>
+                                <span th:text="${mention.no}"></span>
+                            </td>
+                            <td>
+                                <a th:href="@{'/mention_detail/' + ${mention.no}}">
+                                    <span th:text="${mention.content}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${mention.nickname}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${mention.regdate}"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
+
+
+
         <div class="sidebar">
             <div class="search">
 
-                    <input type="textarea" class="search-text" placeholder="검색하기">
+                <input type="textarea" class="search-text" placeholder="검색하기">
 
             </div>
             <div class="trend">
