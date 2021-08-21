@@ -3,6 +3,7 @@ package com.megait.nocoronazone.controller;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
+import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.dto.MentionDto;
 import com.megait.nocoronazone.form.SignUpForm;
@@ -10,6 +11,10 @@ import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MentionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -38,6 +43,22 @@ public class MainController {
 
         return "index";
     }
+
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/topic/public")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+        return chatMessage;
+    }
+
+    @MessageMapping("/chat.addUser")
+    @SendTo("/topic/public")
+    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
+        log.info("User : {}", chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        return chatMessage;
+    }
+
+
 
     // ================= 사용자 ============================
     @ResponseBody
