@@ -1,8 +1,9 @@
 package com.megait.nocoronazone.controller;
 
-import com.megait.nocoronazone.domain.Safety_Index;
+import com.megait.nocoronazone.domain.DetailSafetyIndex;
+import com.megait.nocoronazone.domain.SafetyIndex;
+import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.repository.SafetyRepository;
-import com.megait.nocoronazone.repository.Seoul_SafetyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,7 +41,8 @@ class LocaleCode {
 public class ApiController {
     @Autowired
     SafetyRepository safetyRepository;
-    Seoul_SafetyRepository seoul_safetyRepository;
+    @Autowired
+    DetailSafetyRepository detailSafetyRepository;
 
     int[] idx2=new int[18];
     double[] contactDensityPercentile=new double[18];
@@ -91,11 +93,6 @@ public class ApiController {
                 jsonInString+=DayToDay[idx-idx_compare].localCnt; //국내 감염
                 jsonInString+=DayToDay[idx-idx_compare].totalConfirmedCnt; //누적 감염
                 jsonInString+=DayToDay[idx-idx_compare].dailyConfirmedCnt; //일일 감염
-                safetyRepository.save(Safety_Index.builder()
-                        .no(idx-idx_compare)
-                        .city(DayToDay[idx-idx_compare].location)
-                        .confirmed(Integer.parseInt(DayToDay[idx-idx_compare].dailyConfirmedCnt))
-                        .build());
                 idx++;
             }
 
@@ -130,7 +127,7 @@ public class ApiController {
 
                 String url = "https://apis.openapi.sk.com/safecaster/v1/search/location";
 
-                UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=kr&searchText=" + localeName[i]).build();
+                UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=en&searchText=" + localeName[i]).build();
 
                 //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
                 ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
@@ -179,6 +176,8 @@ public class ApiController {
 
         for (int i = 0; i <= 16; i++) {
             int cnt= idx2[i];
+            int detail=0;
+            int cnt2=0;
             contactDensityPercentile[i]=0;
             for (int j = 0; j < idx2[i]; j++) {
                 try {
@@ -189,7 +188,7 @@ public class ApiController {
 
                     String url = "https://apis.openapi.sk.com/safecaster/v1/search/safetyindex/ldongcd/all/current";
 
-                    UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=kr&ldongCd=" + lcode[i][j].lDongCd).build();
+                    UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=en&ldongCd=" + lcode[i][j].lDongCd).build();
 
                     //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
                     ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
@@ -205,7 +204,19 @@ public class ApiController {
                     ArrayList<Map> dboxoffList = (ArrayList<Map>) resultMap.getBody().get("data");
                     LinkedHashMap mnList = new LinkedHashMap<>();
                     for (Map obj : dboxoffList) {
+                        detail+=Double.parseDouble(obj.get("contactDensityPercentile").toString());
                         contactDensityPercentile[i] += Double.parseDouble(obj.get("contactDensityPercentile").toString()); //법정동\
+                        cnt2++;
+                    }
+                    if(idx2[i]==j+1||!lcode[i][j].siGunGu.equals(lcode[i][j+1].siGunGu))//시군구 바뀌면 save
+                    {
+                        detail/=cnt2;
+                        detailSafetyRepository.save(DetailSafetyIndex.builder()
+                                .district(lcode[i][j].siGunGu.toString())
+                                .index(detail)
+                                .build());
+                        detail=0;
+                        cnt2=0;
                     }
 
 
@@ -221,7 +232,11 @@ public class ApiController {
                 }
             }
             contactDensityPercentile[i]/=cnt;
-            safetyRepository.save(Safety_Index.builder().no(i+1).index(contactDensityPercentile[i]).build());
+            safetyRepository.save(SafetyIndex.builder()
+                    .no(i+1)
+                    .city(DayToDay[i+1].location)
+                    .confirmed(Integer.parseInt(DayToDay[i+1].dailyConfirmedCnt))
+                    .index(contactDensityPercentile[i]).build());
         }
         return jsonInString;
     }

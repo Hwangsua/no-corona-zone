@@ -13,8 +13,8 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Safety_Index {
-    @Id @GeneratedValue
+public class SafetyIndex {
+    @Id
     private int no;
 
     private String city;
