@@ -51,11 +51,11 @@ public class Mention {
     @OneToMany(mappedBy = "mention", cascade = CascadeType.ALL)
     private List<ReMention> reMentions;
 
-//    @Builder
-//    public Mention(){
-//        regdate = LocalDateTime.now();
-//        reMentions = new ArrayList<>();
-//    }
+    @Builder
+    public Mention(){
+        regdate = LocalDateTime.now();
+        reMentions = new ArrayList<>();
+    }
 
     public String getContent() {
         return content;
