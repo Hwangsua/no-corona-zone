@@ -4,7 +4,6 @@ import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.repository.SafetyRepository;
-import com.megait.nocoronazone.repository.SeoulSafetyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +39,7 @@ class LocaleCode {
 
 @RestController
 public class ApiController {
+
     @Autowired
     SafetyRepository safetyRepository;
 
@@ -68,7 +68,7 @@ public class ApiController {
 
             UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=kr").build();
 
-            // 이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
+            //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
             ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
 
             result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
@@ -86,14 +86,14 @@ public class ApiController {
                     idxCompare++;
                     continue;
                 }
-                DayToDay[idx-idx_compare].location=obj.get("location").toString();
-                DayToDay[idx-idx_compare].localCnt=obj.get("localCnt").toString();
-                DayToDay[idx-idx_compare].totalConfirmedCnt=obj.get("totalConfirmedCnt").toString();
-                DayToDay[idx-idx_compare].dailyConfirmedCnt=obj.get("dailyConfirmedCnt").toString();
-                jsonInString+= DayToDay[idx-idx_compare].location; //현재 지역
-                jsonInString+=DayToDay[idx-idx_compare].localCnt; //국내 감염
-                jsonInString+=DayToDay[idx-idx_compare].totalConfirmedCnt; //누적 감염
-                jsonInString+=DayToDay[idx-idx_compare].dailyConfirmedCnt; //일일 감염
+                DayToDay[idx - idxCompare].location = obj.get("location").toString();
+                DayToDay[idx - idxCompare].localCnt = obj.get("localCnt").toString();
+                DayToDay[idx - idxCompare].totalConfirmedCnt = obj.get("totalConfirmedCnt").toString();
+                DayToDay[idx - idxCompare].dailyConfirmedCnt = obj.get("dailyConfirmedCnt").toString();
+                jsonInString += DayToDay[idx - idxCompare].location; //현재 지역
+                jsonInString += DayToDay[idx - idxCompare].localCnt; //국내 감염
+                jsonInString += DayToDay[idx - idxCompare].totalConfirmedCnt; //누적 감염
+                jsonInString += DayToDay[idx - idxCompare].dailyConfirmedCnt; //일일 감염
                 idx++;
             }
 
@@ -170,17 +170,17 @@ public class ApiController {
     }
 
     @GetMapping("/callAPI3")//http://localhost:8080/callAPI3
-    @Scheduled(fixedRate = 1200000)//20분
+    @Scheduled(fixedRate = 1200000) //20분
     public String callAPI3() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
         String jsonInString = "";
 
         for (int i = 0; i <= 16; i++) {
-            int cnt= idx2[i];
-            int detail=0;
-            int cnt2=0;
-            contactDensityPercentile[i]=0;
+            int cnt = idx2[i];
+            int detail = 0;
+            int cnt2 = 0;
+            contactDensityPercentile[i] = 0;
             for (int j = 0; j < idx2[i]; j++) {
                 try {
                     RestTemplate restTemplate = new RestTemplate();
@@ -205,19 +205,19 @@ public class ApiController {
                     ArrayList<Map> dboxoffList = (ArrayList<Map>) resultMap.getBody().get("data");
                     LinkedHashMap mnList = new LinkedHashMap<>();
                     for (Map obj : dboxoffList) {
-                        detail+=Double.parseDouble(obj.get("contactDensityPercentile").toString());
+                        detail += Double.parseDouble(obj.get("contactDensityPercentile").toString());
                         contactDensityPercentile[i] += Double.parseDouble(obj.get("contactDensityPercentile").toString()); //법정동\
                         cnt2++;
                     }
-                    if(idx2[i]==j+1||!lcode[i][j].siGunGu.equals(lcode[i][j+1].siGunGu))//시군구 바뀌면 save
+                    if (idx2[i] == j + 1 || !lcode[i][j].siGunGu.equals(lcode[i][j + 1].siGunGu))//시군구 바뀌면 save
                     {
-                        detail/=cnt2;
+                        detail /= cnt2;
                         detailSafetyRepository.save(DetailSafetyIndex.builder()
                                 .district(lcode[i][j].siGunGu.toString())
                                 .index(detail)
                                 .build());
-                        detail=0;
-                        cnt2=0;
+                        detail = 0;
+                        cnt2 = 0;
                     }
 
 
@@ -232,11 +232,11 @@ public class ApiController {
                     System.out.println(e.toString());
                 }
             }
-            contactDensityPercentile[i]/=cnt;
+            contactDensityPercentile[i] /= cnt;
             safetyRepository.save(SafetyIndex.builder()
-                    .no(i+1)
-                    .city(DayToDay[i+1].location)
-                    .confirmed(Integer.parseInt(DayToDay[i+1].dailyConfirmedCnt))
+                    .no(i + 1)
+                    .city(DayToDay[i + 1].location)
+                    .confirmed(Integer.parseInt(DayToDay[i + 1].dailyConfirmedCnt))
                     .index(contactDensityPercentile[i]).build());
         }
         return jsonInString;

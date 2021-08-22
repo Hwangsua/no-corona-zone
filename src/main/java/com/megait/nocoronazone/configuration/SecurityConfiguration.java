@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
                         "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
 
+                .mvcMatchers("/menu/mobile_menu.html").permitAll()
 
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
 
