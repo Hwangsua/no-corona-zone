@@ -22,13 +22,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
 
-                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**").permitAll()
+                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**").permitAll()
 
                 .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
-                        "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}").permitAll()
+                        "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}",
+                        "/chat", "/mention").permitAll()
 
                 .mvcMatchers("/menu/mobile_menu.html").permitAll()
 

@@ -3,8 +3,11 @@ package com.megait.nocoronazone.controller;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
+<<<<<<< HEAD
 import com.megait.nocoronazone.domain.DetailSafetyIndex;
+=======
 import com.megait.nocoronazone.domain.ChatMessage;
+>>>>>>> 450bd9ad7cada578a216bc3efe4ccb367283625e
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.dto.MentionDto;
 import com.megait.nocoronazone.form.SignUpForm;
