@@ -3,10 +3,14 @@ package com.megait.nocoronazone.controller;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
+import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
-import com.megait.nocoronazone.dto.MentionDto;
+import com.megait.nocoronazone.domain.Mention;
+import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.repository.DetailSafetyRepository;
+import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MentionService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
 
+    private final DetailSafetyService detailSafetyService;
     private final VaccineXml vaccineXml;
 
     private final MemberService memberService;
@@ -39,8 +44,10 @@ public class MainController {
 
     // ================= 메인 ============================
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
 
+
+//        System.out.println(detailSafetyService.getDetailSafetytoAlpha("Chuncheon-si"));
         return "index";
     }
 
@@ -146,6 +153,7 @@ public class MainController {
 
     @PostMapping("/settings")
     public String setUpSubmit(){
+
         return "member/settings";
     }
 
@@ -182,10 +190,12 @@ public class MainController {
 
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
-    public String list(Model model) {
-        List<MentionDto> mentionList = mentionService.getMentionlist();
+    public String timelineFollow(Model model){
+        List<Mention> mentionFormList = mentionService.getMentionlist();
 
-        model.addAttribute("mentionList", mentionList);
+        model.addAttribute("member", memberService);
+        model.addAttribute("mentionFormList", mentionFormList);
+        model.addAttribute("mentionForm", new MentionForm());
         return "co_sns/timeline_follow";
     }
 
@@ -195,17 +205,19 @@ public class MainController {
         return "co_sns/timeline_location";
     }
 
+    @PostMapping("/timeline_follow")
+    public String write(@AuthenticationMember Member member,MentionForm mentionForm){
 
-    // 게시글 쓰기
-    @PostMapping("/mention")
-    public String write(MentionDto mentionDto) {
-        System.out.println("넘어오니?");
-        mentionService.savePost(mentionDto);
+        if (member == null){
+            return "redirect:/";
+        }
 
-        return "co_sns/timeline_follow";
+        mentionService.saveMention(member, mentionForm);
+
+        return "redirect:timeline_follow";
     }
 
-    @GetMapping("/mention_datail")
+    @GetMapping("/mention_detail")
     public String mentionDetail(){
         return "co_sns/mention_detail";
     }
