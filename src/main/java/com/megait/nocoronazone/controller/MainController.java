@@ -3,10 +3,13 @@ package com.megait.nocoronazone.controller;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
+import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.repository.DetailSafetyRepository;
+import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MentionService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
 
+    private final DetailSafetyService detailSafetyService;
     private final VaccineXml vaccineXml;
 
     private final MemberService memberService;
@@ -39,8 +43,10 @@ public class MainController {
 
     // ================= 메인 ============================
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
 
+
+//        System.out.println(detailSafetyService.getDetailSafetytoAlpha("Chuncheon-si"));
         return "index";
     }
 
@@ -146,6 +152,7 @@ public class MainController {
 
     @PostMapping("/settings")
     public String setUpSubmit(){
+
         return "member/settings";
     }
 

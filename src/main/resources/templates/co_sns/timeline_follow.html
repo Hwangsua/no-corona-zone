@@ -8,16 +8,16 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline.css}" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣기 &libraries=services"></script>
-
+    <script src="/js/co_sns/timeline.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="container">
+    <div class="container-timeline">
         <div class="timeline">
             <div class="timeline-header">
                 <div class="timeline-collect">
-                    <a href="#" class="follow">팔로우 타임라인</a>
-                    <a href="#" class="location">위치기반 타임라인</a>
+                    <a th:href="@{timeline_follow}" class="follow">타임라인</a>
+                    <a th:href="@{timeline_location}" class="location">위치검색</a>
                 </div>
                 <div class="mention-btn">
                     <p class="mention-btn-text">말하기</p>
@@ -93,9 +93,7 @@
         </div>
         <div class="sidebar">
             <div class="search">
-
-                <input type="textarea" class="search-text" placeholder="검색하기">
-
+                <input type="textarea" class="search-text" placeholder="멘션 검색하기">
             </div>
             <div class="trend">
                 <div class="trend-box">

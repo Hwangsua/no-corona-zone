@@ -66,7 +66,7 @@
                         </tr>
                         <tr>
                             <th id="vaccine-chart-date-1"></th>
-                            <td style="--start: 0.6; --size: 1.0"> <span class="data"></span> </td>
+                            <td> <span class="data"></span> </td>
                         </tr>
                         </tbody>
 
@@ -125,6 +125,7 @@
                 day2 = (day2 - 2) < 10 ? '0' + day2.toString() - 8 : day2.toString() - 8;
                 var month2 = date0.getMonth() + 1;
                 month2 = month2 < 10 ? '0' + month2.toString() : month2.toString();
+                var weekTotalFirstCnt = 0;
                 console.log(date0.getFullYear().toString() + '-' + month2 + '-' + day2);
                 $.ajax({
                     url: "https://api.odcloud.kr/api/15077756/v1/vaccine-stat",
@@ -134,20 +135,20 @@
                         "page": 1,
                         "perPage": 7,
                         "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
-                        "cond[sido::EQ]": "경기도",
+                        "cond[sido::EQ]": "전국",
                         "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                     },
                     success: function (data) {
                         console.log(data);
                         $.each(data.data, function (i, data){
                             firstCnt = parseInt(data.firstCnt);
-                            weekTotalFirstCnt = 0;
-                            weekTotalFirstCnt = weekTotalFirstCnt + firstCnt;
+                            secondCnt = parseInt(data.secondCnt);
+                            weekTotalFirstCnt = weekTotalFirstCnt + firstCnt + secondCnt;
                             console.log(firstCnt);
+                            console.log(secondCnt);
                             console.log(weekTotalFirstCnt);
                         });
-                        // console.log(firstCnt);
-                        // console.log(weekTotalFirstCnt);
+                        $('<style>').text("#vaccine-chart-date-1{--start: 0.6; --size: 0.9}").appendTo(document.getElementById('head'));
                     }
                 })
 
