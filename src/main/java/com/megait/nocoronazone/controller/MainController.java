@@ -5,7 +5,7 @@ import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
-import com.megait.nocoronazone.dto.MentionDto;
+import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MentionService;
@@ -182,10 +182,8 @@ public class MainController {
 
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
-    public String list(Model model) {
-        List<MentionDto> mentionList = mentionService.getMentionlist();
-
-        model.addAttribute("mentionList", mentionList);
+    public String timelineFollow(Model model){
+        model.addAttribute("mentionForm", new MentionForm());
         return "co_sns/timeline_follow";
     }
 
@@ -195,17 +193,19 @@ public class MainController {
         return "co_sns/timeline_location";
     }
 
-
-    // 게시글 쓰기
     @PostMapping("/mention")
-    public String write(MentionDto mentionDto) {
-        System.out.println("넘어오니?");
-        mentionService.savePost(mentionDto);
+    public String write(@AuthenticationMember Member member,MentionForm mentionForm){
 
-        return "co_sns/timeline_follow";
+        if (member == null){
+            return "redirect:/";
+        }
+
+        mentionService.saveMention(member, mentionForm);
+
+        return "redirect:timeline_follow";
     }
 
-    @GetMapping("/mention_datail")
+    @GetMapping("/mention_detail")
     public String mentionDetail(){
         return "co_sns/mention_detail";
     }
