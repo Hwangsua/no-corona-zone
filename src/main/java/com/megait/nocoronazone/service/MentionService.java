@@ -39,17 +39,23 @@ public class MentionService {
     }
 
 //    @Transactional
-//    public List<MentionDto> getMentionlist(Integer pageNum) {
-//        Page<Mention> page = mentionRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
+//    public List<Mention> getMentionlist() {
 //
-//        List<Mention> mentionEntities = page.getContent();
-//        List<MentionDto> mentionDtoList = new ArrayList<>();
+//        List<Mention> mentionEntities = mentionRepository.findAll();
+//        List<Mention> mentionList = new ArrayList<>();
 //
-//        for (Mention mention : mentionEntities) {
-//            mentionDtoList.add(this.convertEntityToDto(mention));
+//        for (Mention mentions : mentionEntities) {
+//            Mention mention = Mention.builder()
+//                    .content(mentions.getContent())
+//                    .regdate(mentions.getRegdate())
+//                    .member(mentions.getMember())
+//                    .build();
+//
+//
+//            mentionList.add(mention);
 //        }
 //
-//        return mentionDtoList;
+//        return mentionList;
 //    }
 //
 //    @Transactional
