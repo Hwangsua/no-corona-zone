@@ -11,6 +11,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -42,6 +43,11 @@ public class NoCoronaZoneApplication {
 		return tomcat;
 	}
 
+//	@Bean
+//	public PasswordEncoder passwordEncoder(){
+//		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//	}
+
 	private Connector createStandardConnector() {
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		connector.setScheme("http");
@@ -50,8 +56,13 @@ public class NoCoronaZoneApplication {
 		connector.setRedirectPort(8443);
 		return connector;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> c043c797975fb0c69a019643ff206aa3c3aa37fd
 	@Bean
 	public PasswordEncoder passwordEncoder(){
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder;
 	}
 }

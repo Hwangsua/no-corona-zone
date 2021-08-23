@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +16,19 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class Mention {
+
     @Id @GeneratedValue
     private Long no;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Member user;
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id")
+    private Member member;
 
     @Length
-    @Column(nullable = false)
+    @NotNull
     private String content;
 
-    @Column(nullable = false)
+    @NotNull
     private LocalDateTime regdate;
 
     private Double latitude;

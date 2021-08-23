@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @ToString
 public class ReMention {
     @Id @GeneratedValue
-    private Long id;
+    private Long no;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member user;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Mention mention;

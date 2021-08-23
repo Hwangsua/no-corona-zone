@@ -8,7 +8,11 @@ import com.megait.nocoronazone.repository.MemberRepository;
 import com.megait.nocoronazone.service.EmailService;
 import com.megait.nocoronazone.service.MemberUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +27,7 @@ import java.util.Optional;
 @Service
 @Validated
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
@@ -43,7 +48,7 @@ public class MemberService implements UserDetailsService {
                 .authType(AuthType.GENERAL)
                 .build();
 
-        Member newMember = memberRepository.save(member);
+        memberRepository.save(member);
 
     }
 
@@ -64,12 +69,27 @@ public class MemberService implements UserDetailsService {
         return newMember;
     }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<Member> optional = memberRepository.findByEmail(username);
+//        if (optional.isEmpty()){
+//            throw new UsernameNotFoundException(username);
+//        }
+//
+//        return new MemberUser(optional.get());
+//    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> optional = memberRepository.findByEmail(username);
-        if (optional.isEmpty()){
+        System.out.println(username);
+        if(optional.isEmpty()){
+            log.info("없는 이메일로 로그인 시도.");
             throw new UsernameNotFoundException(username);
         }
+
+        log.info("있는 이메일로 로그인 시도");
+        System.out.println(optional);
 
         return new MemberUser(optional.get());
     }
@@ -98,5 +118,19 @@ public class MemberService implements UserDetailsService {
         }
 
         member.completeSignup();
+    }
+
+    public void login(Member member) {
+        MemberUser memberUser = new MemberUser(member);
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(
+                        memberUser,
+                        memberUser.getMember().getPassword(),
+                        memberUser.getAuthorities()
+                );
+
+        SecurityContext ctx = SecurityContextHolder.getContext();
+        ctx.setAuthentication(token);
     }
 }

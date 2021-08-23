@@ -3,38 +3,73 @@ package com.megait.nocoronazone.controller;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
+import com.megait.nocoronazone.domain.DetailSafetyIndex;
+import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
+import com.megait.nocoronazone.domain.Mention;
+import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MemberUser;
-
+import com.megait.nocoronazone.repository.DetailSafetyRepository;
+import com.megait.nocoronazone.service.DetailSafetyService;
+import com.megait.nocoronazone.service.MentionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class MainController {
 
+    private final DetailSafetyService detailSafetyService;
     private final VaccineXml vaccineXml;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final HttpSession httpSession;
     private final MemberService memberService;
+    private final MentionService mentionService;
 
     // ================= 메인 ============================
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
 
+
+//        System.out.println(detailSafetyService.getDetailSafetytoAlpha("Chuncheon-si"));
         return "index";
     }
+
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/topic/public")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+        return chatMessage;
+    }
+
+    @MessageMapping("/chat.addUser")
+    @SendTo("/topic/public")
+    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
+        log.info("User : {}", chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        return chatMessage;
+    }
+
+
 
     // ================= 사용자 ============================
     @ResponseBody
@@ -80,7 +115,7 @@ public class MainController {
     public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
 
         if(errors.hasErrors()){
-            System.out.println("에러발생");
+            System.out.println(errors);
             return "member/signup";
         }
 
@@ -98,20 +133,15 @@ public class MainController {
     }
 
     @PostMapping("/login")
-    public String loginSubmit(Model model, @AuthenticationMember MemberUser user){
-        log.info("user : {}", user);
+    public String login(Member member) {
+        memberService.login(member);
         return "index";
     }
-    //    @PostMapping("/login")
-//    public String loginSubmit(@Valid LoginForm loginForm, Errors errors){
-//        //TODO - 0808 LoginForm 구현하기
-//        if(errors.hasErrors()){
-//            return "/member/login";
-//        }
-//        return "redirect:/";
-//    }
-    @GetMapping("/logout")
-    public String logout(){
+
+
+    @GetMapping(value = "/logout")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/";
     }
 
@@ -127,6 +157,7 @@ public class MainController {
 
     @PostMapping("/settings")
     public String setUpSubmit(){
+
         return "member/settings";
     }
 
@@ -159,23 +190,36 @@ public class MainController {
 
     // ================= co_sns ============================
 
+    //타임라인(팔로우)
     @GetMapping("/timeline_follow")
-    public String timelineFollow(){
+    public String timelineFollow(Model model){
+        List<Mention> mentionFormList = mentionService.getMentionlist();
+
+        model.addAttribute("member", memberService);
+        model.addAttribute("mentionFormList", mentionFormList);
+        model.addAttribute("mentionForm", new MentionForm());
         return "co_sns/timeline_follow";
     }
 
+    //타임라인(위치)
     @GetMapping("/timeline_location")
     public String timelineLocation(){
         return "co_sns/timeline_location";
     }
 
-    @GetMapping("/mention/write")
-    public String writeTimeline(){
-        // ajax
-        return "success";
+    @PostMapping("/timeline_follow")
+    public String write(@AuthenticationMember Member member,MentionForm mentionForm){
+
+        if (member == null){
+            return "redirect:/";
+        }
+
+        mentionService.saveMention(member, mentionForm);
+
+        return "redirect:timeline_follow";
     }
 
-    @GetMapping("/mention_datail")
+    @GetMapping("/mention_detail")
     public String mentionDetail(){
         return "co_sns/mention_detail";
     }

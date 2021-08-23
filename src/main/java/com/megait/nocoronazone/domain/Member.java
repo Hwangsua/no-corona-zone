@@ -41,6 +41,7 @@ public class Member {
 
     private String emailCheckToken;
 
+    @Column(nullable = false)
     private boolean emailVerified;
 
     @Enumerated(EnumType.STRING)
@@ -56,6 +57,7 @@ public class Member {
     public boolean isValidToken(String token) {
         return emailCheckToken.equals(token);
     }
+
     public void completeSignup(){
         emailVerified = true;
     }

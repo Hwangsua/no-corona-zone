@@ -5,6 +5,8 @@
       layout:decorate="~{layout/common_layout}"  th:with="activeTab='signup', title='Sign Up'">
 
 <head>
+    <script th:src="@{/js/member/form-validation.js}"></script>
+    <script th:src="@{/js/member/daum-address.js}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link th:href="@{/css/member/signup.css}" rel="stylesheet">
     <script th:inline="javascript">

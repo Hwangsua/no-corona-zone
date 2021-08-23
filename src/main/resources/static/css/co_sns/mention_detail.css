@@ -1,0 +1,292 @@
+.container-mention {
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 60px;
+}
+.mention-detail {
+    width: 90%;
+}
+.mention-header {
+    display: flex;
+    justify-content: flex-start;
+    height: 55px;
+    position: sticky;
+    top: 0px;
+    background: white;
+    font-size: 5vw;
+}
+.identicon {
+    height: 40px;
+    width: 40px;
+}
+.mention-header .back-btn {
+    margin-top: 15px;
+}
+.mention-header .mention {
+    font-weight: bold;
+    margin: auto 10px;
+}
+.hr {
+    border: 1px solid lightgrey;
+    border-radius: 0.5px;
+    position: sticky;
+    top: 55px;
+}
+.mention-and-remention {
+    display: flex;
+    flex-direction: column;
+}
+.mention-list {
+    margin-top: 10px;
+}
+.mention-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: auto;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
+.mention-top {
+    display: flex;
+    justify-content: flex-start;
+    height: 40px;
+    width: 40px;
+}
+.mention-top .nickname {
+    height: 20px;
+    width: auto;
+}
+.mention-top .vaccine {
+    height: 20px;
+    width: auto;
+}
+.mention-bottom {
+    height: auto;
+    width: 100%;
+    margin-top: 10px;
+}
+.mention-bottom .content {
+    height: 100%;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+.mention-info {
+    height: auto;
+    display: flex;
+}
+.mention-info .dot {
+    margin: 0 5px;
+}
+.remention-content {
+    display: flex;
+    height: auto;
+    padding: 5px;
+    min-height: 50px;
+    overflow: hidden;
+    border-bottom: 1px solid lightgray;
+}
+.profile-img {
+    margin: auto 0;
+}
+.remention-write{
+    height: auto;
+    width: 500px;
+}
+.remention-write textarea {
+    height: 90%;
+    width: 97%;
+    resize: none;
+    border: none;
+    margin: 10px;
+    outline: none;
+}
+.remention-write-submit {
+    margin: auto;
+}
+.remention-btn {
+    height: 35px;
+    width: 70px;
+    padding-top: 9.5px;
+    background-color: lightgrey;
+    border-radius: 10px;
+}
+.remention-btn-text {
+    margin-left: 15px;
+    font-weight: bold;
+}
+.sidebar {
+    display: none;
+}
+/*********************************************************************/
+@media (min-width: 940px) {
+    .container-mention {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-top: 0;
+    }
+    .mention-detail {
+        width: 600px;
+    }
+    .mention-header {
+        display: flex;
+        justify-content: flex-start;
+        height: 55px;
+        position: sticky;
+        top: 0px;
+        background: white;
+        font-size: 1.5rem;
+    }
+    .identicon {
+        height: 40px;
+        width: 40px;
+    }
+    .mention-header .back-btn {
+        margin-top: 15px;
+    }
+    .mention-header .mention {
+        font-weight: bold;
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+    .hr {
+        border: 1px solid lightgrey;
+        border-radius: 0.5px;
+        position: sticky;
+        top: 55px;
+    }
+    .mention-and-remention {
+        display: flex;
+        flex-direction: column;
+    }
+    .mention-list {
+        margin-top: 10px;
+    }
+    .mention-content {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        height: auto;
+        padding: 10px;
+        border-bottom: 1px solid lightgray;
+    }
+    .mention-top {
+        display: flex;
+        justify-content: flex-start;
+        height: 40px;
+        width: 40px;
+    }
+    .mention-top .nickname-box {
+        height: 20px;
+        width: auto;
+        margin: auto 0;
+        text-align: center;
+    }
+    .mention-top .vaccine {
+        height: 20px;
+        width: auto;
+        margin: auto 0;
+    }
+    .mention-bottom {
+        height: auto;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .mention-bottom .content {
+        height: 100%;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+    .mention-info {
+        height: auto;
+        display: flex;
+    }
+    .mention-info .dot {
+        margin: 0 5px;
+    }
+    .remention-content {
+        display: flex;
+        height: auto;
+        padding-top: 5px;
+        padding-left: 10px;
+        min-height: 50px;
+        overflow: hidden;
+        border-bottom: 1px solid lightgray;
+    }
+    .profile-img {
+        margin: auto 0;
+    }
+    .remention-write{
+        height: inherit;
+        width: 500px;
+    }
+    .remention-write textarea {
+        height: inherit;
+        width: 97%;
+        resize: none;
+        border: none;
+        margin: 10px;
+        outline: none;
+        overflow: visible;
+    }
+    .remention-write-submit {
+        margin: auto;
+    }
+    .remention-btn {
+        height: 35px;
+        width: 70px;
+        padding-top: 9.5px;
+        background-color: lightgrey;
+        border-radius: 10px;
+    }
+    .remention-btn-text {
+        margin-left: 15px;
+        font-weight: bold;
+    }
+    .sidebar {
+        display: block;
+        height: auto;
+        width: 250px;
+        margin-top: 15px;
+        position: sticky;
+        top: 15px;
+    }
+    .search {
+        height: 40px;
+        margin: 0 20px;
+        padding-top: 8px;
+        background-color: rgb(245, 245, 245);
+        border: 1px solid rgb(245, 245, 245);
+        border-radius: 10px;
+        text-align: center;
+        align-items: center;
+    }
+    .search-text {
+        background-color: rgb(245, 245, 245);
+        border: none;
+        outline: none;
+    }
+    .trend-box {
+        height: 300px;
+        margin: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(245, 245, 245);
+        border-radius: 10px;
+    }
+    .trend-head {
+        margin: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .trend-rank {
+        flex-grow: 1;
+        margin-top: 15px;
+        margin-left: 20px;
+        font-size: 1rem;
+    }
+}
