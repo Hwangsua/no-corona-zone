@@ -5,15 +5,18 @@ import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
+import com.megait.nocoronazone.service.MemberUser;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -22,7 +25,8 @@ import javax.validation.Valid;
 public class MainController {
 
     private final VaccineXml vaccineXml;
-
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final HttpSession httpSession;
     private final MemberService memberService;
 
     // ================= 메인 ============================
@@ -82,18 +86,23 @@ public class MainController {
 
         Member member = memberService.processNewUser(signUpForm);
 
+
         //memberService.login(member);
 
         return "/member/email_check";
     }
-
 
     @GetMapping("/login")
     public String login() {
         return "member/login";
     }
 
-//    @PostMapping("/login")
+    @PostMapping("/login")
+    public String loginSubmit(Model model, @AuthenticationMember MemberUser user){
+        log.info("user : {}", user);
+        return "index";
+    }
+    //    @PostMapping("/login")
 //    public String loginSubmit(@Valid LoginForm loginForm, Errors errors){
 //        //TODO - 0808 LoginForm 구현하기
 //        if(errors.hasErrors()){
@@ -101,7 +110,6 @@ public class MainController {
 //        }
 //        return "redirect:/";
 //    }
-
     @GetMapping("/logout")
     public String logout(){
         return "redirect:/";
@@ -121,9 +129,6 @@ public class MainController {
     public String setUpSubmit(){
         return "member/settings";
     }
-
-    @GetMapping("/settings")
-    public String settings() { return "member/settings"; }
 
     // ================= co_info ============================
 
@@ -149,19 +154,6 @@ public class MainController {
 
     @GetMapping("/article")
     public String article() {
-        return "co_info/article";
-    }
-    public String news() {
-        return "co_info/main";
-    }
-
-    @GetMapping("/news/article")
-    public String article() {
-        return "co_info/article";
-    }
-
-    @GetMapping("/news/video")
-    public String video() {
         return "co_info/article";
     }
 

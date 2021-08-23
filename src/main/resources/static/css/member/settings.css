@@ -91,6 +91,9 @@
     margin-left: 90px;
 }
 @media (min-width: 940px) {
+    .container{
+        margin-top: 50px;
+    }
     .content-list{
         justify-content: center;
     }

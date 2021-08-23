@@ -4,108 +4,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='login', title='Login'">
 <head>
-    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
-    <!--    <script src="https: //ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
-    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
-    <!--    <meta name="google-signin-scope" content="profile email">-->
-    <meta name="google-signin-client_id" content="725302808101-hqpnierbqp4r7eab210nqb4rskrods2f.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <link th:href="@{/css/member/login.css}" rel="stylesheet">
-    <script>
-        function onSuccess(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
-        }
-        function onFailure(error){
-            console.log(error);
-        }
-        function renderButton(){
-            gapi.signin2.render('my-signin2',{
-                'scope': 'profile email',
-                'width': 280,
-                'height': 50,
-                'longtitle': true,
-                'theme': 'light',
-                'onsuccess': onSuccess,
-                'onfailure': onFailure
-            });
-        }
-    </script>
-    <script>
-        Kakao.init('165e95f2ff52a33799fe89ee3e10ea58');
-        console.log(Kakao.isInitialized());
-    </script>
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '2715633162061349',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v11.0'
-            });
-            FB.AppEvents.logPageView();
-            // FB.getLoginStatus(function(response) {
-            //     if(response.status === 'connected') {
-            //         document.querySelector('.fb-login-button').value = "Logout";
-            //     } else {
-            //         document.querySelector('.fb-login-button').value = "Login";
-            //     }
-            // })
-        };
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
-<!--    <script>-->
-<!--        //기존 로그인 상태를 가져오기 위해 Facebook에 대한 호출-->
-<!--        function statusChangeCallback(res){-->
-<!--            statusChangeCallback(response);-->
-<!--        }-->
-
-<!--        function fnFbCustomLogin(){-->
-<!--            FB.login(function(response) {-->
-<!--                if (response.status === 'connected') {-->
-<!--                    FB.api('/me', 'get', {fields: 'name,email'}, function(r) {-->
-<!--                        console.log(r);-->
-<!--                    })-->
-<!--                } else if (response.status === 'not_authorized') {-->
-<!--                    // 사람은 Facebook에 로그인했지만 앱에는 로그인하지 않았습니다.-->
-<!--                    alert('앱에 로그인해야 이용가능한 기능입니다.');-->
-<!--                } else {-->
-<!--                    // 그 사람은 Facebook에 로그인하지 않았으므로이 앱에 로그인했는지 여부는 확실하지 않습니다.-->
-<!--                    alert('페이스북에 로그인해야 이용가능한 기능입니다.');-->
-<!--                }-->
-<!--            }, {scope: 'public_profile,email'});-->
-<!--        }-->
-
-<!--        window.fbAsyncInit = function() {-->
-<!--            FB.init({-->
-<!--                appId      : '559450068740997', // 내 앱 ID를 입력한다.-->
-<!--                cookie     : true,-->
-<!--                xfbml      : true,-->
-<!--                version    : 'v10.0'-->
-<!--            });-->
-<!--            FB.AppEvents.logPageView();-->
-<!--        };-->
-<!--    </script>-->
 </head>
 <body>
 <div id="fb-root"></div>
-
-<script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v11.0&appId=2715633162061349&autoLogAppEvents=1"
-        nonce="ZfOAZ6z4"></script>
 <div layout:fragment="content">
     <div class="container">
         <div class="login-header">
@@ -142,37 +44,17 @@
                         <button type="submit" class="buttons">로그인</button>
                     </div>
                     <div class="item">
-                        <button type="submit" class="buttons" th:onclick="@{/signup}">회원가입</button>
+                        <button type="button" class="buttons">회원가입</button>
                     </div>
                     <!--구글 로그인-->
                     <div class="item">
-                        <div id="my-signin2"></div>
+                        <a href="/oauth2/authorization/google" role="button"><img class="google-btn" th:src="@{img/google.png}"></a>
                     </div>
-                    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
                     <!--페이스북 로그인-->
                     <div class="item">
-
-                    </div>
-                    <div class="fb-login-button" data-width="280" data-size="large" data-button-type="login_with"
-                         data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
-                    <div class="item">
-                        <a id="custom-login-btn" href="javascript:loginWithKakao()">
-                            <img src="img/kakao_login_large_wide.png" width="280px" height="50px"/>
-                        </a>
+                        <a href="/oauth2/authorization/facebook" role="button"><img class="facebook-btn" th:src="@{img/facebook_login.png}"></a>
                     </div>
 
-                    <script type="text/javascript">
-                        function loginWithKakao() {
-                            Kakao.Auth.login({
-                                success: function(authObj) {
-                                    alert(JSON.stringify(authObj))
-                                },
-                                fail: function(err) {
-                                    alert(JSON.stringify(err))
-                                },
-                            })
-                        }
-                    </script>
                 </div>
             </form>
         </div>

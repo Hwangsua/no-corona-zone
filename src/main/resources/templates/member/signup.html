@@ -5,16 +5,8 @@
       layout:decorate="~{layout/common_layout}"  th:with="activeTab='signup', title='Sign Up'">
 
 <head>
-    <script th:src="@{/js/user/form-validation.js}"></script>
-    <script th:src="@{/js/user/daum-address.js}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <link th:href="@{/css/user/signup.css}" rel="stylesheet">
-</head>
-<body>
-    <div layout:fragment="content">
-        <div class="container">
-
-
+    <link th:href="@{/css/member/signup.css}" rel="stylesheet">
     <script th:inline="javascript">
         $(document).ready(function (){
             let nicknameRegexCheck = true;
@@ -88,15 +80,16 @@
                     alert('닉네임 중복 확인해주세요.');
                     return false;
                 }
+                if(checkBox == false){
+                    alert('약관을 읽어보시고 동의해주시기 바랍니다.');
+                    return false;
+                }
 
                 $('form[name=signup]').submit();
 
             });
-
-
         });
     </script>
-
 </head>
 <body>
 <div layout:fragment="content">
@@ -104,18 +97,18 @@
         <div class="signup-header">
             <h3 class="signup-title">회원가입</h3>
         </div>
-        <div class="signup-button">
-            <div class="item">
-                <button type="submit" class="kakao-signup">카카오계정으로 가입</button>
-            </div>
-            <div class="item">
-                <button type="submit" class="naver-signup">네이버로 가입</button>
-            </div>
-            <div id="naverIdLogin"></div>
+        <div class = "check_font" id="nicknameCheck"></div>
+        <!--        <div class="signup-button">-->
+        <div class="item">
+            <a href="/oauth2/authorization/google" role="button"><img class="google-btn" th:src="@{img/google.png}"></a>
         </div>
-        <div class="none"></div>
+        <div class="item">
+            <a href="/oauth2/authorization/facebook" role="button"><img class="facebook-btn" th:src="@{img/facebook_continue.png}"></a>
+        </div>
+        <!--        </div>-->
+        <!--        <div class="none"></div>-->
         <div class="signup-form">
-            <form action="" method="post" name="signup" th:object="${signUpForm}" th:action="@{signup}">
+            <form class="signup-submit-form" action="" method="post" name="signup" th:object="${signUpForm}" th:action="@{signup}">
                 <div class="form-group">
                     <input type="text" th:field="*{email}" name="userEmail" class="form-control" id="email" placeholder="아이디(이메일)을 입력하세요.">
                 </div>
@@ -128,9 +121,9 @@
                 <div class="form-group">
                     <input type="text" th:field="*{nickname}" name="userNickname" class="form-control" id="nickname" placeholder="닉네임을 입력하세요.">
                     <button type="button" id ="nicknameDuplicateCheck">중복확인</button>
-                    <div class = "check_font" id="nicknameCheck"></div>
                 </div>
-                <div class="none" style="visibility: hidden;height: 10px"></div>
+
+                <div class="none" style="visibility: hidden;height: 30px"></div>
                 <div class="privacy">이용약관</div>
                 <div class="privacy-contents">
                     < No-Corona-Zone >('http://127.0.0.1/8080'이하 'No-Corona-Zone')은(는) 「개인정보 보호법」 제30조에 따라
@@ -165,13 +158,12 @@
                     ⑥ No-Corona-Zone은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.
                 </div>
                 <div class="signup-form2">
-                    <div class="agree-box"> <input type="checkbox" th:field="*{agreeTermsOfService}" th:value="true">[필수] 약관에 동의합니다.</div>
+                    <div class="agree-box"> <input id="agreechk" type="checkbox" th:field="*{agreeTermsOfService}" th:value="true">[필수] 약관에 동의합니다.</div>
                     <!--<button type="submit" class="signup-complete">회원가입 완료</button>-->
                     <button type="button" class="signup-complete">회원가입 완료</button>
-
                 </div>
-
             </form>
         </div>
     </div>
+</div>
 </body>
