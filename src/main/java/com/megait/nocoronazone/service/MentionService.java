@@ -38,6 +38,29 @@ public class MentionService {
         mentionRepository.save(mention);
     }
 
+
+    @Transactional
+    public List<Mention> getMentionlist() {
+
+        List<Mention> mentionEntities = mentionRepository.findAll();
+        List<Mention> mentionFormList = new ArrayList<>();
+
+        for (Mention mentions : mentionEntities) {
+            Mention mention = Mention.builder()
+                    .member(mentions.getMember())
+                    .content(mentions.getContent())
+                    .location(mentions.getLocation())
+                    .build();
+
+            mentionFormList.add(mention);
+        }
+        System.out.println("for문이 돌아갈까?");
+//        System.out.println(mentionEntities);
+        System.out.println(mentionFormList);
+
+        return mentionFormList;
+    }
+
 //    @Transactional
 //    public List<Mention> getMentionlist() {
 //

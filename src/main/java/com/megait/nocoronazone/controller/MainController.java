@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
+import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
@@ -190,6 +191,10 @@ public class MainController {
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
     public String timelineFollow(Model model){
+        List<Mention> mentionFormList = mentionService.getMentionlist();
+
+        model.addAttribute("member", memberService);
+        model.addAttribute("mentionFormList", mentionFormList);
         model.addAttribute("mentionForm", new MentionForm());
         return "co_sns/timeline_follow";
     }
@@ -200,7 +205,7 @@ public class MainController {
         return "co_sns/timeline_location";
     }
 
-    @PostMapping("/mention")
+    @PostMapping("/timeline_follow")
     public String write(@AuthenticationMember Member member,MentionForm mentionForm){
 
         if (member == null){
