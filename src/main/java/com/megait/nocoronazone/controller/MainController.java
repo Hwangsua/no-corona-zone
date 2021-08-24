@@ -10,9 +10,11 @@ import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.service.CustomOAuth2UserService;
+import com.megait.nocoronazone.service.MemberService;
+import com.megait.nocoronazone.service.MemberUser;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.service.DetailSafetyService;
-import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MentionService;
 import com.megait.nocoronazone.service.ReMentionService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -40,7 +43,8 @@ public class MainController {
 
     private final DetailSafetyService detailSafetyService;
     private final VaccineXml vaccineXml;
-
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final HttpSession httpSession;
     private final MemberService memberService;
     private final MentionService mentionService;
     private final ReMentionService reMentionService;
@@ -120,11 +124,11 @@ public class MainController {
 
         Member member = memberService.processNewUser(signUpForm);
 
+
         //memberService.login(member);
 
         return "/member/email_check";
     }
-
 
     @GetMapping("/login")
     public String login() {
@@ -186,8 +190,6 @@ public class MainController {
     public String article() {
         return "co_info/article";
     }
-
-
 
     // ================= co_sns ============================
 

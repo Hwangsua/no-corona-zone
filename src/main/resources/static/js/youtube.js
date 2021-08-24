@@ -9,7 +9,7 @@ $.ajax({
     data:{part:'snippet',key:apikey,q:keyword,maxResults,type:'video'},
     contentType : "application/json",
     success : function(data){
-        //console.log(data);
+        console.log(data);
         $.each(data.items, function(i, item){
             url = "https://www.youtube.com/watch?v="+item.id.videoId;
             thumbnail = item.snippet.thumbnails.medium.url;

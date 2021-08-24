@@ -1,7 +1,6 @@
 package com.megait.nocoronazone.configuration;
 
-import com.megait.nocoronazone.service.MemberService;
-//import com.megait.nocoronazone.service.SnsMemberService;
+import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    private final SnsMemberService snsmemberService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,11 +36,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
 
-//                .and()
-//                .oauth2Login()
-//                .loginPage("/login")
-//                .userInfoEndpoint()
-//                .userService(snsmemberService)
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
 
 //                .and()
                 .and()
@@ -54,10 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout") // 안해도 기본값이 이미 '/logout'임임
                 .invalidateHttpSession(true) // 로그아웃했을때 세션을 갱신
                 .logoutSuccessUrl("/") // 로그아웃하면 메인으로 가게
-
-
         ;
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {
