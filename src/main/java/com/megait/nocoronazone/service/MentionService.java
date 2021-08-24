@@ -47,6 +47,7 @@ public class MentionService {
 
         for (Mention mentions : mentionEntities) {
             Mention mention = Mention.builder()
+                    .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
                     .location(mentions.getLocation())
@@ -59,6 +60,16 @@ public class MentionService {
         System.out.println(mentionFormList);
 
         return mentionFormList;
+    }
+
+    public Mention getMention(Long no) {
+        Optional<Mention> optionalMention = mentionRepository.findById(no);
+
+        if(optionalMention.isEmpty()){
+            throw new IllegalArgumentException("wrong mention no");
+        }
+
+        return optionalMention.get();
     }
 
 //    @Transactional
@@ -79,7 +90,7 @@ public class MentionService {
 //        }
 //
 //        return mentionList;
-//    }
+//    }gi
 //
 //    @Transactional
 //    public List<MentionDto> getMentionlist() {

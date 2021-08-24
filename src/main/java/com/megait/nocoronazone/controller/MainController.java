@@ -8,11 +8,13 @@ import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
+import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.MentionService;
+import com.megait.nocoronazone.service.ReMentionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -41,6 +43,7 @@ public class MainController {
 
     private final MemberService memberService;
     private final MentionService mentionService;
+    private final ReMentionService reMentionService;
 
     // ================= 메인 ============================
     @RequestMapping("/")
@@ -209,7 +212,7 @@ public class MainController {
     public String write(@AuthenticationMember Member member,MentionForm mentionForm){
 
         if (member == null){
-            return "redirect:/";
+            return "redirect:login";
         }
 
         mentionService.saveMention(member, mentionForm);
@@ -217,15 +220,33 @@ public class MainController {
         return "redirect:timeline_follow";
     }
 
-    @GetMapping("/mention_detail")
-    public String mentionDetail(){
+    @GetMapping("/mention_detail/{no}")
+    public String mentionDetail(@PathVariable Long no, Model model){
+
+        try {
+            Mention parentMention = mentionService.getMention(no);
+            model.addAttribute("mention", parentMention );
+            model.addAttribute("reMentionForm", new ReMentionForm());
+            model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+        }catch (IllegalArgumentException e){
+            return "co_sns/timeline_location";
+        }
         return "co_sns/mention_detail";
     }
 
+
     @PostMapping("/remention")
-    public String remention(){
-        // ajax
-        return "success";
+    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model){
+
+        try {
+            Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
+            reMentionService.saveReMention(member, parentMention,reMentionForm);
+            model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+        }catch (IllegalArgumentException e){
+            return "co_sns/timeline_location";
+        }
+
+        return "co_sns/mention_detail :: #re-mention-list";
     }
 
     @GetMapping("/search")
