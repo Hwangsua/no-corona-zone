@@ -21,11 +21,12 @@ public class NoCoronaZoneApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NoCoronaZoneApplication.class, args);
 	}
+
 	@Bean
 	@Profile("https")
 	public ServletWebServerFactory servletContainer() {
 
-		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){
+		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
 			@Override
 			protected void postProcessContext(Context context) {
 				SecurityConstraint securityConstraint = new SecurityConstraint();
@@ -55,7 +56,10 @@ public class NoCoronaZoneApplication {
 		connector.setRedirectPort(8443);
 		return connector;
 	}
+<<<<<<< HEAD
+=======
 
+>>>>>>> c043c797975fb0c69a019643ff206aa3c3aa37fd
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

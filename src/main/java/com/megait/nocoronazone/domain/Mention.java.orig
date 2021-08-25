@@ -23,6 +23,7 @@ public class Mention {
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
+<<<<<<< HEAD
 //    private String writer;
 
     //    @Transient
@@ -36,6 +37,8 @@ public class Mention {
     private void setNickname(){
         this.nickname = member.getNickname();
     }
+=======
+>>>>>>> 230af1ba62d411e5a67fc737ddd7732e87aea72d
 
     @Length
     @NotNull
