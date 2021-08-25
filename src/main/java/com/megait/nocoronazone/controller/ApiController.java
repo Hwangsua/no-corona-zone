@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,7 @@ class LocaleCode {
     Object dong;
 }
 
+@EnableScheduling
 @RestController
 public class ApiController {
 
@@ -68,12 +70,12 @@ public class ApiController {
 
             UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=kr").build();
 
-            //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
+            // 이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
             ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
 
-            result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
-            result.put("header", resultMap.getHeaders()); //헤더 정보 확인
-            result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
+            result.put("statusCode", resultMap.getStatusCodeValue()); // http status code를 확인
+            result.put("header", resultMap.getHeaders()); // 헤더 정보 확인
+            result.put("body", resultMap.getBody()); // 실제 데이터 정보 확인
 
             ArrayList<Map> dboxoffList = (ArrayList<Map>) resultMap.getBody().get("data");
             LinkedHashMap mnList = new LinkedHashMap<>();
@@ -90,10 +92,10 @@ public class ApiController {
                 DayToDay[idx - idxCompare].localCnt = obj.get("localCnt").toString();
                 DayToDay[idx - idxCompare].totalConfirmedCnt = obj.get("totalConfirmedCnt").toString();
                 DayToDay[idx - idxCompare].dailyConfirmedCnt = obj.get("dailyConfirmedCnt").toString();
-                jsonInString += DayToDay[idx - idxCompare].location; //현재 지역
-                jsonInString += DayToDay[idx - idxCompare].localCnt; //국내 감염
-                jsonInString += DayToDay[idx - idxCompare].totalConfirmedCnt; //누적 감염
-                jsonInString += DayToDay[idx - idxCompare].dailyConfirmedCnt; //일일 감염
+                jsonInString += DayToDay[idx - idxCompare].location; // 현재 지역
+                jsonInString += DayToDay[idx - idxCompare].localCnt; // 국내 감염
+                jsonInString += DayToDay[idx - idxCompare].totalConfirmedCnt; // 누적 감염
+                jsonInString += DayToDay[idx - idxCompare].dailyConfirmedCnt; // 일일 감염
                 idx++;
             }
 
@@ -131,12 +133,12 @@ public class ApiController {
 
                 UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=en&searchText=" + localeName[i]).build();
 
-                //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
+                // 이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
                 ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
 
-                result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
-                result.put("header", resultMap.getHeaders()); //헤더 정보 확인
-                result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
+                result.put("statusCode", resultMap.getStatusCodeValue()); // http status code를 확인
+                result.put("header", resultMap.getHeaders()); // 헤더 정보 확인
+                result.put("body", resultMap.getBody()); // 실제 데이터 정보 확인
 
                 ArrayList<Map> dboxoffList = (ArrayList<Map>) resultMap.getBody().get("data");
                 LinkedHashMap mnList = new LinkedHashMap<>();
@@ -148,10 +150,10 @@ public class ApiController {
                     lcode[i][idx2[i]].siDo = obj.get("siDo");
                     lcode[i][idx2[i]].siGunGu = obj.get("siGunGu");
                     lcode[i][idx2[i]].dong = obj.get("dong");
-                    jsonInString += lcode[i][idx2[i]].lDongCd; //법정동 번호
-                    jsonInString += lcode[i][idx2[i]].siDo; //시
-                    jsonInString += lcode[i][idx2[i]].siGunGu; //구
-                    jsonInString += lcode[i][idx2[i]].dong; //동
+                    jsonInString += lcode[i][idx2[i]].lDongCd; // 법정동 번호
+                    jsonInString += lcode[i][idx2[i]].siDo; // 시
+                    jsonInString += lcode[i][idx2[i]].siGunGu; // 구
+                    jsonInString += lcode[i][idx2[i]].dong; // 동
                     idx2[i]++;
                 }
             } catch (HttpClientErrorException | HttpServerErrorException e) {
@@ -192,12 +194,12 @@ public class ApiController {
 
                     UriComponents uri = UriComponentsBuilder.fromHttpUrl(url + "?" + "appKey=l7xx1e9a9e235e1b4c54a4d0cf20abc304f5&locale=en&ldongCd=" + lcode[i][j].lDongCd).build();
 
-                    //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
+                    // 이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
                     ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
 
-                    result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
-                    result.put("header", resultMap.getHeaders()); //헤더 정보 확인
-                    result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
+                    result.put("statusCode", resultMap.getStatusCodeValue()); // http status code를 확인
+                    result.put("header", resultMap.getHeaders()); // 헤더 정보 확인
+                    result.put("body", resultMap.getBody()); // 실제 데이터 정보 확인
                     if (!resultMap.getBody().get("code").equals("0000")) {
                         cnt--;
                         continue;
@@ -206,10 +208,10 @@ public class ApiController {
                     LinkedHashMap mnList = new LinkedHashMap<>();
                     for (Map obj : dboxoffList) {
                         detail += Double.parseDouble(obj.get("contactDensityPercentile").toString());
-                        contactDensityPercentile[i] += Double.parseDouble(obj.get("contactDensityPercentile").toString()); //법정동\
+                        contactDensityPercentile[i] += Double.parseDouble(obj.get("contactDensityPercentile").toString()); // 법정동\
                         cnt2++;
                     }
-                    if (idx2[i] == j + 1 || !lcode[i][j].siGunGu.equals(lcode[i][j + 1].siGunGu))//시군구 바뀌면 save
+                    if (idx2[i] == j + 1 || !lcode[i][j].siGunGu.equals(lcode[i][j + 1].siGunGu))// 시군구 바뀌면 save
                     {
                         detail /= cnt2;
                         detailSafetyRepository.save(DetailSafetyIndex.builder()
@@ -234,7 +236,6 @@ public class ApiController {
             }
             contactDensityPercentile[i] /= cnt;
             safetyRepository.save(SafetyIndex.builder()
-                    .no(i + 1)
                     .city(DayToDay[i + 1].location)
                     .confirmed(Integer.parseInt(DayToDay[i + 1].dailyConfirmedCnt))
                     .index(contactDensityPercentile[i]).build());

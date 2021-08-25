@@ -30,6 +30,10 @@ public class Mention {
     //    @Transient
     private String nickname;
 
+    public Mention() {
+
+    }
+
     //    @PostLoad
     private void setNickname(){
         this.nickname = member.getNickname();

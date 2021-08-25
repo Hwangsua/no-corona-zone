@@ -17,5 +17,5 @@ public class DetailSafetyIndex {
     @Id
     private String district;
 
-    private int index;
+    private double index;
 }
