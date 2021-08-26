@@ -565,12 +565,63 @@ c28 0 30 -3 30 -35 l0 -35 -95 0 -95 0 0 -55 0 -55 -40 0 -40 0 0 55 0 55
                     <path d="M12213 2469 c-49 -14 -45 -45 8 -59 77 -21 173 10 138 45 -18 18
 -105 27 -146 14z"/>
                 </g>
-
             </svg>
-
         </div>
         <div class="home-right">
-            <div class="news-img"></div>
+            <div class="news-slide-container">
+                <div class="news-slide fade">
+                    <img src="img/corona1.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <div class="news-slide fade">
+                    <img src="img/corona2.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <div class="news-slide fade">
+                    <img src="img/corona3.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <div class="news-slide fade">
+                    <img src="img/corona4.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+            <div style="text-align: center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+            <script>
+                var slideIndex = 1;
+                showSlides(slideIndex);
+
+                function plusSlides(n){
+                    showSlides(slideIndex+=n);
+                }
+                function currentSlide(n){
+                    showSlides(slideIndex=n);
+                }
+                function showSlides(n){
+                    var i;
+                    var slides = document.getElementsByClassName("news-slide");
+                    var dots = document.getElementsByClassName("dot");
+                    if(n>slides.length){slideIndex=1}
+                    if(n<1){slideIndex = slides.length}
+                    for(i=0;i<slides.length;i++){
+                        slides[i].style.display="none";
+                    }
+                    for(i=0;i<dots.length;i++){
+                        dots[i].className=dots[i].className.replace(" active","");
+                    }
+                    slides[slideIndex-1].style.display="block";
+                    dots[slideIndex-1].className+=" active";
+                }
+            </script>
             <div class="chat"></div>
             <!-- 채팅 -->
             <div>

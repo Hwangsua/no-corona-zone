@@ -56,10 +56,7 @@ public class NoCoronaZoneApplication {
 		connector.setRedirectPort(8443);
 		return connector;
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> c043c797975fb0c69a019643ff206aa3c3aa37fd
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

@@ -12,60 +12,66 @@
     <div class="myhistory">
       <div class="myhistory-header">
         <div class="myhistory-img">
-
         </div>
         <div class="myhistory-info">
           <div class="info-list">
-            <div class="imgs">
-              닉네임
+            <span class="info-name">닉네임</span>
+            <div class="detail">
             </div>
-            <div class="imgs">
-              백신인증표시
+            <span class="info-name">백신인증표시</span>
+            <div class="detail">
             </div>
           </div>
-          <div class="info-list">사용자 프로필 메세지</div>
           <div class="info-list">
-            <div class="follows">팔로잉</div>
-            <div class="follows">팔로워</div>
+          <span class="info-name">사용자 프로필 메세지</span>
+          <div class="detail"></div>
           </div>
-
+          <div class="info-list">
+            <span class="info-name">팔로잉</span>
+            <div class="detail follows"></div>
+            <span class="info-name">팔로워</span>
+            <div class="detail"></div>
+          </div>
         </div>
-        <div class="myhistory-btn">
-          <button type="submit" class="btn-style">정보수정</button>
-        </div>
+          <button type="submit" class="btn-style" onclick="location.href='/settings'">정보수정</button>
       </div>
       <div class="hr"></div>
       <!--            TODO 타임리프 for문으로 돌리기 -->
       <div class="myhistory-list">
         <div class="img">
-
         </div>
         <div class="myhistory-content">
-
         </div>
         <div class="myhistory-time">
-
         </div>
       </div>
     </div>
     <div class="sidebar">
-      <div class="search">
-        <div onclick="location.href='#'" class="search-box">
-          <input type="textarea" class="search-text" placeholder="검색하기">
-        </div>
-      </div>
-      <div class="trend">
-        <div class="trend-box">
-          <div class="trend-head">
-            실시간 트렌드
+      <div class="following">
+        <div class="following-box">
+          <div class="following-head">
+            팔로잉 목록
           </div>
-          <div class="trend-rank 1">1</div>
-          <div class="trend-rank 2">2</div>
-          <div class="trend-rank 3">3</div>
-          <div class="trend-rank 4">4</div>
-          <div class="trend-rank 5">5</div>
+          <div class="following-list" th:each="num:${following}"></div>
         </div>
       </div>
+<!--      <div class="search">-->
+<!--        <div onclick="location.href='#'" class="search-box">-->
+<!--          <input type="textarea" class="search-text" placeholder="검색하기">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="trend">-->
+<!--        <div class="trend-box">-->
+<!--          <div class="trend-head">-->
+<!--            실시간 트렌드-->
+<!--          </div>-->
+<!--          <div class="trend-rank 1">1</div>-->
+<!--          <div class="trend-rank 2">2</div>-->
+<!--          <div class="trend-rank 3">3</div>-->
+<!--          <div class="trend-rank 4">4</div>-->
+<!--          <div class="trend-rank 5">5</div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 
   </div>

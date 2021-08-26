@@ -2,48 +2,54 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='video', title='NEWS_VIDEO'">
-
 <head>
   <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-  <script th:src="@{/js/youtube.js}"></script>
+  <script th:src="@{/js/co_info/youtube.js}"></script>
   <link th:href="@{/css/co_info/video.css}" rel="stylesheet">
-  <!--  <script>-->
-  <!--    let apikey = "AIzaSyAl3Cd1dxfvABLMjNJx6IcK1q9m9YY_zjA"-->
-  <!--    let keyword = "코로나"-->
-  <!--    let maxResults = 30-->
-
-  <!--    $.ajax({-->
-  <!--      type : "GET",-->
-  <!--      dataType : "JSON",-->
-  <!--      url : "https://www.googleapis.com/youtube/v3/search",-->
-  <!--      data:{part:'snippet',key:apikey,q:keyword,maxResults,type:'video'},-->
-  <!--      contentType : "application/json",-->
-  <!--      success : function(data){-->
-  <!--        //console.log(data);-->
-  <!--        $.each(data.items, function(i, item){-->
-  <!--          url = "https://www.youtube.com/watch?v="+item.id.videoId;-->
-  <!--          thumbnail = item.snippet.thumbnails.medium.url;-->
-  <!--          $("#get_view").append("<p class=box>"+"<img class=thumbnail src="+thumbnail+">"+"<a href="+url+">"+"<br/>"+-->
-  <!--          "<span class=title>"+item.snippet.title+"</span></a></p>");-->
-
-  <!--          title = item.snippet.title;-->
-  <!--          videoId = item.id.videoId;-->
-
-  <!--          // console.log(thumbnail);-->
-  <!--          // console.log(videoId);-->
-  <!--          // console.log(title);-->
-  <!--        });-->
-  <!--      }-->
-  <!--    });-->
-  <!--  </script>-->
 </head>
 <body>
+<script>
+  let apikey = "AIzaSyCdW0U4HuSoXPmWFbRy7Z-VYLxhtvtIcWM"
+  let keyword = "코로나"
+  let maxResults = 30
+  $.ajax({
+    type : "GET",
+    dataType : "JSON",
+    url : "https://www.googleapis.com/youtube/v3/search",
+    data:{part:'snippet',key:apikey,q:keyword,maxResults,type:'video'},
+    contentType : "application/json",
+    success : function(data){
+      console.log(data);
+    }
+  });
+</script>
 <div layout:fragment="content">
+
   <div class="container">
     <div class="container-name">
       <h4>영상</h4>
     </div>
-    <div id="get_view"></div>
+    <div id="get_view">
+    </div>
+    <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
   </div>
+  <script>
+  var topButton = document.getElementById("topBtn");
+  window.onscroll = function() {
+    scrollFunction()
+  };
+
+  function scrollFunction(){
+    if(document.body.scrollTop>200|| document.documentElement.scrollTop>200){
+      topButton.style.display = "block";
+    }else{
+      topButton.style.display = "none";
+    }
+  }
+  function  topFunction(){
+    document.body.scrollTop=0;
+    document.documentElement.scrollTop=0;
+  }
+</script>
 </div>
 </body>
