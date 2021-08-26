@@ -101,7 +101,7 @@
     }
     .home-map {
         position: relative;
-        max-width: 650px;
+        width: 650px;
     }
     .home-map svg {
         display: block;

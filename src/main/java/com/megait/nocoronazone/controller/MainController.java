@@ -395,7 +395,6 @@ public class MainController {
     @GetMapping("/timeline_location")
     public String timelineLocation(Model model)
     {
-        System.out.println("Get");
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
 
