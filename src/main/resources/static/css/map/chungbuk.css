@@ -41,7 +41,7 @@
     .home {
         display: flex;
         justify-content: center;
-        margin-top: 15px;
+        margin-top: 20px;
     }
     .home-left {
         display: block;
@@ -52,11 +52,11 @@
         display: flex;
         justify-content: space-evenly;
         width: 100%;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     .map-collect-item {
-        height: 30px;
-        width: 70px;
+        height: 35px;
+        width: 80px;
         margin: 0;
         line-height: 35px;
         text-align: center;
@@ -66,38 +66,12 @@
     .infection-info {
         display: block;
     }
-    .infection-list {
-        height: inherit;
-        width: 80%;
-        margin: 5px auto;
-    }
-    .infection-each {
-        display: flex;
-        justify-content: center;
-        height: 33px;
-        margin-top: 5px;
-        text-align: center;
-    }
-    .infection-each div {
-        border: 1px solid lightgray;
+    .total-infection {
+        height: 100px;
+        width: 100%;
+        margin-top: 10px;
+        background: lightgray;
         border-radius: 5px;
-
-    }
-    .infection-each-city {
-        width: 60px;
-        height: 30px;
-        margin-right: 5px;
-        font-weight: bold;
-    }
-    .infection-each-confiremed {
-        width: 70px;
-        height: 30px;
-        font-size: 1.1rem;
-    }
-    .infection-each-density {
-        width: 70px;
-        height: 30px;
-
     }
     .home-map {
         position: relative;
@@ -119,25 +93,9 @@
         position: absolute;
         max-height: 800px;
         max-width: 100%;
-        margin-left: 100px;
-        margin-top: -150px;
+        margin-top: -100px;
     }
-    .land {
-        fill-opacity: 1;
-        stroke:white;
-        stroke-opacity: 1;
-        stroke-width:0.5;
-    }
-    .land:hover {
-        cursor: pointer;
-        fill: lightgray;
-    }
-    .none {
-        fill-opacity: 1;
-        stroke:white;
-        stroke-opacity: 1;
-        stroke-width:0.5;
-    }
+
 }
 
 

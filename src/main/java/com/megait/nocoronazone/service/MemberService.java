@@ -36,7 +36,7 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @PostConstruct
+    //@PostConstruct
     @Profile("local")
     public void createNewMember(){
 
