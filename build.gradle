@@ -53,11 +53,17 @@ dependencies {
 
 	// oauth
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE'
+
 	// https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl
 	implementation group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
 
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
 	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.12.4'
+
+	// https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis
+	implementation group: 'com.github.scribejava', name: 'scribejava-apis', version: '8.3.1'
+
 
 
 }
