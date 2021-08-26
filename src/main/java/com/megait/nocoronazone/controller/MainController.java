@@ -5,6 +5,7 @@ import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
+import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.form.MentionForm;

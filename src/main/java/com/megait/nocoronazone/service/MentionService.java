@@ -55,7 +55,6 @@ public class MentionService {
 
             mentionFormList.add(mention);
         }
-        System.out.println("for문이 돌아갈까?");
 //        System.out.println(mentionEntities);
         System.out.println(mentionFormList);
 
