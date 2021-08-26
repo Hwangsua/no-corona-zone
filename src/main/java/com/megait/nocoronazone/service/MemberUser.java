@@ -19,4 +19,6 @@ public class MemberUser extends User {
         );
         this.member = member;
     }
+
+
 }

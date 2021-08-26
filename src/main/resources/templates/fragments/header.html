@@ -41,8 +41,8 @@
                 <a th:href="@{/timeline_follow}" class="global-nav-item">CO-SNS</a>
                 <a th:href="@{/signup}" class="global-nav-item" sec:authorize="!isAuthenticated()">회원가입</a>
                 <a th:href="@{/login}" class="global-nav-item" th:classappend="${activeTab == 'login'} ? active" sec:authorize="!isAuthenticated()">로그인</a>
-                <a class="nav-link" th:classappend="${activeTab == 'mypage'} ? active"
-                   sec:authorize="isAuthenticated()" th:href="@{'/mypage/' + ${#authentication?.name}}" sec:authentication="name">내 정보</a>
+                <a class="nav-link" th:classappend="${activeTab == 'settings'} ? active"
+                   sec:authorize="isAuthenticated()" th:href="@{/settings}" sec:authentication="name">내 정보</a>
                 <!-- 로그인 정보 보고싶어서 잠시 이렇게 해두겠습니다 -->
 
                 <form class="form-inline" th:action="@{/logout}" th:method="post">

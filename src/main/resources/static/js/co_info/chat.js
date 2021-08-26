@@ -10,17 +10,18 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
+var socket = null;
 
 function connect(event) {
-    console.log("왜 연결 안되지");
     username = document.querySelector('#name').value.trim();
 
     if(username) {
-        console.log("연결좀 되라");
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
-        var socket = new SockJS('/ws');
+        if(socket == null) {
+            socket = new SockJS('/ws');
+        }
         console.log("socket : " + socket);
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
@@ -31,7 +32,6 @@ function connect(event) {
 
 
 function onConnected() {
-    console.log("넌 도대체 언제 실행되니")
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
@@ -42,19 +42,16 @@ function onConnected() {
     )
 
     connectingElement.classList.add('hidden');
-    console.log("실행될 생각은 있고?")
 }
 
 
 function onError(error) {
-    console.log("넌 좀 그만 나왔으면 ")
     connectingElement.textContent = '연결실패!';
     connectingElement.style.color = 'red';
 }
 
 
 function sendMessage(event) {
-    console.log("보내져라 메세지메세지!!")
     var messageContent = messageInput.value.trim();
     if(messageContent && stompClient) {
         var chatMessage = {
@@ -70,7 +67,6 @@ function sendMessage(event) {
 
 
 function onMessageReceived(payload) {
-    console.log("메세지좀 받아봐...")
     var message = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');

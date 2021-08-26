@@ -5,6 +5,7 @@ import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.repository.MentionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,10 +19,6 @@ import java.util.Optional;
 public class MentionService {
 
     private final MentionRepository mentionRepository;
-    //final로 설정이 안되어있으면 bean으로 설정이 안된다.
-
-    private static final int BLOCK_PAGE_NUM_COUNT = 10;  // 블럭에 존재하는 페이지 번호 수
-    private static final int PAGE_POST_COUNT = 10;       // 한 페이지에 존재하는 게시글 수
 
 
     public void saveMention(Member member, MentionForm mentionForm){
@@ -32,7 +29,7 @@ public class MentionService {
                 .latitude(mentionForm.getLatitude())
                 .longitude(mentionForm.getLongitude())
                 .location(mentionForm.getLocation())
-                .regdate(LocalDateTime.now())
+                .regdate(LocalDateTime.now().withNano(0))
                 .build();
 
         mentionRepository.save(mention);
@@ -42,85 +39,87 @@ public class MentionService {
     @Transactional
     public List<Mention> getMentionlist() {
 
-        List<Mention> mentionEntities = mentionRepository.findAll();
+        List<Mention> mentionEntities = mentionRepository.findAll(Sort.by(Sort.Direction.DESC,"regdate"));
         List<Mention> mentionFormList = new ArrayList<>();
 
         for (Mention mentions : mentionEntities) {
             Mention mention = Mention.builder()
+                    .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
                     .location(mentions.getLocation())
+                    .regdate(mentions.getRegdate())
                     .build();
 
             mentionFormList.add(mention);
         }
-        System.out.println("for문이 돌아갈까?");
-//        System.out.println(mentionEntities);
-        System.out.println(mentionFormList);
-
         return mentionFormList;
     }
 
-//    @Transactional
-//    public List<Mention> getMentionlist() {
-//
-//        List<Mention> mentionEntities = mentionRepository.findAll();
-//        List<Mention> mentionList = new ArrayList<>();
-//
-//        for (Mention mentions : mentionEntities) {
-//            Mention mention = Mention.builder()
-//                    .content(mentions.getContent())
-//                    .regdate(mentions.getRegdate())
-//                    .member(mentions.getMember())
-//                    .build();
-//
-//
-//            mentionList.add(mention);
-//        }
-//
-//        return mentionList;
-//    }
-//
-//    @Transactional
-//    public List<MentionDto> getMentionlist() {
-//        List<Mention> mentionEntities = mentionRepository.findAll();
-//        List<MentionDto> mentionDtoList = new ArrayList<>();
-//
-//        for ( Mention mention : mentionEntities) {
-//            MentionDto mentionDto = MentionDto.builder()
-//                    .no(mention.getNo())
-////                  .member(Mention.getMember())
-//                    .nickname(mention.getNickname())
-//                    .content(mention.getContent())
-//                    .location(mention.getLocation())
-////                    .createdDate(mention.getCreatedDate())
-//                    .build();
-//
-//            mentionDtoList.add(mentionDto);
-//        }
-//
-//        return mentionDtoList;
-//    }
-//
-//
-//    @Transactional
-//    public Long getBoardCount() {
-//        return mentionRepository.count();
-//    }
-//
-//    @Transactional
-//    public MentionDto getPost(Long id) {
-//        Optional<Mention> MentionWrapper = mentionRepository.findById(id);
-//        Mention mention = MentionWrapper.get();
-//
-//        return this.convertEntityToDto(mention);
-//    }
-//
-//    @Transactional
-//    public Long savePost(MentionDto MentionDto) {
-//        return mentionRepository.save(MentionDto.toEntity()).getNo();
-//    }
-//
+    public Mention getMention(Long no) {
+        Optional<Mention> optionalMention = mentionRepository.findById(no);
+
+        if(optionalMention.isEmpty()){
+            throw new IllegalArgumentException("wrong mention no");
+        }
+
+        return optionalMention.get();
+    }
+
+    public List<Mention> getNearLocationMentionList(double currentLatitude,double currentLongitude){
+
+        List<Mention> Mentions = mentionRepository.findAll();
+        List<Mention> mentionList = new ArrayList<>();
+
+        for(Mention m : Mentions){
+
+            if ( m.getLatitude()==null || m.getLongitude()==null){
+                continue;
+            }
+
+            double mentionLatitude = m.getLatitude();
+            double mentionLongitude = m.getLongitude();
+
+            if(distanceInKilometerByHaversine(currentLatitude, currentLongitude, mentionLatitude, mentionLongitude)){
+
+                Mention mention = Mention.builder()
+                        .no(m.getNo())
+                        .member(m.getMember())
+                        .content(m.getContent())
+                        .location(m.getLocation())
+                        .build();
+
+                mentionList.add(mention);
+            }
+
+        }
+
+        return mentionList;
+    }
+
+
+    public boolean distanceInKilometerByHaversine(double x1, double y1, double x2, double y2) {
+        double distance;
+        double radius = 6371; // 지구 반지름(km)
+        double toRadian = Math.PI / 180;
+
+        double deltaLatitude = Math.abs(x1 - x2) * toRadian;
+        double deltaLongitude = Math.abs(y1 - y2) * toRadian;
+
+        double sinDeltaLat = Math.sin(deltaLatitude / 2);
+        double sinDeltaLng = Math.sin(deltaLongitude / 2);
+        double squareRoot = Math.sqrt(sinDeltaLat * sinDeltaLat + Math.cos(x1 * toRadian) * Math.cos(x2 * toRadian) * sinDeltaLng * sinDeltaLng);
+
+        distance = 2 * radius * Math.asin(squareRoot);
+
+        if (0 <= distance && distance <= 10) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 //    @Transactional
 //    public void deletePost(Long id) {
 //        mentionRepository.deleteById(id);
@@ -139,41 +138,5 @@ public class MentionService {
 //
 //        return MentionDtoList;
 //    }
-//
-//    public Integer[] getPageList(Integer curPageNum) {
-//        Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
-//
-//        // 총 게시글 갯수
-//        Double postsTotalCount = Double.valueOf(this.getBoardCount());
-//
-//        // 총 게시글 기준으로 계산한 마지막 페이지 번호 계산
-//        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
-//
-//        // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-//        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-//                ? curPageNum + BLOCK_PAGE_NUM_COUNT
-//                : totalLastPageNum;
-//
-//        // 페이지 시작 번호 조정
-//        curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
-//
-//        // 페이지 번호 할당
-//        for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
-//            pageList[idx] = val;
-//        }
-//
-//        return pageList;
-//    }
-//
-//    private MentionDto convertEntityToDto(Mention mention) {
-//        return MentionDto.builder()
-//                .no(mention.getNo())
-////                .member(Mention.getMember())
-//                .nickname(mention.getNickname())
-//                .content(mention.getContent())
-//                .location(mention.getLocation())
-////                .createdDate(mention.getCreatedDate())
-//                .regdate(mention.getRegdate())
-//                .build();
-//    }
+
 }

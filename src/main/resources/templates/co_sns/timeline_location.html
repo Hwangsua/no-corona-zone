@@ -4,9 +4,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='timeline', title='Timeline'">
+
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣어&libraries=services"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -20,45 +22,52 @@
                 <div class="search-box">
                     <input type="text" class="search-box-text" placeholder="위치를 입력하세요.">
                 </div>
-                <div class="search-btn">
-                    <p class="search-btn-text">검색</p>
-                </div>
+                <form method="post" name="search" th:object="${locationSearchForm}" th:action="@{timeline_location}">
+                    <div class="search-btn">
+                        <button type="button" class="btn btn-info btn-lg" id="location-btn">위치</button>
+                        <input type="hidden" th:field="*{latitude}" name="location-latitude" id="location-latitude">
+                        <input type="hidden" th:field="*{longitude}" name="location-longitude" id="location-longitude">
+                    </div>
+                </form>
             </div>
             <div class="hr"></div>
             <div class="timeline-content">
                 <div class="mention-list">
-                    <div class="mention-each">
+                    <div class="mention-each" th:each="mention:${mentionList}">
                         <div class="mention-left">
                             <div class="profile-img">
                                 <style>
-                                    .identicon {height:70px; width:70px;}
+                                    .identicon {
+                                        height: 70px;
+                                        width: 70px;
+                                    }
                                 </style>
 
-                                <img class="identicon" data-id="hazsoo" />
+                                <img class="identicon" data-id="hazsoo"/>
 
-                                <script src="//code.jquery.com/jquery.min.js"></script>
-                                <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>
-                                <script src="//cdnjs.cloudflare.com/ajax/libs/identicon.js/2.3.3/identicon.min.js"></script>
-                                <script>
-                                    $(".identicon").each(function() {
-                                        var hash = md5($(this).data('id')).toString();
-                                        var data = new Identicon(hash,{format:'svg'}).toString();
-                                        $(this).attr('src', "data:image/svg+xml;base64,"+data);
-                                    });
-                                </script>
+                                <!--                                <script src="//code.jquery.com/jquery.min.js"></script>-->
+                                <!--                                <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>-->
+                                <!--                                <script src="//cdnjs.cloudflare.com/ajax/libs/identicon.js/2.3.3/identicon.min.js"></script>-->
+                                <!--                                <script>-->
+                                <!--                                    $(".identicon").each(function() {-->
+                                <!--                                        var hash = md5($(this).data('id')).toString();-->
+                                <!--                                        var data = new Identicon(hash,{format:'svg'}).toString();-->
+                                <!--                                        $(this).attr('src', "data:image/svg+xml;base64,"+data);-->
+                                <!--                                    });-->
+                                <!--                                </script>-->
                             </div>
                         </div>
                         <div class="mention-right">
                             <div class="mention-info">
-                                <div class="nickname">닉네임</div>
+                                <div class="nickname" th:text="${mention.member.nickname}">닉네임</div>
                                 <div class="vaccine">
                                     <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
-                                <div class="location">롯데월드</div>
+                                <div class="location" th:text="${mention.location}">롯데월드</div>
                                 <div class="dot">·</div>
-                                <div class="upload-time">20시간</div>
+                                <div class="upload-time" th:text="${mention.regdate}">20시간</div>
                             </div>
-                            <div class="content">가나다라마바다아자차카타파하!!!!!!!!</div>
+                            <div class="content" th:text="${mention.content}">가나다라마바다아자차카타파하!!!!!!!!</div>
                         </div>
                     </div>
                 </div>
@@ -67,7 +76,7 @@
         <div class="sidebar">
             <div class="search">
 
-                    <input type="textarea" class="search-text" placeholder="검색하기">
+                <input type="textarea" class="search-text" placeholder="검색하기">
 
             </div>
             <div class="trend">
@@ -84,6 +93,163 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="location-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">위치 검색</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="search">
+                        <input type="text" class="search-text" placeholder="장소 입력" id="location-keyword">
+                        <button type="button" class="btn btn-info btn-sm" id="keyword-search">검색</button>
+                    </div>
+                    <div id="map-div">
+                        <div id="map" style="width:100%;height:350px;"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="text" class="search-text" name="location-select" id="location-select">
+                    <button type="button" class="btn btn-default" id="location-save-btn" data-dismiss="modal">선택</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let markers = [];
+        let selectedPlaceLatitude = null;
+        let selectedPlaceLongitude = null;
+        let selectedPlaceName = null;
+
+        // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+        let infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+
+        let mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+                level: 5 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        $("#location-btn").click(function () {
+            document.getElementById("location-keyword").value = null;
+            $("#location-modal").modal();
+
+            $("#location-modal").on('shown.bs.modal', function () {
+                map.relayout();
+            })
+        });
+
+
+        $('#keyword-search').click(function () {
+
+            setMarkers(null);
+            markers = [];
+            let keyword = $('#location-keyword').val();
+            searchKeyword(keyword);
+
+        });
+
+        $('#location-save-btn').click(function () {
+
+            document.getElementById("location-longitude").value = selectedPlaceLongitude;
+            document.getElementById("location-latitude").value = selectedPlaceLatitude;
+
+            if(!$('#location-longitude').val() || !$('#location-latitude').val()){
+                return false;
+            }
+
+            $('form[name=search]').submit();
+
+        });
+
+
+        function searchKeyword(keyword) {
+            // 장소 검색 객체를 생성합니다
+            var ps = new kakao.maps.services.Places();
+
+            // 키워드로 장소를 검색합니다
+            ps.keywordSearch(keyword, placesSearchCB);
+        }
+
+
+        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        function placesSearchCB(data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                // LatLngBounds 객체에 좌표를 추가합니다
+                var bounds = new kakao.maps.LatLngBounds();
+
+                for (var i = 0; i < data.length; i++) {
+                    displayMarker(data[i]);
+                    bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                }
+
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                map.setBounds(bounds);
+            }
+        }
+
+        // 지도에 마커를 표시하는 함수입니다
+        function displayMarker(place) {
+
+            // 마커를 생성하고 지도에 표시합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+
+            markers.push(marker);
+
+            // 마커에 표시할 인포윈도우를 생성합니다
+            infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>'
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow))
+
+            kakao.maps.event.addListener(marker, 'click', function () {
+
+                selectedPlaceLongitude = place.x;
+                selectedPlaceLatitude = place.y;
+                selectedPlaceName = place.place_name;
+
+                document.getElementById("location-select").value = selectedPlaceName;
+            });
+        }
+
+        // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+        function setMarkers(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+        function makeOverListener(map, marker, infowindow) {
+            return function () {
+                infowindow.open(map, marker);
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+        function makeOutListener(infowindow) {
+            return function () {
+                infowindow.close();
+            };
+        }
+
+
+    </script>
 </div>
 </body>
 </html>

@@ -17,11 +17,13 @@ public class DetailSafetyService {
     private final DetailSafetyRepository detailSafetyRepository;
 
 
-//    public int getDetailSafetytoAlpha(String district) {
-////        int detailSafetyIndexMax = detailSafetyRepository.maxIndex();
-//
-////        System.out.println(detailSafetyIndexMax);
-//        return Integer.parseInt(String.valueOf(detailSafetyRepository.findIndexByDistrict(district)));
-//    }
+    public double getDetailSafetytoAlpha(String district) {
+        double detailSafetyIndexMax = detailSafetyRepository.maxIndex();
+        double getIndexByDistrict = detailSafetyRepository.getById(district).getIndex();
+
+        double result = getIndexByDistrict / detailSafetyIndexMax ;
+
+        return result;
+    }
 
 }

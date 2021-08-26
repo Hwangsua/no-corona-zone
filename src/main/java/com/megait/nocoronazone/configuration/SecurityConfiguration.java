@@ -14,16 +14,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+   // private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                
+                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**", "/map/**").permitAll()
 
-                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**").permitAll()
 
-                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
+                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
@@ -34,21 +35,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
 
-                .and()
-                .oauth2Login()
-                .loginPage("/login")
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService)
+//                .and()
+//                .oauth2Login()
+//                .loginPage("/login")
+//                .userInfoEndpoint()
+//                .userService(customOAuth2UserService)
 
                 .and()
                 .and()
                 .formLogin()
-                .loginPage("/login")  // 안해도 기본값이 이미 '/login'임
+                .loginPage("/login")
                 .defaultSuccessUrl("/", true)
 
                 .and()
                 .logout()
-                .logoutUrl("/logout") // 안해도 기본값이 이미 '/logout'임임
+                .logoutUrl("/logout")
                 .invalidateHttpSession(true) // 로그아웃했을때 세션을 갱신
                 .logoutSuccessUrl("/") // 로그아웃하면 메인으로 가게
         ;

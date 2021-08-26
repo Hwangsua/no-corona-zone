@@ -23,6 +23,6 @@ public class ProfileImage {
     private String fileName;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Member user;
+    private Member member;
 
 }

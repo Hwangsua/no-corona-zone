@@ -21,7 +21,6 @@ public class Mention {
     private Long no;
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id")
     private Member member;
 
     @Length
