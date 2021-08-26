@@ -31,7 +31,7 @@
     position: absolute;
     max-height: 800px;
     max-width: 100%;
-    margin-top: -150px;
+    margin-top: -80px;
 }
 .home-right {
     display: none;
@@ -98,34 +98,24 @@
     .infection-each-density {
         width: 70px;
         height: 30px;
-
     }
     .home-map {
-        /*position: relative;*/
+        position: relative;
         max-width: 650px;
     }
     .home-map svg {
         display: block;
-        /*position: absolute;*/
+        position: absolute;
         max-height: 800px;
         max-width: 100%;
-        margin-left: 100px;
-        margin-top: -150px;
-    }
-    .land {
-        fill-opacity: 1;
-        stroke:white;
-        stroke-opacity: 1;
-        stroke-width:0.5;
-    }
-    .land:hover {
-        cursor: pointer;
-        fill: lightgray;
+        margin-top: -80px;
     }
     .home-right {
         display: block;
         width: 250px;
     }
+
+
 }
 
 

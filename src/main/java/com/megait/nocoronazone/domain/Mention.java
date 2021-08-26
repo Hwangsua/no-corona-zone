@@ -28,9 +28,6 @@ public class Mention {
     //    @Transient
     private String nickname;
 
-    public Mention() {
-
-    }
 
     //    @PostLoad
     private void setNickname(){

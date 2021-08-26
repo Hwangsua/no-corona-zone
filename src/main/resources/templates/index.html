@@ -12,12 +12,17 @@
     <div class="home">
         <div class="home-left">
             <div class="map-collect">
-                <a th:href="@{/infection}" class="map-collect-item infection">확진</a>
-                <a th:href="@{/density}" class="map-collect-item density">밀집</a>
-                <a href="#" class="map-collect-item distancing">거리두기</a>
+                <a th:href="@{/infection}" class="map-collect-item infection" id="item-infection">확진</a>
+                <a th:href="@{/density}" class="map-collect-item density" id="item-density">밀집</a>
+                <a href="#" class="map-collect-item distancing" id="item-distancing">거리두기</a>
             </div>
             <div class="infection-info">
                 <div class="infection-list">
+                    <div class="infection-list-label">
+                        <span>지역</span>
+                        <span style="font-size: 0.8rem">오늘 확진자</span>
+                        <span style="font-size: 0.8rem">밀집도</span>
+                    </div>
                     <div class="infection-each" th:each="safety : ${safetyList}">
                         <div class="infection-each-city">
                             <span th:text="${safety.city}"></span>
@@ -26,10 +31,9 @@
                             <span th:text="${safety.confirmed}"></span>
                         </div>
                         <div class="infection-each-density">
-                            <span th:text="${#numbers.formatDecimal(safety.index,0,2)}"></span>
+                            <span th:text="${#numbers.formatDecimal(safety.index, 0, 2)}"></span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -37,7 +41,7 @@
         <div class="home-map" id="home-map">
 
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap"
-                 width="29000000px38." height="2560.000000px"
+                 width="29000000px" height="2560px"
                  preserveAspectRatio="xMidYMid meet"xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
                 <defs>
 
@@ -127,34 +131,18 @@
             <!-- 채팅 끝 -->
         </div>
     </div>
-<!--    <script>-->
-
-<!--        function changeMap(district) {-->
-<!--            document.querySelector('.home-map').add('.district-hidden');-->
-<!--            document.querySelector(district).remove('.district-hidden');-->
-<!--        }-->
-<!--    </script>-->
-
-
-<!--    <script>-->
-<!--        $('.density').on('click',function() {-->
-<!--            var cbDistrict = ["Boeun-gun", "Cheongju-si", "Chungju-si", "Danyang-gun", "Goesan-gun", "Jecheon-si", "Jeungpyeong-gun", "Jincheon-gun", "Okcheon-gun", "Eumseong-gun", "Yeongdong-gun"];-->
-<!--            var cbDistrict2 = ["Boeun_gun", "Cheongju_si", "Chungju_si", "Danyang_gun", "Goesan_gun", "Jecheon_si", "Jeungpyeong_gun", "Jincheon_gun", "Okcheon_gun", "Eumseong_gun", "Yeongdong_gun"];-->
-
-
-<!--            $.ajax({-->
-<!--                url: "/density",-->
-<!--                data: {-->
-<!--                    "cbDistrict": cbDistrict,-->
-<!--                    "cbDistrict2": cbDistrict2-->
-<!--                },-->
-<!--                success: function () {-->
-
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    </script>-->
-
+    <script>
+        // 지도 선택 버튼 색 지정
+        if(window.location.href.indexOf("infection") > -1){ // 확진 지도일때
+            document.getElementById("item-infection").style.background = "rgb(125, 204, 171)";
+        } else if(window.location.href.indexOf("density") > -1){ // 밀집 지도일때
+            document.getElementById("item-density").style.background = "rgb(125, 204, 171)";
+        } else if(window.location.href.indexOf("distancing") > -1){ // 거리두기 지도일때
+            document.getElementById("item-distancing").style.background = "rgb(125, 204, 171)";
+        } else { // 나머지. "/" 포함.
+            document.getElementById("item-infection").style.background = "rgb(125, 204, 171)";
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="/js/co_info/chat.js"></script>
