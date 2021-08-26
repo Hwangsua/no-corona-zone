@@ -124,7 +124,6 @@
                             <input type="password" name="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요.">
                         </div>
                     </div>
-<!-- 이름이 같아야지 값을 알아서 넣겠져....?네...........-->
                     <div class="content-list">
                         <label for="password-ck" class="content-name">비밀번호 확인</label>
                         <div class="content-name-value">
@@ -146,10 +145,6 @@
                     <div class="content-list content-img">
                         <div class="content-name">
                             <div class="profile">
-<!--                                <form method="post" action="/settings" enctype="multipart/form-data">-->
-<!--                                    <input multiple type="file" name="profile-files">-->
-<!--                                    <button>전송</button>-->
-<!--                                </form>-->
                                 <svg data-jdenticon-value="user127" th:text="${member.email}"
                                      width="60" height="60" class="rounded border bg-light"></svg>
                             </div>
@@ -166,10 +161,6 @@
                     <div class="content-list content-img">
                         <div class="content-name">
                             <div class="vaccine"></div>
-<!--                            <form method="post" action="/settings" enctype="multipart/form-data">-->
-<!--                                <input multiple type="file" name="vaccine-files">-->
-<!--                                <button>전송</button>-->
-<!--                            </form>-->
                         </div>
                         <div class="content-name-value">
                             <label for="vaccine-img" class="upload-btn">upload</label>
@@ -183,91 +174,3 @@
     </div>
 </div>
 </body>
-
-
-
-<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{layout/common_layout}" th:with="activeTab='settings', title='cosns'">-->
-
-<!--<head>-->
-<!--    <link th:href="@{/css/member/settings.css}" rel="stylesheet">-->
-<!--</head>-->
-<!--<body>-->
-<!--<div layout:fragment="content">-->
-<!--    <div className="container">-->
-<!--        <form action="/settings" method="patch" name="settings">-->
-<!--            <div className="settings-header">-->
-<!--                <div className="header-item1">정보수정</div>-->
-<!--                <div className="header-item2">-->
-<!--                    <button className="btn-style" type="submit">저장</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div className="hr"></div>-->
-<!--            <div className="none" style="visibility: hidden;height: 25px"></div>-->
-<!--            <div className="content">-->
-<!--                <div className="content-list">-->
-<!--                    <label htmlFor="email" className="content-name">아이디</label>-->
-<!--                    <div className="content-name-value">-->
-<!--                        <input type="text" className="form-control" id="email" name="user-email" th:text="${member.email}" disabled>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div className="content-list">-->
-<!--                    <label htmlFor="nickname" className="content-name">닉네임</label>-->
-<!--                    <div className="content-name-value">-->
-<!--                        <input type="text" className="form-control" id="nickname" th:text="${member.nickname}" name="user-nickname">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div className="content-list">-->
-<!--                    <label htmlFor="password" className="content-name">비밀번호</label>-->
-<!--                    <div className="content-name-value">-->
-<!--                        <input type="password" className="form-control" id="password" name="user-pw">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div className="content-list">-->
-<!--                    <label htmlFor="password-ck" className="content-name">비밀번호 확인</label>-->
-<!--                    <div className="content-name-value">-->
-<!--                        <input type="password" className="form-control" id="password-ck" name="user-pw-ck">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div className="content-list">-->
-<!--                    <label htmlFor="introduce" className="content-introduce">자기소개</label>-->
-<!--                    <div className="content-introduce-value">-->
-<!--                        <input type="text" className="form-control" id="introduce" name="user-introduce" placeholder="내용을 입력해주세요!">-->
-<!--                    </div>-->
-<!--                </div>-->
-
-
-<!--                <div className="content-list-small">-->
-<!--                    <span className="content-name">프로필 사진</span>-->
-<!--                </div>-->
-<!--                <div className="content-list content-img">-->
-<!--                    <div className="content-name">-->
-<!--                        <div className="profile"></div>-->
-<!--                    </div>-->
-
-<!--                    <div className="content-name-value">-->
-<!--                        <label htmlFor="profile-img" className="upload-btn">upload</label>-->
-<!--                        <input type="file" className="form-control"-->
-<!--                               id="profile-img" name="user-img" style="display: none">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div className="content-list-small">-->
-<!--                    <span className="content-name">백신 이미지</span>-->
-<!--                </div>-->
-<!--                <div className="content-list content-img">-->
-<!--                    <div className="content-name">-->
-<!--                        <div className="vaccine"></div>-->
-<!--                    </div>-->
-<!--                    <div className="content-name-value">-->
-<!--                        <label htmlFor="vaccine-img" className="upload-btn">upload</label>-->
-<!--                        <input type="file" className="form-control"-->
-<!--                               id="vaccine-img" name="vaccine-img" style="display: none">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</body>-->

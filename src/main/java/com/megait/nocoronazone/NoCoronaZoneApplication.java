@@ -21,11 +21,12 @@ public class NoCoronaZoneApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NoCoronaZoneApplication.class, args);
 	}
+
 	@Bean
 	@Profile("https")
 	public ServletWebServerFactory servletContainer() {
 
-		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){
+		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
 			@Override
 			protected void postProcessContext(Context context) {
 				SecurityConstraint securityConstraint = new SecurityConstraint();

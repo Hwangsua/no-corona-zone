@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -43,6 +44,7 @@ public class MentionService {
 
         for (Mention mentions : mentionEntities) {
             Mention mention = Mention.builder()
+                    .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
                     .location(mentions.getLocation())
@@ -53,7 +55,71 @@ public class MentionService {
         }
         return mentionFormList;
     }
-//
+
+    public Mention getMention(Long no) {
+        Optional<Mention> optionalMention = mentionRepository.findById(no);
+
+        if(optionalMention.isEmpty()){
+            throw new IllegalArgumentException("wrong mention no");
+        }
+
+        return optionalMention.get();
+    }
+
+    public List<Mention> getNearLocationMentionList(double currentLatitude,double currentLongitude){
+
+        List<Mention> Mentions = mentionRepository.findAll();
+        List<Mention> mentionList = new ArrayList<>();
+
+        for(Mention m : Mentions){
+
+            if ( m.getLatitude()==null || m.getLongitude()==null){
+                continue;
+            }
+
+            double mentionLatitude = m.getLatitude();
+            double mentionLongitude = m.getLongitude();
+
+            if(distanceInKilometerByHaversine(currentLatitude, currentLongitude, mentionLatitude, mentionLongitude)){
+
+                Mention mention = Mention.builder()
+                        .no(m.getNo())
+                        .member(m.getMember())
+                        .content(m.getContent())
+                        .location(m.getLocation())
+                        .build();
+
+                mentionList.add(mention);
+            }
+
+        }
+
+        return mentionList;
+    }
+
+
+    public boolean distanceInKilometerByHaversine(double x1, double y1, double x2, double y2) {
+        double distance;
+        double radius = 6371; // 지구 반지름(km)
+        double toRadian = Math.PI / 180;
+
+        double deltaLatitude = Math.abs(x1 - x2) * toRadian;
+        double deltaLongitude = Math.abs(y1 - y2) * toRadian;
+
+        double sinDeltaLat = Math.sin(deltaLatitude / 2);
+        double sinDeltaLng = Math.sin(deltaLongitude / 2);
+        double squareRoot = Math.sqrt(sinDeltaLat * sinDeltaLat + Math.cos(x1 * toRadian) * Math.cos(x2 * toRadian) * sinDeltaLng * sinDeltaLng);
+
+        distance = 2 * radius * Math.asin(squareRoot);
+
+        if (0 <= distance && distance <= 10) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 //    @Transactional
 //    public void deletePost(Long id) {
 //        mentionRepository.deleteById(id);

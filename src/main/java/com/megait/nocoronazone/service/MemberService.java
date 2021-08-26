@@ -1,9 +1,12 @@
 package com.megait.nocoronazone.service;
 
+import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.MemberRepository;
+import com.megait.nocoronazone.service.EmailService;
+import com.megait.nocoronazone.service.MemberUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -34,7 +37,7 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @PostConstruct
+    //@PostConstruct
     @Profile("local")
     public void createNewMember(){
 
@@ -43,6 +46,7 @@ public class MemberService implements UserDetailsService {
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
                 .nickname("하하")
+                .authType(AuthType.GENERAL)
                 .build();
 
         memberRepository.save(member);
@@ -56,6 +60,7 @@ public class MemberService implements UserDetailsService {
                 .nickname(signUpForm.getNickname())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .memberType(MemberType.ROLE_USER)
+                .authType(AuthType.GENERAL)
                 .build();
 
         Member newMember = memberRepository.save(member);

@@ -14,9 +14,8 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 public class SafetyIndex {
-    @Id
-    private int no;
 
+    @Id
     private String city;
 
     private double index; // 밀집
