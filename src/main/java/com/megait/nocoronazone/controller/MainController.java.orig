@@ -3,14 +3,21 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
+<<<<<<< HEAD
+import com.megait.nocoronazone.domain.*;
+=======
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.SafetyIndex;
+>>>>>>> 0df035424574bec7fb072319f060127c67d6e993
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
+<<<<<<< HEAD
+=======
 import com.megait.nocoronazone.form.LocationSearchForm;
 import com.megait.nocoronazone.form.SignUpForm;
+>>>>>>> 0df035424574bec7fb072319f060127c67d6e993
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.DetailSafetyService;

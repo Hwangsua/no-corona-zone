@@ -28,6 +28,10 @@ public class Mention {
     //    @Transient
     private String nickname;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0df035424574bec7fb072319f060127c67d6e993
     //    @PostLoad
     private void setNickname(){
         this.nickname = member.getNickname();
