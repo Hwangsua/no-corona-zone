@@ -31,8 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}",
                         "/chat", "/mention").permitAll()
 
-                .mvcMatchers("/menu/mobile_menu.html").permitAll()
-
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
 
                 .anyRequest().authenticated()
@@ -43,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .userInfoEndpoint()
 //                .userService(customOAuth2UserService)
 
-//                .and()
+                .and()
                 .and()
                 .formLogin()
                 .loginPage("/login")

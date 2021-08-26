@@ -51,11 +51,9 @@
                         </div>
                     </form>
                 </div>
-
-
-
                 <!-- 멘션 목록 -->
                 <div class="mention-list">
+                    <div onclick="location.href='/mention_detail'" class="mention-each">
                     <div class="mention-each" th:each="mention : ${mentionFormList}">
                         <div class="mention-left">
                             <div class="profile-img">
