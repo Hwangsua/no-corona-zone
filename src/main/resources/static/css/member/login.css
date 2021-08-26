@@ -58,5 +58,7 @@
     border: 1px solid lightgray;
     border-radius: 5px;
 }
-
-
+.naver-btn{
+    width: 280px;
+    height: 50px;
+}

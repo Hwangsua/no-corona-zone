@@ -3,15 +3,17 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
+import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
+import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.form.SignUpForm;
-import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.LocationSearchForm;
 import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
 import com.megait.nocoronazone.service.DetailSafetyService;
@@ -36,7 +38,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 import java.util.List;
+
 
 @Controller
 @Slf4j
@@ -53,7 +57,8 @@ public class MainController {
     private final ReMentionService reMentionService;
 
     String colorConfirmed = "235, 64, 52"; // red
-    String colorDensity = "158, 0, 158"; // purple
+//    String colorDensity = "158, 0, 158"; // purple
+    String colorDensity = "168, 118, 0"; // yellow
 
     // 전체
     String[] City = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종"};
@@ -86,9 +91,14 @@ public class MainController {
     String[] incheonDistrict = {"Jung-gu", "Dong-gu", "Michuhol-gu", "Yeonsu-gu", "Namdong-gu", "Bupyeong-gu", "Gyeyang-gu", "Seo-gu", "Ganghwa-gun", "Ongjin-gun"};
 
 
+
+
     // ================= 메인 ============================
     @RequestMapping("/")
     public String index(Model model) {
+        model.addAttribute("member", memberService);
+
+    
         List<SafetyIndex> safetyList = safetyService.getSafetyList();
         model.addAttribute("safetyList", safetyList);
         model.addAttribute("color", colorConfirmed);
@@ -111,15 +121,19 @@ public class MainController {
 
     @GetMapping("/density")
     public String density(Model model) {
+        List<SafetyIndex> safetyList = safetyService.getSafetyList();
+        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("color", colorDensity);
         for(int i = 0; i < City.length; ++i){
             model.addAttribute(City2[i], safetyService.getSafetytoAlpha(City[i]));
         }
-        model.addAttribute("color", colorDensity);
         return "index";
     }
 
     @GetMapping("/detail")
     public String detail(Model model, @Param(value = "district")String district) {
+        List<SafetyIndex> safetyList = safetyService.getSafetyList();
+        model.addAttribute("safetyList", safetyList);
         model.addAttribute("color", colorDensity);
         if (district.equals("Seoul")){
             for(int i = 0; i < seoulDistrict.length; ++i){
@@ -272,7 +286,6 @@ public class MainController {
 
         Member member = memberService.processNewUser(signUpForm);
 
-
         //memberService.login(member);
 
         return "/member/email_check";
@@ -296,21 +309,44 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile")
-    public String coSns_mypage() {
+    @GetMapping("/profile/{id}")
+    public String coSns_Memberpage() {
         return "co_sns/profile";
     }
 
+
+
     @GetMapping("/settings")
-    public String setUpForm(){
-        return "member/settings";
+    public String setting(Model model, @AuthenticationMember Member member){
+        model.addAttribute("member", memberService.getMember(member));
+        return "member/settings_test";
     }
 
-    @PostMapping("/settings")
-    public String setUpSubmit(){
+//    @PostMapping("/settings")
+//    public String updateMember(Model model, @Valid SettingForm settingForm, @AuthenticationMember Member member) {
+//        Member updateMember = memberService.updateMember(member.getNo(), settingForm);
+//        model.addAttribute("result", true);
+//
+//        return setting(model, member);
+//
+//    }
 
-        return "member/settings";
-    }
+
+
+//    //유저 검색
+//    @GetMapping("/admin")
+//    public Member findMember(@RequestParam Long no){
+//        Optional<Member> member = memberRepository.findByNo(no);
+//
+//        return member.get();
+//    }
+
+
+
+
+
+
+
 
     // ================= co_info ============================
 
@@ -318,8 +354,10 @@ public class MainController {
     public String vaccine(Model model) {
         VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
         int totalPopulation = vaccineXml.getTotalPopulation();
+        List<Integer> cityPopulationList = vaccineXml.getCityPopulation();
         model.addAttribute("vaccineCountVo", vaccineCountVo);
         model.addAttribute("totalPopulation", totalPopulation);
+        model.addAttribute("cityPopulationList", cityPopulationList);
         return "co_info/vaccine";
     }
 
@@ -347,6 +385,7 @@ public class MainController {
         List<Mention> mentionFormList = mentionService.getMentionlist();
 
         model.addAttribute("member", memberService);
+        model.addAttribute("mention",mentionService);
         model.addAttribute("mentionFormList", mentionFormList);
         model.addAttribute("mentionForm", new MentionForm());
         return "co_sns/timeline_follow";
@@ -356,7 +395,6 @@ public class MainController {
     @GetMapping("/timeline_location")
     public String timelineLocation(Model model)
     {
-        System.out.println("Get");
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
 

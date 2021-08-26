@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.List;
 
 @Service
 public class VaccineXml {
@@ -17,7 +18,6 @@ public class VaccineXml {
             String url = "https://nip.kdca.go.kr/irgd/cov19stats.do?list=all";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
-//            Document doc = builder.parse(new BufferedInputStream(new FileInputStream("cov19stats.xml")));
             Document doc = builder.parse(url);
             Element root = doc.getDocumentElement();
             NodeList list = root.getElementsByTagName("item");
@@ -62,7 +62,7 @@ public class VaccineXml {
             Element element = (Element)list.item(0);
             int totalPopulation = Integer.parseInt(element.getAttributes().getNamedItem("value").getNodeValue());
 
-        return totalPopulation;
+            return totalPopulation;
 
         }catch(Exception e){
             e.printStackTrace();
@@ -70,26 +70,28 @@ public class VaccineXml {
         return 0;
     }
 
-    public int getWeekVaccineCount() {
+    public List<Integer> getCityPopulation() {
         try{
-            String url = "";
+            String url = "https://kosis.kr/openapi/statisticsData.do?method=getList&apiKey=NjM5ZGVmMDJmOWFmYzBmYTFjNmM4OTg0NzhjZDhmMDY=&format=sdmx&jsonVD=Y&userStatsId=cmlh21/101/DT_1B040A3/2/1/20210826035602&type=Generic&prdSe=M&newEstPrdCnt=1&version=v2_1";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
             Document doc = builder.parse(url);
             Element root = doc.getDocumentElement();
-
-            NodeList list = root.getElementsByTagName("item");
-
-            Element element = (Element)list.item(0);
-            int totalPopulation = Integer.parseInt(element.getAttributes().getNamedItem("name").getNodeValue());
-
-            return totalPopulation;
-
+            NodeList list = root.getElementsByTagName("generic:Series");
+            List<Integer> cityPopulationList = null;
+            for(int i = 0; i < list.getLength(); i++){
+                Element element = (Element)list.item(i);
+                System.out.println(element);
+                NodeList list2 = element.getElementsByTagName("generic:Obs");
+                Element element2 = (Element)list2.item(1);
+                int cityPopulation = Integer.parseInt(element2.getAttributes().getNamedItem("value").getNodeValue());
+                cityPopulationList.add(cityPopulation);
+            }
+            return cityPopulationList;
         }catch(Exception e){
             e.printStackTrace();
         }
-
-        return 0;
+        return null;
     }
 
 }

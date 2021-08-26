@@ -5,11 +5,13 @@ import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
+@Slf4j
 public class OAuthAttributes {
     private final Map<String, Object> attributes;
     private final String nameAttributeKey;
@@ -32,11 +34,15 @@ public class OAuthAttributes {
     public static OAuthAttributes of(String registrationId,
                                      String userNameAttributeName,
                                      Map<String, Object> attributes) {
+        if ("naver".equals(registrationId)) {
+            return ofNaver("id", attributes);
+        }
         if ("facebook".equals(registrationId)) {
-            return ofFaceBook("id", attributes);
+            return ofFacebook("id",attributes);
         }
 
         return ofGoogle(userNameAttributeName, attributes);
+
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName,
@@ -51,7 +57,21 @@ public class OAuthAttributes {
                 .build();
     }
 
-    private static OAuthAttributes ofFaceBook(String userNameAttributeName,
+    private static OAuthAttributes ofNaver(String userNameAttributeName,
+                                           Map<String, Object> attributes) {
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profile_image"))
+                .authType(AuthType.NAVER)
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    private static OAuthAttributes ofFacebook(String userNameAttributeName,
                                            Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
@@ -65,13 +85,33 @@ public class OAuthAttributes {
                 .build();
     }
 
+
+//    private static OAuthAttributes ofFacebook(String userNameAttributeName, Map<String, Object> attributes) {
+//        String email = (String) attributes.get("email");
+//        if (email == null) {
+//            email = ((String) attributes.get("name")) + "@facebook.com";
+//        }
+//
+//        Map<String, Object> picture = (Map<String, Object>) attributes.get("picture");
+//        Map<String, Object> picture_data = (Map<String, Object>) picture.get("data");
+//        String picture_url = (String) picture_data.get("url");
+//
+//        return OAuthAttributes.builder()
+//                .name((String) attributes.get("name"))
+//                .email(email)
+//                .picture(picture_url)
+//                .authType(AuthType.FACEBOOK)
+//                .attributes(attributes)
+//                .nameAttributeKey(userNameAttributeName)
+//                .build();
+//    }
+
     public Member toEntity() {
         return Member.builder()
                 .name(name)
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
-                .certification(false)
-                .emailCheckToken("{noop}")
+                .certification(true)
                 .introduce("{noop}")
                 .nickname("{noop}")
                 .authType(authType)
