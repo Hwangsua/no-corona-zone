@@ -21,17 +21,7 @@ public class Mention {
     private Long no;
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id")
     private Member member;
-//    private String writer;
-
-    //    @Transient
-    private String nickname;
-
-    //    @PostLoad
-    private void setNickname(){
-        this.nickname = member.getNickname();
-    }
 
     @Length
     @NotNull

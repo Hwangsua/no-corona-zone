@@ -10,6 +10,7 @@ import com.megait.nocoronazone.service.MemberUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,27 +70,12 @@ public class MemberService implements UserDetailsService {
         return newMember;
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Optional<Member> optional = memberRepository.findByEmail(username);
-//        if (optional.isEmpty()){
-//            throw new UsernameNotFoundException(username);
-//        }
-//
-//        return new MemberUser(optional.get());
-//    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Member> optional = memberRepository.findByEmail(username);
-        System.out.println(username);
-        if(optional.isEmpty()){
-            log.info("없는 이메일로 로그인 시도.");
+        if (optional.isEmpty()){
             throw new UsernameNotFoundException(username);
         }
-
-        log.info("있는 이메일로 로그인 시도");
-        System.out.println(optional);
 
         return new MemberUser(optional.get());
     }
@@ -133,4 +119,41 @@ public class MemberService implements UserDetailsService {
         SecurityContext ctx = SecurityContextHolder.getContext();
         ctx.setAuthentication(token);
     }
+
+
+//    @Transactional
+//    public Member updateMember(Long no, SettingForm settingForm) {
+//        Member member = memberRepository.findByNo(no).get();
+//        member.update(settingForm);
+//
+//        return member;
+//    }
+
+
+//    public boolean modifyMember(Member request) {
+//        Member member;
+//        if (request.getNo() == null || request.getNo() == 0) {
+//            member = new Member();
+//            member.setNickname(request.getNickname());
+//            member.setPassword(request.getPassword());
+//            member.setIntroduce(request.getIntroduce());
+//            member.setCertification(request.isCertification());
+//        } else {
+//            member = request;
+//        }
+//        memberRepository.save(member);
+//        return true;
+//    }
+
+//    public boolean deleteMember(Member request) {
+//        memberRepository.deleteById(request.getNo());
+//        return true;
+//    }
+
+    public Object getMember(Member member) {
+        return memberRepository.getById(member.getNo());
+    }
 }
+
+
+

@@ -20,10 +20,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-
+                
                 .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**", "/map/**").permitAll()
 
-                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
+
+                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
@@ -45,12 +46,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .and()
                 .and()
                 .formLogin()
-                .loginPage("/login")  // 안해도 기본값이 이미 '/login'임
+                .loginPage("/login")
                 .defaultSuccessUrl("/", true)
 
                 .and()
                 .logout()
-                .logoutUrl("/logout") // 안해도 기본값이 이미 '/logout'임임
+                .logoutUrl("/logout")
                 .invalidateHttpSession(true) // 로그아웃했을때 세션을 갱신
                 .logoutSuccessUrl("/") // 로그아웃하면 메인으로 가게
         ;

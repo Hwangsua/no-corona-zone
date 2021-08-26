@@ -53,6 +53,12 @@ public class MentionService {
 
             mentionFormList.add(mention);
         }
+<<<<<<< HEAD
+//        System.out.println(mentionEntities);
+        System.out.println(mentionFormList);
+
+=======
+>>>>>>> d0a74133ade7b16a43fe890b8bce887459537e62
         return mentionFormList;
     }
 
