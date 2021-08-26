@@ -19,15 +19,19 @@
     text-align: center;
     border-radius: 5px;
 }
-.home-map {
-    width: 100%;
+.infection-info {
+    display: none;
 }
-.home-map .map {
+.home-map {
+    position: relative;
+    max-width: 100%;
+}
+.home-map svg {
     display: block;
     position: absolute;
     max-height: 800px;
     max-width: 100%;
-    margin: 10px auto;
+    margin-top: -80px;
 }
 .home-right {
     display: none;
@@ -94,23 +98,23 @@
     .infection-each-density {
         width: 70px;
         height: 30px;
-
     }
     .home-map {
         position: relative;
-        max-width: 650px;
-    }
-    .home-right {
-        display: block;
-        width: 250px;
+        width: 650px;
     }
     .home-map svg {
         display: block;
         position: absolute;
         max-height: 800px;
         max-width: 100%;
-        margin-top: -100px;
+        margin-top: -80px;
     }
+    .home-right {
+        display: block;
+        width: 250px;
+    }
+
 
 }
 

@@ -227,11 +227,9 @@ a {
         text-align: center;
         width: 300px;
     }
-    .home-btn {
-        font-weight: bold;
-        font-size: 1.7vw;
+    .icon-home:hover {
+        cursor: pointer;
     }
-
     a:hover {
         text-decoration: none;
     }

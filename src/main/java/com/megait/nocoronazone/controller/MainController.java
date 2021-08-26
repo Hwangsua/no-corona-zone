@@ -6,9 +6,9 @@ import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
+import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.form.SignUpForm;
-import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.LocationSearchForm;
@@ -57,7 +57,8 @@ public class MainController {
     private final ReMentionService reMentionService;
 
     String colorConfirmed = "235, 64, 52"; // red
-    String colorDensity = "158, 0, 158"; // purple
+//    String colorDensity = "158, 0, 158"; // purple
+    String colorDensity = "168, 118, 0"; // yellow
 
     // 전체
     String[] City = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종"};
@@ -120,15 +121,19 @@ public class MainController {
 
     @GetMapping("/density")
     public String density(Model model) {
+        List<SafetyIndex> safetyList = safetyService.getSafetyList();
+        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("color", colorDensity);
         for(int i = 0; i < City.length; ++i){
             model.addAttribute(City2[i], safetyService.getSafetytoAlpha(City[i]));
         }
-        model.addAttribute("color", colorDensity);
         return "index";
     }
 
     @GetMapping("/detail")
     public String detail(Model model, @Param(value = "district")String district) {
+        List<SafetyIndex> safetyList = safetyService.getSafetyList();
+        model.addAttribute("safetyList", safetyList);
         model.addAttribute("color", colorDensity);
         if (district.equals("Seoul")){
             for(int i = 0; i < seoulDistrict.length; ++i){
@@ -349,8 +354,10 @@ public class MainController {
     public String vaccine(Model model) {
         VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
         int totalPopulation = vaccineXml.getTotalPopulation();
+        List<Integer> cityPopulationList = vaccineXml.getCityPopulation();
         model.addAttribute("vaccineCountVo", vaccineCountVo);
         model.addAttribute("totalPopulation", totalPopulation);
+        model.addAttribute("cityPopulationList", cityPopulationList);
         return "co_info/vaccine";
     }
 
@@ -388,7 +395,6 @@ public class MainController {
     @GetMapping("/timeline_location")
     public String timelineLocation(Model model)
     {
-        System.out.println("Get");
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
 

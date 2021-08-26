@@ -87,6 +87,9 @@
             </svg>
         </div>
         <div class="home-right">
+<<<<<<< HEAD
+            <div class="news-img"></div>
+=======
             <div class="news-slide-container">
                 <div class="news-slide fade">
                     <img src="img/corona1.png">
@@ -142,6 +145,7 @@
                 }
             </script>
             <div class="chat"></div>
+>>>>>>> a3e57b36f28f51e6ab920daa137354452255d8c0
             <!-- 채팅 -->
             <div class="chat">
                 <div id="username-page">
