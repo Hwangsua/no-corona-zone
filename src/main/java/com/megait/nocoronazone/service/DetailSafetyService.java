@@ -23,7 +23,7 @@ public class DetailSafetyService {
 
         double result = getIndexByDistrict / detailSafetyIndexMax ;
 
-        return result;
+        return getIndexByDistrict;
     }
 
     public List<DetailSafetyIndex> getDetailSafetyIndexList() {

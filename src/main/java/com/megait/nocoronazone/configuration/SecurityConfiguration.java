@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .userInfoEndpoint()
 //                .userService(customOAuth2UserService)
 
-                .and()
+//                .and()
                 .and()
                 .formLogin()
                 .loginPage("/login")

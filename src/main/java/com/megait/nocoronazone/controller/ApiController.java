@@ -215,7 +215,7 @@ public class ApiController {
                     {
                         detail /= cnt2;
                         detailSafetyRepository.save(DetailSafetyIndex.builder()
-                                .district(lcode[i][j].siGunGu.toString())
+                                .district(lcode[i][j].siDo.toString()+"-"+lcode[i][j].siGunGu.toString())
                                 .index(detail)
                                 .build());
                         detail = 0;

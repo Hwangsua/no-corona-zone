@@ -3,7 +3,6 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
-import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
@@ -12,11 +11,9 @@ import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.LocationSearchForm;
-import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
-import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.MentionService;
 import com.megait.nocoronazone.service.SafetyService;
 import com.megait.nocoronazone.service.ReMentionService;
@@ -89,7 +86,8 @@ public class MainController {
     String[] ulsanDistrict = {"Jung-gu", "Nam-gu", "Dong-gu", "Buk-gu", "Ulju-gun"};
     // 인천
     String[] incheonDistrict = {"Jung-gu", "Dong-gu", "Michuhol-gu", "Yeonsu-gu", "Namdong-gu", "Bupyeong-gu", "Gyeyang-gu", "Seo-gu", "Ganghwa-gun", "Ongjin-gun"};
-
+    // 광주
+    String[] gwangjuDistrict = {"Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Gwangsan-gu"};
 
 
 
@@ -137,52 +135,52 @@ public class MainController {
         model.addAttribute("color", colorDensity);
         if (district.equals("Seoul")){
             for(int i = 0; i < seoulDistrict.length; ++i){
-                model.addAttribute(seoulDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(seoulDistrict[i]));
+                model.addAttribute(("Seoul-" + seoulDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Seoul-" + seoulDistrict[i]));
             }
             return "map/seoul";
         } else if (district.equals("Chungbuk")) {
             for (int i = 0; i < cbDistrict.length; ++i) {
-                model.addAttribute(cbDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(cbDistrict[i]));
+                model.addAttribute(("Chungcheongbuk-do-" + cbDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Chungcheongbuk-do-" + cbDistrict[i]));
             }
             return "map/chungbuk";
         } else if (district.equals("Chungnam")) {
             for (int i = 0; i < cnDistrict.length; ++i) {
-                model.addAttribute(cnDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(cnDistrict[i]));
+                model.addAttribute(("Chungcheongnam-do-" + cnDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Chungcheongnam-do-" + cnDistrict[i]));
             }
             return "map/chungnam";
         } else if (district.equals("Gyeongbuk")) {
             for (int i = 0; i < gbDistrict.length; ++i) {
-                model.addAttribute(gbDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(gbDistrict[i]));
+                model.addAttribute(("Gyeongsangbuk-do-" + gbDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gyeongsangbuk-do-" + gbDistrict[i]));
             }
             return "map/gyeongbuk";
         } else if (district.equals("Gyeongnam")) {
             for (int i = 0; i < gnDistrict.length; ++i) {
-                model.addAttribute(gnDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(gnDistrict[i]));
+                model.addAttribute(("Gyeongsangnam-do-" + gnDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gyeongsangnam-do-" + gnDistrict[i]));
             }
             return "map/gyeongnam";
         } else if (district.equals("Jeonbuk")) {
             for (int i = 0; i < jbDistrict.length; ++i) {
-                model.addAttribute(jbDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(jbDistrict[i]));
+                model.addAttribute(("Jeollabuk-do-" + jbDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Jeollabuk-do-" + jbDistrict[i]));
             }
             return "map/jeonbuk";
         } else if (district.equals("Jeonnam")) {
             for (int i = 0; i < jnDistrict.length; ++i) {
-                model.addAttribute(jnDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(jnDistrict[i]));
+                model.addAttribute(("Jeollanam-do-" + jnDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Jeollanam-do-" + jnDistrict[i]));
             }
             return "map/jeonnam";
         } else if (district.equals("Gyeonggi")) {
             for (int i = 0; i < ggDistrict.length; ++i) {
-                model.addAttribute(ggDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(ggDistrict[i]));
+                model.addAttribute(("Gyeonggi-do-" + ggDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gyeonggi-do-" + ggDistrict[i]));
             }
             return "map/gyeonggi";
         } else if (district.equals("Busan")) {
             for (int i = 0; i < busanDistrict.length; ++i) {
-                model.addAttribute(busanDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(busanDistrict[i]));
+                model.addAttribute(("Busan-" + busanDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Busan-" + busanDistrict[i]));
             }
             return "map/busan";
         } else if (district.equals("Gangwon")) {
             for (int i = 0; i < gangwonDistrict.length; ++i) {
-                model.addAttribute(gangwonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(gangwonDistrict[i]));
+                model.addAttribute(("Gangwon-do-" + gangwonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gangwon-do-" + gangwonDistrict[i]));
             }
             return "map/gangwon";
         } else if (district.equals("Jeju")) {
@@ -192,27 +190,27 @@ public class MainController {
             return "map/jeju";
         } else if (district.equals("Ulsan")) {
             for (int i = 0; i < ulsanDistrict.length; ++i) {
-                model.addAttribute(ulsanDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(ulsanDistrict[i]));
+                model.addAttribute(("Ulsan-" + ulsanDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Ulsan-" + ulsanDistrict[i]));
             }
-            return "map/Ulsan";
+            return "map/ulsan";
         } else if (district.equals("Incheon")) {
             for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+                model.addAttribute(("Incheon-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Incheon-" + incheonDistrict[i]));
             }
             return "map/incheon";
         } else if (district.equals("Daegu")) {
             for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+                model.addAttribute(("Daegu-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daegu-" + incheonDistrict[i]));
             }
             return "map/daegu";
         } else if (district.equals("Daejeon")) {
             for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+                model.addAttribute(("Daejeon-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daejeon-" + incheonDistrict[i]));
             }
             return "map/daejeon";
         } else if (district.equals("Gwangju")) {
-            for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+            for (int i = 0; i < gwangjuDistrict.length; ++i) {
+                model.addAttribute(("Gwangju-" + gwangjuDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gwangju-" + gwangjuDistrict[i]));
             }
             return "map/gwangju";
         }

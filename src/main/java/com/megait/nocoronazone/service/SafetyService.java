@@ -20,6 +20,10 @@ public class SafetyService {
         return safetyList;
     }
 
+    public double getSafety(String city) {
+        return safetyIndexRepository.maxIndex();
+    }
+
     public double getSafetytoAlpha(String city) {
         double safetyIndexMax = safetyIndexRepository.maxIndex();
         double getIndexByCity = safetyIndexRepository.getById(city).getIndex();
@@ -37,4 +41,6 @@ public class SafetyService {
 
         return result;
     }
+
+
 }

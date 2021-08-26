@@ -1,10 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='index', title='Welcome!'">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/map/seoul.css}" rel="stylesheet">
 </head>
-<body>
 
+<body>
+<div layout:fragment="content">
+    <div class="home">
+        <div class="home-left">
+            <div class="map-collect">
+                <a th:href="@{/infection}" class="map-collect-item infection" id="item-infection">확진</a>
+                <a th:href="@{/density}" class="map-collect-item density" id="item-density">밀집</a>
+                <a href="#" class="map-collect-item distancing" id="item-distancing">거리두기</a>
+            </div>
+            <div class="infection-info">
+                <div class="infection-list">
+                    <div class="infection-list-label">
+                        <span>지역</span>
+                        <span style="font-size: 0.8rem">오늘 확진자</span>
+                        <span style="font-size: 0.8rem">밀집도</span>
+                    </div>
+                    <div class="infection-each" th:each="safety : ${safetyList}">
+                        <div class="infection-each-city">
+                            <span th:text="${safety.city}"></span>
+                        </div>
+                        <div class="infection-each-confiremed">
+                            <span th:text="${safety.confirmed}"></span>
+                        </div>
+                        <div class="infection-each-density">
+                            <span th:text="${#numbers.formatDecimal(safety.index, 0, 2)}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 지도 -->
+        <div class="home-map" id="home-map">
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                 width="29000000px" height="2560.000000px" viewBox="0 0 4000.000000 2600.000000"
+                 preserveAspectRatio="xMidYMid meet" class="cb">
+
+            </svg>
+
+        </div>
+        <div class="home-right">
+            <div class="news-img"></div>
+            <div class="chat"></div>
+            <!-- 채팅 -->
+            <div>
+                <div id="username-page">
+                    <div class="username-page-container">
+                        <h2 class="title">채팅 아이디를 입력해주세요!</h2>
+                        <form id="usernameForm" name="usernameForm">
+                            <div class="form-group">
+                                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="accent username-submit">채팅 시작</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="chat-page" class="hidden">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h2>NCZ 채팅</h2>
+                        </div>
+                        <div class="connecting">
+                            Connecting...
+                        </div>
+                        <ul id="messageArea">
+
+                        </ul>
+                        <form id="messageForm" name="messageForm">
+                            <div class="form-group">
+                                <div class="input-group clearfix">
+                                    <input type="text" id="message" placeholder="메세지를 입력하세요" autocomplete="off" class="form-control"/>
+                                    <button type="submit" class="primary">보내기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- 채팅 끝 -->
+        </div>
+    </div>
+    <script>
+        // 지도 선택 버튼 색 지정
+        if(window.location.href.indexOf("detail") > -1){ // 밀집 지도일때
+            document.getElementById("item-density").style.background = "rgb(125, 204, 171)";
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/co_info/chat.js"></script>
+</div>
 </body>
 </html>

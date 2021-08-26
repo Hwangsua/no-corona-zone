@@ -9,8 +9,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-<!--    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣어&libraries=services"></script>-->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=149e69a18d8f97067783834a08df57e0&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣어&libraries=services"></script>
     <script src="/js/co_sns/timeline.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
 
@@ -54,33 +53,34 @@
                 <!-- 멘션 목록 -->
                 <div class="mention-list">
                     <div onclick="location.href='/mention_detail'" class="mention-each">
-                    <div class="mention-each" th:each="mention : ${mentionFormList}">
-                        <div class="mention-left">
-                            <div class="profile-img">
-                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                                         width="60" height="60" class="rounded border bg-light"></svg>
-                            </div>
-                        </div>
-                        <div class="mention-right">
-                            <div class="mention-info">
-                                <div class="nickname">
-                                    <span th:text="${mention.member.nickname}"></span>
-                                </div>
-                                <div class="vaccine">
-                                    <img src="img/vaccine.png" alt="" class="vaccine">
-                                </div>
-                                <div class="location">
-                                    <span th:text="${mention.location}"></span>
-                                </div>
-                                <div class="dot">·</div>
-                                <div class="upload-time">
-                                    <span class="viewTime" th:text="${mention.regdate}"></span>
+                        <div class="mention-each" th:each="mention : ${mentionFormList}">
+                            <div class="mention-left">
+                                <div class="profile-img">
+                                        <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                             width="60" height="60" class="rounded border bg-light"></svg>
                                 </div>
                             </div>
-                            <div class="content">
-                                <a th:href="@{'/mention_detail/' + ${mention.no}}">
-                                    <span th:text="${mention.content}"></span>
-                                </a>
+                            <div class="mention-right">
+                                <div class="mention-info">
+                                    <div class="nickname">
+                                        <span th:text="${mention.member.nickname}"></span>
+                                    </div>
+                                    <div class="vaccine">
+                                        <img src="img/vaccine.png" alt="" class="vaccine">
+                                    </div>
+                                    <div class="location">
+                                        <span th:text="${mention.location}"></span>
+                                    </div>
+                                    <div class="dot">·</div>
+                                    <div class="upload-time">
+                                        <span class="viewTime" th:text="${mention.regdate}"></span>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <a th:href="@{'/mention_detail/' + ${mention.no}}">
+                                        <span th:text="${mention.content}"></span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -262,6 +262,6 @@
     </script>
 </div>
 
-
+</div>
 </body>
 </html>
