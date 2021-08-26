@@ -3,17 +3,15 @@ package com.megait.nocoronazone.controller;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.google.gson.JsonObject;
-import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
+import com.megait.nocoronazone.form.LocationSearchForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
-import com.megait.nocoronazone.service.MemberUser;
-import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.MentionService;
 import com.megait.nocoronazone.service.ReMentionService;
@@ -206,8 +204,25 @@ public class MainController {
 
     //타임라인(위치)
     @GetMapping("/timeline_location")
-    public String timelineLocation(){
+    public String timelineLocation(Model model)
+    {
+        System.out.println("Get");
+        model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
+
+    }
+
+    @PostMapping("/timeline_location")
+    public String searchLocation(@Valid LocationSearchForm locationSearchForm, Errors errors, Model model)
+    {
+        System.out.println("Post");
+        double lx = locationSearchForm.getLatitude();
+        double ly = locationSearchForm.getLongitude();
+
+        model.addAttribute("mentionList", mentionService.getNearLocationMentionList(lx, ly));
+
+        return "co_sns/timeline_location";
+
     }
 
     @PostMapping("/timeline_follow")

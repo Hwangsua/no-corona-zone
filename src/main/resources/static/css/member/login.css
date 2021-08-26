@@ -3,7 +3,7 @@
     border: none;
 }
 .login-header{
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 .login-title{
@@ -17,11 +17,12 @@
     height: 50px;
     border: none;
     border-radius: 5px;
+    background-color: rgb(125, 204, 171);
+    color: white;
+    font-weight: bold;
 }
 .item{
     margin-top: 15px;
-}
-.login-buttons{
 }
 .form-group{
     width: 280px;
