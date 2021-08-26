@@ -5,8 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.UUID;
 
-// @DynamicInsert : 현재 들어있는(설정되어있는) 값만 넣는다. @columnDefault로 값 설정
-// @DynamicUpdate : 현재 엔티티에 적용되어있는 설정된 값만 변경한다.
 
 @Entity
 @Getter
@@ -45,6 +43,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
+
     public void generateEmailCheckToken(){
         emailCheckToken = UUID.randomUUID().toString();
     }
@@ -56,4 +55,43 @@ public class Member {
     public void completeSignup(){
         emailVerified = true;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public boolean isCertification() {
+        return certification;
+    }
+
+    public void setCertification(boolean certification) {
+        this.certification = certification;
+    }
+
+//    public void update(SettingForm settingForm) {
+//        this.nickname = settingForm.getNickname();
+//        this.password = settingForm.getPassword();
+////        this.email = settingForm.getEmail();
+//        this.introduce = settingForm.getIntroduce();
+//    }
 }

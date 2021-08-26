@@ -1,7 +1,5 @@
 package com.megait.nocoronazone.configuration;
 
-import com.megait.nocoronazone.service.MemberService;
-//import com.megait.nocoronazone.service.SnsMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +19,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                 .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**").permitAll()
 
-                .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**").permitAll()
 
-                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout","/settings",
+
+                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",

@@ -6,9 +6,12 @@
       layout:decorate="~{layout/common_layout}" th:with="activeTab='timeline', title='Timeline'">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣기 &libraries=services"></script>
-    <script src="/js/co_sns/timeline.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+
 
 </head>
 <body>
@@ -38,7 +41,6 @@
                                 <input type="hidden" th:field="*{location}" class="search-text" name="location-name" id ="location-name">
                                 <input type="hidden" th:field="*{latitude}" name="location-latitude" id ="location-latitude">
                                 <input type="hidden" th:field="*{longitude}" name="location-longitude" id ="location-longitude">
-                                <!--                            <input type="text" class="location-text" placeholder="위치 검색">-->
                             </div>
 
                             <div class="mention-btn">
@@ -53,72 +55,36 @@
 
                 <!-- 멘션 목록 -->
                 <div class="mention-list">
-                    <div class="mention-each">
+                    <div class="mention-each" th:each="mention : ${mentionFormList}">
                         <div class="mention-left">
                             <div class="profile-img">
-                                <style>
-                                    .identicon {height:70px; width:70px;}
-                                </style>
-
-                                <img class="identicon" data-id="hazsoo" />
-
-                                    <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>
-                                    <script src="//cdnjs.cloudflare.com/ajax/libs/identicon.js/2.3.3/identicon.min.js"></script>
-                                    <script>
-                                        $(".identicon").each(function() {
-                                            var hash = md5($(this).data('id')).toString();
-                                            var data = new Identicon(hash,{format:'svg'}).toString();
-                                            $(this).attr('src', "data:image/svg+xml;base64,"+data);
-                                        });
-                                    </script>
-
+                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                         width="60" height="60" class="rounded border bg-light"></svg>
                             </div>
                         </div>
                         <div class="mention-right">
                             <div class="mention-info">
-                                <div class="nickname">닉네임</div>
+                                <div class="nickname">
+                                    <span th:text="${mention.member.nickname}"></span>
+                                </div>
                                 <div class="vaccine">
                                     <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
-                                <div class="location">롯데월드</div>
+                                <div class="location">
+                                    <span th:text="${mention.location}"></span>
+                                </div>
                                 <div class="dot">·</div>
-                                <div class="upload-time">20시간</div>
+                                <div class="upload-time">
+                                    <span class="viewTime" th:text="${mention.regdate}"></span>
+                                </div>
                             </div>
-                            <div class="content">가나다라마바다아자차카타파하!!!!!!!!</div>
-                        </div>
-                    </div>
-
-                    <table>
-                        <thead>
-                        <tr>
-                            <th class="one wide">번호</th>
-                            <th class="ten wide">글 내용</th>
-<!--                            <th class="two wide">작성자</th>-->
-                            <th class="three wide">작성일</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        CONTENTS !
-                        <tr th:each="mention : ${mentionFormList}">
-                            <td>
-                                <span th:text="${mention.no}"></span>
-                            </td>
-                            <td>
+                            <div class="content">
                                 <a th:href="@{'/mention_detail/' + ${mention.no}}">
                                     <span th:text="${mention.content}"></span>
                                 </a>
-                            </td>
-<!--                            <td>-->
-<!--                                <span th:text="${mention.nickname}"></span>-->
-<!--                            </td>-->
-                            <td>
-                                <span th:text="${mention.regdate}"></span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,6 +133,7 @@
 
         </div>
     </div>
+
 
 
     <script>

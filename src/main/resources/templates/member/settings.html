@@ -8,68 +8,73 @@
 </head>
 <body>
 <div layout:fragment="content">
-  <div class="container">
-    <form action="" method="post" name="settings">
-      <div class="settings-header">
-        <div class="header-item1">정보수정</div>
-        <div class="header-item2">
-          <button class="btn-style" type="submit">저장</button>
+  <div className="container">
+    <form action="/settings" method="patch" name="settings">
+      <div className="settings-header">
+        <div className="header-item1">정보수정</div>
+        <div className="header-item2">
+          <button className="btn-style" type="submit">저장</button>
         </div>
       </div>
-      <div class="hr"></div>
-      <div class="none" style="visibility: hidden;height: 25px"></div>
-      <div class="content">
-        <div class="content-list">
-          <label for="email" class="content-name">아이디</label>
-          <div class="content-name-value">
-            <input type="text" class="form-control"
-                   id="email" name="user-email" disabled>
+      <div className="hr"></div>
+      <div className="none" style="visibility: hidden;height: 25px"></div>
+      <div className="content">
+        <div className="content-list">
+          <label htmlFor="email" className="content-name">아이디</label>
+          <div className="content-name-value">
+            <input type="text" className="form-control" id="email" name="user-email" disabled>
           </div>
         </div>
-        <div class="content-list">
-          <label for="nickname" class="content-name">닉네임</label>
-          <div class="content-name-value">
-            <input type="text" class="form-control"
-                   id="nickname" name="user-nickname">
+        <div className="content-list">
+          <label htmlFor="nickname" className="content-name">닉네임</label>
+          <div className="content-name-value">
+            <input type="text" className="form-control" id="nickname" name="user-nickname">
           </div>
         </div>
-        <div class="content-list">
-          <label for="password" class="content-name">비밀번호</label>
-          <div class="content-name-value">
-            <input type="password" class="form-control"
-                   id="password" name="user-pw">
+        <div className="content-list">
+          <label htmlFor="password" className="content-name">비밀번호</label>
+          <div className="content-name-value">
+            <input type="password" className="form-control" id="password" name="user-pw">
           </div>
         </div>
-        <div class="content-list">
-          <label for="password-ck" class="content-name">비밀번호 확인</label>
-          <div class="content-name-value">
-            <input type="password" class="form-control"
-                   id="password-ck" name="user-pw-ck">
+        <div className="content-list">
+          <label htmlFor="password-ck" className="content-name">비밀번호 확인</label>
+          <div className="content-name-value">
+            <input type="password" className="form-control" id="password-ck" name="user-pw-ck">
           </div>
         </div>
-        <div class="content-list-small">
-          <span class="content-name">프로필 사진</span>
-        </div>
-        <div class="content-list content-img">
-          <div class="content-name">
-            <div class="profile"></div>
+        <div className="content-list">
+          <label htmlFor="introduce" className="content-introduce">자기소개</label>
+          <div className="content-introduce-value">
+            <input type="text" className="form-control" id="introduce" name="user-introduce">
           </div>
-          <div class="content-name-value">
-            <label for="profile-img" class="upload-btn">upload</label>
-            <input type="file" class="form-control"
+        </div>
+
+
+        <div className="content-list-small">
+          <span className="content-name">프로필 사진</span>
+        </div>
+        <div className="content-list content-img">
+          <div className="content-name">
+            <div className="profile"></div>
+          </div>
+
+          <div className="content-name-value">
+            <label htmlFor="profile-img" className="upload-btn">upload</label>
+            <input type="file" className="form-control"
                    id="profile-img" name="user-img" style="display: none">
           </div>
         </div>
-        <div class="content-list-small">
-          <span class="content-name">백신 이미지</span>
+        <div className="content-list-small">
+          <span className="content-name">백신 이미지</span>
         </div>
-        <div class="content-list content-img">
-          <div class="content-name">
-            <div class="vaccine"></div>
+        <div className="content-list content-img">
+          <div className="content-name">
+            <div className="vaccine"></div>
           </div>
-          <div class="content-name-value">
-            <label for="vaccine-img" class="upload-btn">upload</label>
-            <input type="file" class="form-control"
+          <div className="content-name-value">
+            <label htmlFor="vaccine-img" className="upload-btn">upload</label>
+            <input type="file" className="form-control"
                    id="vaccine-img" name="vaccine-img" style="display: none">
           </div>
         </div>
