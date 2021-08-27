@@ -9,9 +9,16 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣어&libraries=services"></script>
-    <script src="/js/co_sns/timeline.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb2c655475454d2f0e54c0e3f5e5d1ff&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+    <script>
+        $(document).ready(function () {
+
+            if([[${result}]]) {
+                alert('삭제 성공!');
+            }
+        });
+    </script>
 
 </head>
 <body>
@@ -32,7 +39,7 @@
                 <div class="mention-write">
                     <form id="mention-form" method="post" th:object="${mentionForm}" th:action="@{timeline_follow}">
                         <div class="mention-write-text">
-                            <textarea name="content" th:field="*{content}" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>
+                            <textarea class="content" name="content" th:field="*{content}" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>
                         </div>
                         <div class="mention-write-submit">
 
@@ -43,7 +50,7 @@
                                 <input type="hidden" th:field="*{longitude}" name="location-longitude" id ="location-longitude">
                             </div>
 
-                            <div class="mention-btn">
+                            <div class="mention-btn" >
                                 <input type="submit" value="올리기">
                             </div>
 
@@ -65,7 +72,9 @@
                         <div class="mention-right">
                             <div class="mention-info">
                                 <div class="nickname">
-                                    <span th:text="${mention.member.nickname}"></span>
+                                    <a th:href="@{'/profile/' + ${mention.member.nickname}}">
+                                        <span th:text="${mention.member.nickname}"></span>
+                                    </a>
                                 </div>
                                 <div class="vaccine">
                                     <img src="img/vaccine.png" alt="" class="vaccine">
@@ -75,7 +84,7 @@
                                 </div>
                                 <div class="dot">·</div>
                                 <div class="upload-time">
-                                    <span class="viewTime" th:text="${mention.regdate}"></span>
+                                    <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
                                 </div>
                             </div>
                             <div class="content">
@@ -83,14 +92,21 @@
                                     <span th:text="${mention.content}"></span>
                                 </a>
                             </div>
+                            <div class="delete">
+
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- 멘션 끝!! -->
+
             </div>
         </div>
         <div class="sidebar">
             <div class="search">
-                <input type="textarea" class="search-text" placeholder="멘션 검색하기">
+                <form method="get" name="search-mention" th:action="@{search}">
+                    <input type="text" class="search-mention" name="keyword" placeholder="멘션 검색하기">
+                </form>
             </div>
             <div class="trend">
                 <div class="trend-box">

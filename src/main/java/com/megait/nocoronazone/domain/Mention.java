@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @ToString
+@Data
 public class Mention {
 
     @Id @GeneratedValue

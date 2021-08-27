@@ -127,33 +127,33 @@
             <!-- 채팅 끝 -->
         </div>
     </div>
-<!--    <script>-->
+    <script>
 
-<!--        function changeMap(district) {-->
-<!--            document.querySelector('.home-map').add('.district-hidden');-->
-<!--            document.querySelector(district).remove('.district-hidden');-->
-<!--        }-->
-<!--    </script>-->
-
-
-<!--    <script>-->
-<!--        $('.density').on('click',function() {-->
-<!--            var cbDistrict = ["Boeun-gun", "Cheongju-si", "Chungju-si", "Danyang-gun", "Goesan-gun", "Jecheon-si", "Jeungpyeong-gun", "Jincheon-gun", "Okcheon-gun", "Eumseong-gun", "Yeongdong-gun"];-->
-<!--            var cbDistrict2 = ["Boeun_gun", "Cheongju_si", "Chungju_si", "Danyang_gun", "Goesan_gun", "Jecheon_si", "Jeungpyeong_gun", "Jincheon_gun", "Okcheon_gun", "Eumseong_gun", "Yeongdong_gun"];-->
+        function changeMap(district) {
+            document.querySelector('.home-map').add('.district-hidden');
+            document.querySelector(district).remove('.district-hidden');
+        }
+    </script>
 
 
-<!--            $.ajax({-->
-<!--                url: "/density",-->
-<!--                data: {-->
-<!--                    "cbDistrict": cbDistrict,-->
-<!--                    "cbDistrict2": cbDistrict2-->
-<!--                },-->
-<!--                success: function () {-->
+    <script>
+        $('.density').on('click',function() {
+            var cbDistrict = ["Boeun-gun", "Cheongju-si", "Chungju-si", "Danyang-gun", "Goesan-gun", "Jecheon-si", "Jeungpyeong-gun", "Jincheon-gun", "Okcheon-gun", "Eumseong-gun", "Yeongdong-gun"];
+            var cbDistrict2 = ["Boeun_gun", "Cheongju_si", "Chungju_si", "Danyang_gun", "Goesan_gun", "Jecheon_si", "Jeungpyeong_gun", "Jincheon_gun", "Okcheon_gun", "Eumseong_gun", "Yeongdong_gun"];
 
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    </script>-->
+
+            $.ajax({
+                url: "/density",
+                data: {
+                    "cbDistrict": cbDistrict,
+                    "cbDistrict2": cbDistrict2
+                },
+                success: function () {
+
+                }
+            });
+        });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

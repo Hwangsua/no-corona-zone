@@ -3,20 +3,15 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
-import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.SafetyIndex;
-import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.form.*;
 import com.megait.nocoronazone.domain.Mention;
-import com.megait.nocoronazone.form.MentionForm;
-import com.megait.nocoronazone.form.ReMentionForm;
-import com.megait.nocoronazone.form.LocationSearchForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
-import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.MentionService;
 import com.megait.nocoronazone.service.SafetyService;
 import com.megait.nocoronazone.service.ReMentionService;
@@ -40,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -97,7 +93,7 @@ public class MainController {
     public String index(Model model) {
         model.addAttribute("member", memberService);
 
-    
+
         List<SafetyIndex> safetyList = safetyService.getSafetyList();
         model.addAttribute("safetyList", safetyList);
         model.addAttribute("color", colorConfirmed);
@@ -281,7 +277,7 @@ public class MainController {
 
         Member member = memberService.processNewUser(signUpForm);
 
-        //memberService.login(member);
+        memberService.login(member);
 
         return "/member/email_check";
     }
@@ -304,8 +300,15 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile/{id}")
-    public String coSns_Memberpage() {
+    @GetMapping("/profile/{nickname}")
+    public String profilePage(@PathVariable String nickname, Model model) {
+
+        List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
+        Member profileMember = memberService.getNicknameMember(nickname);
+        model.addAttribute("profileMember", profileMember);
+        model.addAttribute("memberMentionList", memberMentionList);
+
+
         return "co_sns/profile";
     }
 
@@ -314,34 +317,19 @@ public class MainController {
     @GetMapping("/settings")
     public String setting(Model model, @AuthenticationMember Member member){
         model.addAttribute("member", memberService.getMember(member));
-        return "member/settings_test";
+        return "member/settings";
     }
 
-//    @PostMapping("/settings")
-//    public String updateMember(Model model, @Valid SettingForm settingForm, @AuthenticationMember Member member) {
-//        Member updateMember = memberService.updateMember(member.getNo(), settingForm);
-//        model.addAttribute("result", true);
-//
-//        return setting(model, member);
-//
-//    }
+    @PostMapping("/settings")
+    public String updateMember(Model model, @Valid SettingForm settingForm, @AuthenticationMember Member member) {
 
+            Member updateMember = memberService.updateMember(member.getNo(), settingForm);
+            model.addAttribute("updateMember",updateMember);
+            model.addAttribute("result", true);
 
+        return setting(model, member);
 
-//    //유저 검색
-//    @GetMapping("/admin")
-//    public Member findMember(@RequestParam Long no){
-//        Optional<Member> member = memberRepository.findByNo(no);
-//
-//        return member.get();
-//    }
-
-
-
-
-
-
-
+    }
 
     // ================= co_info ============================
 
@@ -375,6 +363,7 @@ public class MainController {
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
     public String timelineFollow(Model model){
+
         List<Mention> mentionFormList = mentionService.getMentionlist();
 
         model.addAttribute("member", memberService);
@@ -420,13 +409,13 @@ public class MainController {
     }
 
     @GetMapping("/mention_detail/{no}")
-    public String mentionDetail(@PathVariable Long no, Model model){
-
+    public String mentionDetail(@PathVariable Long no, Model model, @AuthenticationMember Member member){
         try {
             Mention parentMention = mentionService.getMention(no);
             model.addAttribute("mention", parentMention );
             model.addAttribute("reMentionForm", new ReMentionForm());
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+            model.addAttribute("member", memberService.getMember(member));
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }
@@ -437,10 +426,12 @@ public class MainController {
     @PostMapping("/remention")
     public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model){
 
+
         try {
             Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
             reMentionService.saveReMention(member, parentMention,reMentionForm);
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+            model.addAttribute("member", memberService.getMember(member));
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }
@@ -448,10 +439,30 @@ public class MainController {
         return "co_sns/mention_detail :: #re-mention-list";
     }
 
+
     @GetMapping("/search")
-    public String searchCoSns(){
-        return "co_sns/search";
+    public String search(@RequestParam(value="keyword") String keyword, Model model) {
+        List<Mention> mentionFormList = mentionService.searchMentions(keyword);
+
+        model.addAttribute("member", memberService);
+        model.addAttribute("mention",mentionService);
+        model.addAttribute("mentionFormList", mentionFormList);
+        model.addAttribute("mentionForm", new MentionForm());
+
+        return "co_sns/timeline_follow";
+
     }
+
+
+    @PostMapping("/delete/{no}")
+    public String delete(@PathVariable Long no,Model model){
+
+        mentionService.deleteMention(no);
+        model.addAttribute("result", true);
+
+        return "redirect:/timeline_follow";
+    }
+
 
     //TODO - 트렌드, 강사님이 도와주신다고 하심
 
@@ -465,9 +476,5 @@ public class MainController {
 //        return "co_sns/follower";
 //    }
 
-//    @GetMapping("/{nickname}")
-//    public String profile(@PathVariable String nickname){
-//        return "co_sns/profile";
-//    }
 
 }
