@@ -13,13 +13,8 @@ import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.LocationSearchForm;
 import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.service.*;
 import com.megait.nocoronazone.service.DetailSafetyService;
-import com.megait.nocoronazone.service.CustomOAuth2UserService;
-import com.megait.nocoronazone.service.MemberService;
-import com.megait.nocoronazone.service.DetailSafetyService;
-import com.megait.nocoronazone.service.MentionService;
-import com.megait.nocoronazone.service.SafetyService;
-import com.megait.nocoronazone.service.ReMentionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -39,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -50,6 +46,7 @@ public class MainController {
     private final DetailSafetyService detailSafetyService;
     private final SafetyService safetyService;
     private final VaccineXml vaccineXml;
+    private final ArticleService articleService;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final HttpSession httpSession;
     private final MemberService memberService;
@@ -358,6 +355,13 @@ public class MainController {
         model.addAttribute("vaccineCountVo", vaccineCountVo);
         model.addAttribute("totalPopulation", totalPopulation);
         model.addAttribute("cityPopulationList", cityPopulationList);
+
+        try {
+            model.addAttribute("articleList",articleService.getVaccineArticleList());
+        }catch (IOException  e){
+            e.printStackTrace();
+        }
+
         return "co_info/vaccine";
     }
 
@@ -372,10 +376,33 @@ public class MainController {
     @GetMapping("/video")
     public String co_info_video() { return "/co_info/video";}
 
-    @GetMapping("/article")
-    public String article() {
+    @RequestMapping("/article")
+    public String article(Model model) {
+
+        try {
+            model.addAttribute("articleList",articleService.getLocalArticleList("서울", "전체"));
+        }catch (IOException  e){
+            e.printStackTrace();
+            //return "" //TODO - 점검페이지가 있으면 어떨까..
+        }
+
         return "co_info/article";
     }
+
+    @GetMapping("/local_article")
+    public String article(@RequestParam String mainCityName, @RequestParam String subCityName, Model model){
+
+        try {
+            model.addAttribute("articleList",articleService.getLocalArticleList(mainCityName, subCityName));
+        }catch (IOException e){
+            e.printStackTrace();
+            // return "점검 페이지"
+        }
+
+        return "/co_info/article :: #article-list";
+    }
+
+
 
     // ================= co_sns ============================
 
@@ -388,6 +415,7 @@ public class MainController {
         model.addAttribute("mention",mentionService);
         model.addAttribute("mentionFormList", mentionFormList);
         model.addAttribute("mentionForm", new MentionForm());
+
         return "co_sns/timeline_follow";
     }
 
@@ -433,6 +461,7 @@ public class MainController {
             model.addAttribute("mention", parentMention );
             model.addAttribute("reMentionForm", new ReMentionForm());
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }
@@ -447,6 +476,7 @@ public class MainController {
             Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
             reMentionService.saveReMention(member, parentMention,reMentionForm);
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }

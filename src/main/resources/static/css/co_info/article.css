@@ -60,12 +60,13 @@
         padding: 10px;
     }
     .article-thumbnail-img {
-        height: 112px;
+        height: auto;
         width: 112px;
     }
     .article-content {
         display: flex;
         flex-direction: column;
+        height: auto;
         gap: 7px 0;
         margin: 5px;
     }

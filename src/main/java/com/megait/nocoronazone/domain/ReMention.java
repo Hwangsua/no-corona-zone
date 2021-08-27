@@ -26,6 +26,9 @@ public class ReMention {
 
     private LocalDateTime regdate;
 
+    @Transient
+    private String nlString;
+
     @Builder
     public ReMention(){
         regdate = LocalDateTime.now();

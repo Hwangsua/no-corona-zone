@@ -7,8 +7,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">    
-   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣어&libraries=services"></script>
+    <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오api키&libraries=services"></script>
 
 </head>
 <body>
@@ -68,7 +68,7 @@
                                 <div class="dot">·</div>
                                 <div class="upload-time" th:text="${mention.regdate}">20시간</div>
                             </div>
-                            <div class="content" th:text="${mention.content}">가나다라마바다아자차카타파하!!!!!!!!</div>
+                            <div class="content" th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!</div>
                         </div>
                     </div>
                 </div>

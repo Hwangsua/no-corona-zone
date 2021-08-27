@@ -79,61 +79,61 @@
                         </div>
                     </div>
                     <div class="mention-bottom">
-                        <div class="content" th:text="${mention.content}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
+                        <div class="content" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
                         <div class="mention-info">
-                            <div class="upload-time" th:text="${mention.regdate}">2021년 8월 22일 오후 4:27</div>
-                            <div class="dot">·</div>
-                            <div class="location" th:text="${mention.location}">롯데월드</div>
-                        </div>
+                        <div class="upload-time" th:text="${mention.regdate}">2021년 8월 22일 오후 4:27</div>
+                        <div class="dot">·</div>
+                        <div class="location" th:text="${mention.location}">롯데월드</div>
                     </div>
-                </div>
-                <div class="remention-content" >
-                    <form id="re-mention-form" th:object="${reMentionForm}" >
-                        <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
-                        <div class="profile-img">
-                            <img class="identicon" data-id="hazsoo"/>
-                        </div>
-                        <div class="remention-write">
-                            <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
-                        </div>
-                        <div class="remention-write-submit" id="remention-save-btn">
-                            <div class="remention-btn">
-                                <p class="remention-btn-text" >말하기</p>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-                <div id = "re-mention-list">
-                    <div th:each="reMention:${reMentionList}">
-                        <div class="re-mention-info">
-                            <img class="identicon">
-                            <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
-                            <div id="re-mention-content" th:text="${reMention.content}">내용</div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-        </div>
-        <div class="sidebar">
-            <div class="search">
-                <input type="textarea" class="search-text" placeholder="멘션 검색하기">
-            </div>
-            <div class="trend">
-                <div class="trend-box">
-                    <div class="trend-head">
-                        실시간 트렌드
+            <div class="remention-content" >
+                <form id="re-mention-form" th:object="${reMentionForm}" >
+                    <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
+                    <div class="profile-img">
+                        <img class="identicon" data-id="hazsoo"/>
                     </div>
-                    <div class="trend-rank 1">1</div>
-                    <div class="trend-rank 2">2</div>
-                    <div class="trend-rank 3">3</div>
-                    <div class="trend-rank 4">4</div>
-                    <div class="trend-rank 5">5</div>
+                    <div class="remention-write">
+                        <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
+                    </div>
+                    <div class="remention-write-submit" id="remention-save-btn">
+                        <div class="remention-btn">
+                            <p class="remention-btn-text" >말하기</p>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div id = "re-mention-list">
+                <div th:each="reMention:${reMentionList}">
+                    <div class="re-mention-info">
+                        <img class="identicon">
+                        <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
+                        <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
+    <div class="sidebar">
+        <div class="search">
+            <input type="textarea" class="search-text" placeholder="멘션 검색하기">
+        </div>
+        <div class="trend">
+            <div class="trend-box">
+                <div class="trend-head">
+                    실시간 트렌드
+                </div>
+                <div class="trend-rank 1">1</div>
+                <div class="trend-rank 2">2</div>
+                <div class="trend-rank 3">3</div>
+                <div class="trend-rank 4">4</div>
+                <div class="trend-rank 5">5</div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>
