@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @ToString
+@Data
 public class Mention {
 
     @Id @GeneratedValue
@@ -28,6 +29,7 @@ public class Mention {
     @Length
     @NotNull
     private String content;
+
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -41,6 +43,9 @@ public class Mention {
 
     @OneToMany(mappedBy = "mention", cascade = CascadeType.ALL)
     private List<ReMention> reMentions;
+
+    @Transient
+    private String nlString;
 
     @Builder
     public Mention(){

@@ -42,6 +42,7 @@ public class ReMentionService {
                     .no(r.getNo())
                     .member(r.getMember())
                     .content(r.getContent())
+                    .nlString(System.getProperty("line.separator").toString())
                     .regdate(r.getRegdate())
                     .build();
 

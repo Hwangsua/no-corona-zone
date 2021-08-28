@@ -9,8 +9,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb2c655475454d2f0e54c0e3f5e5d1ff&libraries=services"></script>
-    <script src="/js/co_sns/timeline.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오api키&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
 
 </head>
@@ -29,7 +28,7 @@
                 <div class="mention-write">
                     <form id="mention-form" method="post" th:object="${mentionForm}" th:action="@{timeline_follow}">
                         <div class="mention-write-text">
-                            <textarea name="content" th:field="*{content}" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>
+                            <textarea class="content" name="content" th:field="*{content}" id="content" placeholder="무슨 일이 일어나고 있나요?"></textarea>
                         </div>
                         <div class="mention-write-submit">
                             <div class="mention-location">
@@ -38,8 +37,9 @@
                                 <input type="hidden" th:field="*{latitude}" name="location-latitude" id ="location-latitude">
                                 <input type="hidden" th:field="*{longitude}" name="location-longitude" id ="location-longitude">
                             </div>
-                            <div class="mention-btn">
-                                <button type="submit" class="submit-btn">올리기</button>
+
+                            <div class="mention-btn" >
+                                <input type="submit" value="올리기">
                             </div>
                         </div>
                     </form>
@@ -52,6 +52,17 @@
                                 <div class="profile-img">
                                     <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
                                          width="60" height="60" class="rounded border bg-light"></svg>
+                            </div>
+                        </div>
+                        <div class="mention-right">
+                            <div class="mention-info">
+                                <div class="nickname">
+                                    <a th:href="@{'/profile/' + ${mention.member.nickname}}">
+                                        <span th:text="${mention.member.nickname}"></span>
+                                    </a>
+                                </div>
+                                <div class="vaccine">
+                                    <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
                             </div>
                             <div class="mention-right">
@@ -72,20 +83,28 @@
                                         <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
                                     </div>
                                 </div>
-                                <div class="content">
-                                    <a th:href="@{'/mention_detail/' + ${mention.no}}">
-                                        <span th:text="${mention.content}"></span>
-                                    </a>
+                                <div class="dot">·</div>
+                                <div class="upload-time">
+                                    <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
                                 </div>
                             </div>
+                            <div class="content">
+                                <a th:href="@{'/mention_detail/' + ${mention.no}}">
+<!--                                    <span th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}"></span>-->
+                                    <span th:text="${mention.content}"></span>
+                                </a>
+                            </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="sidebar">
             <div class="search">
-                <input type="textarea" class="search-text2" placeholder="멘션 검색하기">
+                <form method="get" name="search-mention" th:action="@{search}">
+                    <input type="text" class="search-mention" name="keyword" placeholder="멘션 검색하기">
+                </form>
             </div>
             <div class="trend">
                 <div class="trend-box">
@@ -100,22 +119,23 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="location-modal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">위치 검색</h4>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
+
+    <div class="modal fade" id="location-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">위치 검색</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="location-search">
+                        <input type="text" class="search-text" placeholder="장소 입력" id ="location-keyword">
+                        <button type="button" id ="keyword-search">검색</button>
+                    <div id="map-div">
+                        <div id="map" style="width:100%;height:350px;"></div>
                     </div>
-                    <div class="modal-body">
-                        <div class="location-search">
-                            <input type="text" class="search-text" placeholder="장소 입력" id ="location-keyword">
-                            <button type="button" id ="keyword-search">검색</button>
-                        </div>
-                        <div id="map-div">
-                            <div id="map" style="width:100%;height:350px;"></div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <input type="text" class="search-text3" name="location-select" id ="location-select">

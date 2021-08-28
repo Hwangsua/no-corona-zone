@@ -1,5 +1,6 @@
 package com.megait.nocoronazone.domain;
 
+import com.megait.nocoronazone.form.SettingForm;
 import lombok.*;
 
 import javax.persistence.*;
@@ -77,26 +78,9 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public String getIntroduce() {
-        return introduce;
+    public void update(SettingForm settingForm) {
+        this.nickname = settingForm.getNickname();
+        this.password = settingForm.getPassword();
+        this.introduce = settingForm.getIntroduce();
     }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    public boolean isCertification() {
-        return certification;
-    }
-
-    public void setCertification(boolean certification) {
-        this.certification = certification;
-    }
-
-//    public void update(SettingForm settingForm) {
-//        this.nickname = settingForm.getNickname();
-//        this.password = settingForm.getPassword();
-////        this.email = settingForm.getEmail();
-//        this.introduce = settingForm.getIntroduce();
-//    }
 }

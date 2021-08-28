@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -40,20 +38,22 @@ public class MentionService {
     public List<Mention> getMentionlist() {
 
         List<Mention> mentionEntities = mentionRepository.findAll(Sort.by(Sort.Direction.DESC,"regdate"));
-        List<Mention> mentionFormList = new ArrayList<>();
+        List<Mention> mentionList = new ArrayList<>();
+
 
         for (Mention mentions : mentionEntities) {
             Mention mention = Mention.builder()
                     .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
+                    .nlString(System.getProperty("line.separator").toString())
                     .location(mentions.getLocation())
                     .regdate(mentions.getRegdate())
                     .build();
 
-            mentionFormList.add(mention);
+            mentionList.add(mention);
         }
-        return mentionFormList;
+        return mentionList;
     }
 
     public Mention getMention(Long no) {
@@ -63,12 +63,18 @@ public class MentionService {
             throw new IllegalArgumentException("wrong mention no");
         }
 
-        return optionalMention.get();
+        Mention parentMention = optionalMention.get();
+        parentMention.setNlString(System.getProperty("line.separator").toString());
+        return parentMention;
     }
+
+
+
+
 
     public List<Mention> getNearLocationMentionList(double currentLatitude,double currentLongitude){
 
-        List<Mention> Mentions = mentionRepository.findAll();
+        List<Mention> Mentions = mentionRepository.findAll(Sort.by(Sort.Direction.DESC,"regdate"));
         List<Mention> mentionList = new ArrayList<>();
 
         for(Mention m : Mentions){
@@ -86,6 +92,7 @@ public class MentionService {
                         .no(m.getNo())
                         .member(m.getMember())
                         .content(m.getContent())
+                        .nlString(System.getProperty("line.separator").toString())
                         .location(m.getLocation())
                         .build();
 
@@ -120,23 +127,56 @@ public class MentionService {
     }
 
 
-//    @Transactional
-//    public void deletePost(Long id) {
-//        mentionRepository.deleteById(id);
-//    }
-//
-//    @Transactional
-//    public List<MentionDto> searchPosts(String keyword) {
-//        List<Mention> mentionEntities = mentionRepository.findByContentContaining(keyword);
-//        List<MentionDto> MentionDtoList = new ArrayList<>();
-//
-//        if (mentionEntities.isEmpty()) return MentionDtoList;
-//
-//        for (Mention Mention : mentionEntities) {
-//            MentionDtoList.add(this.convertEntityToDto(Mention));
-//        }
-//
-//        return MentionDtoList;
-//    }
+    @Transactional
+    public void deleteMention(Long no) {
+        mentionRepository.deleteByNo(no);
+    }
+
+
+
+    @Transactional
+    public List<Mention> getMemberMentions(String nickname) {
+        List<Mention> mentionEntities = mentionRepository.findByMember_NicknameContainsOrderByRegdateDesc(nickname);
+        List<Mention> memberMentionList = new ArrayList<>();
+
+        for (Mention mentions : mentionEntities) {
+            Mention mention = Mention.builder()
+                    .no(mentions.getNo())
+                    .member(mentions.getMember())
+                    .content(mentions.getContent())
+                    .location(mentions.getLocation())
+                    .regdate(mentions.getRegdate())
+                    .build();
+
+            memberMentionList.add(mention);
+
+        }
+
+        System.out.println(memberMentionList);
+        return memberMentionList;
+    }
+
+
+    @Transactional
+    public List<Mention> searchMentions(String keyword) {
+        List<Mention> mentionEntities = mentionRepository.findByContentContaining(keyword);
+        List<Mention> mentionFormList = new ArrayList<>();
+
+        if (mentionEntities.isEmpty()) return mentionFormList;
+
+        for (Mention mentions : mentionEntities) {
+            Mention mention = Mention.builder()
+                    .no(mentions.getNo())
+                    .member(mentions.getMember())
+                    .content(mentions.getContent())
+                    .location(mentions.getLocation())
+                    .regdate(mentions.getRegdate())
+                    .build();
+
+            mentionFormList.add(mention);
+        }
+            return mentionFormList;
+    }
+
 
 }
