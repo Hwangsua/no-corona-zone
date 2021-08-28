@@ -24,16 +24,16 @@
                         <span style="font-size: 0.8rem">밀집도</span>
                     </div>
                     <div class="infection-each" th:each="safety : ${safetyList}">
-                        <div class="infection-each-city">
-                            <span th:text="${safety.city}"></span>
-                        </div>
-                        <div class="infection-each-confiremed">
-                            <span th:text="${safety.confirmed}"></span>
-                        </div>
-                        <div class="infection-each-density">
-                            <span th:text="${#numbers.formatDecimal(safety.index, 0, 2)}"></span>
-                        </div>
+                    <div class="infection-each-city">
+                        <span th:text="${safety.city}"></span>
                     </div>
+                    <div class="infection-each-confiremed">
+                        <span th:text="${safety.confirmed}"></span>
+                    </div>
+                    <div class="infection-each-density">
+                        <span th:text="${#numbers.formatDecimal(safety.index, 0, 2)}"></span>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

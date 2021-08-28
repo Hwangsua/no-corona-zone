@@ -60,7 +60,6 @@ public class MainController {
     private final ReMentionService reMentionService;
 
     String colorConfirmed = "235, 64, 52"; // red
-//    String colorDensity = "158, 0, 158"; // purple
     String colorDensity = "168, 118, 0"; // yellow
 
     // 전체
@@ -512,18 +511,6 @@ public class MainController {
         return "redirect:/timeline_follow";
     }
 
-
-    //TODO - 트렌드, 강사님이 도와주신다고 하심
-
-//    @GetMapping("/following")
-//    public String followingList(){
-//        return "co_sns/following";
-//    }
-//
-//    @GetMapping("/follower")
-//    public String followerList(){
-//        return "co_sns/follower";
-//    }
 
 
 }
