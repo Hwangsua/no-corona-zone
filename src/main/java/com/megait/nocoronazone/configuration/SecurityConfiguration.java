@@ -35,13 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
 
-//                .and()
-//                .oauth2Login()
-//                .loginPage("/login")
-//                .userInfoEndpoint()
-//                .userService(customOAuth2UserService)
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
 
 //                .and()
+                .and()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -54,7 +55,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/") // 로그아웃하면 메인으로 가게
         ;
     }
-
 
     @Override
     public void configure(WebSecurity web) throws Exception {

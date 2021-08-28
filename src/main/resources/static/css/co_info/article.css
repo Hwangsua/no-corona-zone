@@ -1,5 +1,10 @@
+.global-nav{
+    position: sticky;
+    top: 0px;
+}
 .article {
-    margin-top: 70px;
+    /*margin-top: 70px;*/
+    height: auto;
 }
 .article-region {
     display: flex;
@@ -27,7 +32,7 @@
 .article-content {
     display: flex;
     flex-direction: column;
-    height: 2000px;
+    height: auto;
     gap: 7px 0;
     margin: 5px;
 }

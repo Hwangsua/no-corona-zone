@@ -399,7 +399,7 @@ public class MainController {
             // return "점검 페이지"
         }
 
-        return "/co_info/article :: #article-list";
+        return "co_info/article :: #article-list";
     }
 
 
