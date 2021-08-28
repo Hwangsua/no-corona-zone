@@ -352,7 +352,7 @@ public class MainController {
     public String vaccine(Model model) {
         VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
         int totalPopulation = vaccineXml.getTotalPopulation();
-        List<Integer> cityPopulationList = vaccineXml.getCityPopulation();
+        List<String> cityPopulationList = vaccineXml.getCityPopulation();
         model.addAttribute("vaccineCountVo", vaccineCountVo);
         model.addAttribute("totalPopulation", totalPopulation);
         model.addAttribute("cityPopulationList", cityPopulationList);

@@ -4,6 +4,7 @@ import com.megait.nocoronazone.domain.DetailSafetyIndex;
 import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.repository.SafetyRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -38,15 +39,13 @@ class LocaleCode {
     Object dong;
 }
 
+@RequiredArgsConstructor
 @EnableScheduling
 @RestController
 public class ApiController {
 
-    @Autowired
-    SafetyRepository safetyRepository;
-
-    @Autowired
-    DetailSafetyRepository detailSafetyRepository;
+    private final SafetyRepository safetyRepository;
+    private final DetailSafetyRepository detailSafetyRepository;
 
     int[] idx2 = new int[18];
     double[] contactDensityPercentile = new double[18];
@@ -215,7 +214,7 @@ public class ApiController {
                     {
                         detail /= cnt2;
                         detailSafetyRepository.save(DetailSafetyIndex.builder()
-                                .district(lcode[i][j].siDo.toString()+"-"+lcode[i][j].siGunGu.toString())
+                                .district(lcode[i][j].siDo+"_"+lcode[i][j].siGunGu.toString())
                                 .index(detail)
                                 .build());
                         detail = 0;
@@ -238,7 +237,8 @@ public class ApiController {
             safetyRepository.save(SafetyIndex.builder()
                     .city(DayToDay[i + 1].location)
                     .confirmed(Integer.parseInt(DayToDay[i + 1].dailyConfirmedCnt))
-                    .index(contactDensityPercentile[i]).build());
+                    .index(contactDensityPercentile[i])
+                    .build());
         }
         return jsonInString;
     }

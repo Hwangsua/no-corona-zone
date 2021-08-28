@@ -4,11 +4,13 @@ import lombok.*;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class VaccineXml {
@@ -70,25 +72,50 @@ public class VaccineXml {
         return 0;
     }
 
-    public List<Integer> getCityPopulation() {
+//    @PostConstruct
+    public void aa(){
+        try {
+            String url = "https://kosis.kr/openapi/statisticsData.do?method=getList&apiKey=NjM5ZGVmMDJmOWFmYzBmYTFjNmM4OTg0NzhjZDhmMDY=&format=sdmx&jsonVD=Y&userStatsId=cmlh21/101/DT_1B040A3/2/1/20210826035602&type=Generic&prdSe=M&newEstPrdCnt=1&version=v2_1";
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
+            Document doc = builder.parse(url);
+
+            doc.getDocumentElement().normalize();
+
+
+            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+
+            NodeList list = doc.getElementsByTagName("generic:Series");
+            System.out.println("list.length : " + list.getLength());
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<String> getCityPopulation() {
         try{
             String url = "https://kosis.kr/openapi/statisticsData.do?method=getList&apiKey=NjM5ZGVmMDJmOWFmYzBmYTFjNmM4OTg0NzhjZDhmMDY=&format=sdmx&jsonVD=Y&userStatsId=cmlh21/101/DT_1B040A3/2/1/20210826035602&type=Generic&prdSe=M&newEstPrdCnt=1&version=v2_1";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
             Document doc = builder.parse(url);
+
             Element root = doc.getDocumentElement();
-            NodeList list = root.getElementsByTagName("generic:Series");
-            List<Integer> cityPopulationList = null;
-            for(int i = 0; i < list.getLength(); i++){
-                Element element = (Element)list.item(i);
-                System.out.println(element);
-                NodeList list2 = element.getElementsByTagName("generic:Obs");
-                Element element2 = (Element)list2.item(1);
-                int cityPopulation = Integer.parseInt(element2.getAttributes().getNamedItem("value").getNodeValue());
+            Node dataSet = root.getElementsByTagName("message:DataSet").item(0);
+
+            NodeList series = dataSet.getChildNodes();
+
+            List<String> cityPopulationList = new ArrayList<>();
+
+            for(int i = 0; i < series.getLength(); ++i) {
+                Node node = series.item(i);
+                NodeList obsValue = ((Element) node).getElementsByTagName("generic:ObsValue");
+                String cityPopulation = obsValue.item(0).getAttributes().getNamedItem("value").getNodeValue();
                 cityPopulationList.add(cityPopulation);
             }
             return cityPopulationList;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
