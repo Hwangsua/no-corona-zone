@@ -136,68 +136,55 @@
     .second-plus svg {
         transform: rotate(90deg);
     }
-    .vaccine-chart {
-        position: sticky;
-        top: 150px;
+    .select-vaccine-map {
+        display: flex;
+        justify-content: space-between;
+        height: 60px;
+        padding-left: 50px;
+        padding-right: 50px;
+        z-index: 1;
+        font-size: 1.1rem;
+        text-align: center;
+        align-items: center;
     }
-    .vaccine-chart-border {
-        margin: 10px 30px;
-        height: 450px;
-        border: 1px solid lightgray;
-        border-radius: 10px;
-    }
-    .vaccine-chart-total-count {
+    .select-first-second {
         display: flex;
         justify-content: center;
-        align-items: center;
+    }
+    .select-first-second div {
+        height: 30px;
+        width: 50px;
+        margin-right: 3px;
+        padding-top: 5px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+    }
+    .select-first-second a {
+        color: black;
+        cursor: pointer;
+    }
+    .show-city-percent {
         height: 50px;
-        margin: 10px;
+        width: 120px;
+        margin-top: 20px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
     }
-    .count-date {
-        width: 130px;
-        text-align: center;
-        font-size: 0.9rem;
-        color: gray;
-        margin-top: 3px;
-    }
-    .total-count {
-        width: 200px;
-        text-align: center;
-    }
-    .total-count .label {
-        color: gray;
-    }
-    .total-count .num {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-    .total-count .tail {
-        font-size: 1rem;
+    .show-city-percent p {
+        margin: 5px 0;
     }
     .vaccine-map {
-        margin-top: -150px;
-        margin-left: 30px;
+        position: absolute;
+        top: 150px;
+        margin-top: 90px;
+        margin-left: 80px;
     }
-    /*#vaccine-chart {*/
-    /*    height: 350px;*/
-    /*    max-width: 380px;*/
-    /*    margin-left: 30px;*/
-    /*    margin-top: 20px;*/
-    /*}*/
-    /*#vaccine-chart tr {*/
-    /*    --color: rgba(125, 204, 171, 1);*/
-    /*}*/
-    /*#vaccine-chart th {*/
-    /*    color: gray;*/
-    /*    font-size: 0.9rem;*/
-    /*}*/
-    /*#vaccine-chart td {*/
-    /*    transition-duration: 0.3s;*/
-    /*    opacity: 0.5;*/
-    /*}*/
-    /*#vaccine-chart td:hover {*/
-    /*    opacity: 1;*/
-    /*}*/
+    .land {
+        fill-opacity: 1;
+        stroke:white;
+        stroke-opacity: 1;
+        stroke-width:0.5;
+    }
     .vaccine-right {
         display: flex;
         width: 700px;
