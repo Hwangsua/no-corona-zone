@@ -8,10 +8,14 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
+<<<<<<< HEAD
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣어&libraries=services"></script>
+=======
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오api키&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
     
 
+>>>>>>> 4c3158d233f6550e22a5c53caf525f7acea94d17
 </head>
 <body>
 <div layout:fragment="content">

@@ -2,10 +2,12 @@ package com.megait.nocoronazone.domain;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @ToString
+@Data
 public class Mention {
 
     @Id @GeneratedValue
@@ -27,7 +30,9 @@ public class Mention {
     @NotNull
     private String content;
 
+
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime regdate;
 
     private Double latitude;
@@ -39,9 +44,13 @@ public class Mention {
     @OneToMany(mappedBy = "mention", cascade = CascadeType.ALL)
     private List<ReMention> reMentions;
 
+    @Transient
+    private String nlString;
+
     @Builder
     public Mention(){
         regdate = LocalDateTime.now();
+        //DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
         reMentions = new ArrayList<>();
     }
 

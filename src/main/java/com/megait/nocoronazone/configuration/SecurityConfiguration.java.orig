@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
 
+<<<<<<< HEAD
 //                .and()
 //                .oauth2Login()
 //                .loginPage("/login")
@@ -42,6 +43,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .userService(customOAuth2UserService)
 
 //                .and()
+=======
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
+
+>>>>>>> 4c3158d233f6550e22a5c53caf525f7acea94d17
                 .and()
                 .formLogin()
                 .loginPage("/login")

@@ -43,11 +43,21 @@
 }
 .mention-content {
     display: flex;
-    flex-direction: column;
     overflow: hidden;
     height: auto;
     padding: 10px;
     border-bottom: 1px solid lightgray;
+}
+.remention-btn {
+    display: block;
+    height: 26px;
+    width: 55px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    outline: none;
 }
 .mention-top {
     display: flex;
@@ -76,12 +86,12 @@
 .mention-info {
     height: auto;
     display: flex;
+    margin: 3px;
 }
 .mention-info .dot {
     margin: 0 5px;
 }
 .remention-content {
-    display: flex;
     height: auto;
     padding: 5px;
     min-height: 50px;
@@ -105,13 +115,6 @@
 }
 .remention-write-submit {
     margin: auto;
-}
-.remention-btn {
-    height: 35px;
-    width: 70px;
-    padding-top: 9.5px;
-    background-color: lightgrey;
-    border-radius: 10px;
 }
 .remention-btn-text {
     margin-left: 15px;
@@ -153,6 +156,18 @@
         margin-top: 20px;
         margin-left: 10px;
     }
+    .remention-btn {
+        display: block;
+        float: right;
+        height: 26px;
+        width: 55px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+    }
     .hr {
         border: 1px solid lightgrey;
         border-radius: 0.5px;
@@ -168,7 +183,6 @@
     }
     .mention-content {
         display: flex;
-        flex-direction: column;
         overflow: hidden;
         height: auto;
         padding: 10px;
@@ -181,6 +195,7 @@
         width: 40px;
     }
     .mention-top .nickname-box {
+        margin-left: 5px;
         height: 20px;
         width: auto;
         margin: auto 0;
@@ -209,13 +224,14 @@
         margin: 0 5px;
     }
     .remention-content {
-        display: flex;
         height: auto;
         padding-top: 5px;
-        padding-left: 10px;
         min-height: 50px;
         overflow: hidden;
         border-bottom: 1px solid lightgray;
+    }
+    #parent-mention-no{
+        display: flex;
     }
     .profile-img {
         margin: auto 0;
@@ -235,13 +251,6 @@
     }
     .remention-write-submit {
         margin: auto;
-    }
-    .remention-btn {
-        height: 35px;
-        width: 70px;
-        padding-top: 9.5px;
-        background-color: lightgrey;
-        border-radius: 10px;
     }
     .remention-btn-text {
         margin-left: 15px;

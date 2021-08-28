@@ -8,6 +8,28 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/co_info/article.css}" rel="stylesheet">
     <script th:src="@{/js/co_info/article.js}"></script>
+    <script th:inline="javascript">
+        function getArticleList (){
+
+            let mainCitySelect = document.getElementById("main-city");
+            let subCitySelect = document.getElementById("sub-city");
+
+            let mainCityName = mainCitySelect.options[mainCitySelect.selectedIndex].text;
+            let subCityName = subCitySelect.options[subCitySelect.selectedIndex].text;
+
+            $.ajax({
+                url : '/local_article',
+                type : 'GET',
+                data : {'mainCityName': mainCityName ,'subCityName': subCityName},
+                contentType : 'application/json',
+
+            }).done(function (fragment) {
+                $("#article-list").replaceWith(fragment);
+            });
+
+        }
+
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -35,26 +57,33 @@
                 </select>
             </div>
             <div class="form-group">
-                <select name="sub-city" id="sub-city" class="form-control">
-                    <option>서울전체</option>
+                <select name="sub-city" id="sub-city" class="form-control" onchange="getArticleList()">
+                    <option>=미선택=</option>
                 </select>
             </div>
         </div>
-        <div class="article-list">
-            <div class="article-thumbnail">
-                <img class="article-thumbnail-img" src="" alt="">
-            </div>
-            <div class="article-content">
-                <div class="article-content-headline">
-                    <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
-                </div>
-                <div class="article-content-content">
-                        <span>
-                            경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
-                        </span>
-                </div>
-                <div class="article-content-source">
-                    <span>출처: news1</span>
+        <div id="article-list">
+            <div th:fragment="ArticleListFragment(articleList)">
+                <div th:each="article:${articleList}">
+                    <div class="article" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">
+                        <div class="article-thumbnail">
+                            <img class="article-thumbnail-img" th:src="${article.articleImgUrl}" alt="">
+                        </div>
+                        <div class="article-content">
+                            <div class="article-content-headline">
+                                <span th:text="${article.articleTitle}">경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+                            </div>
+                            <div class="article-content-content">
+                    <span th:text="${article.articleContent}">
+                        경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
+                    </span>
+                            </div>
+                            <div class="article-content-source">
+                                <img class="article-content-img" th:src="${article.pressImgUrl}" alt="">
+                                <span th:text="${article.pressName}">출처: news1</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

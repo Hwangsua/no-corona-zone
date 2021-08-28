@@ -9,46 +9,46 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/mention_detail.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/identicon.js/2.3.3/identicon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
     <script>
         $(document).ready(function () {
+
             $('#remention-save-btn').click(function () {
 
-                console.log($('#content').val().length);
-                if($('#content').val().replace(/\s| /gi, "").length==0){
-                    alert("내용을 입력해주세요.");
-                    return false;
-                }
+<!--                console.log($('#content').val().length);-->
+<!--                if($('#content').val().replace(/\s| /gi, "").length==0){-->
+<!--                    alert("내용을 입력해주세요.");-->
+<!--                    return false;-->
+<!--                }-->
 
-                document.getElementById("parent-mention-no").value= $('#parent-mention').val();
+<!--                document.getElementById("parent-mention-no").value= $('#parent-mention').val();-->
 
-                var token = $("meta[name='_csrf']").attr("content");
-                var header = $("meta[name='_csrf_header']").attr("content");
+<!--                var token = $("meta[name='_csrf']").attr("content");-->
+<!--                var header = $("meta[name='_csrf_header']").attr("content");-->
 
-                $.ajax({
-                    url : '/remention',
-                    type : 'POST',
-                    data : $('#re-mention-form').serialize(),
-                    beforeSend: function (xhr){
-                        xhr.setRequestHeader(header, token);
-                    },
-                }).done(function (fragment) {
+<!--                $.ajax({-->
+<!--                    url : '/remention',-->
+<!--                    type : 'POST',-->
+<!--                    data : $('#re-mention-form').serialize(),-->
+<!--                    beforeSend: function (xhr){-->
+<!--                        xhr.setRequestHeader(header, token);-->
+<!--                    },-->
+<!--                }).done(function (fragment) {-->
 
-                    $("#re-mention-list").replaceWith(fragment);
-                    document.getElementById("content").value= null;
-                });
-            });
+<!--                    $("#re-mention-list").replaceWith(fragment);-->
+<!--                    document.getElementById("content").value= null;-->
+<!--                });-->
+<!--            });-->
 
-            $(".identicon").each(function () {
-                var hash = md5($(this).data('id')).toString();
-                var data = new Identicon(hash, {format: 'svg'}).toString();
-                $(this).attr('src', "data:image/svg+xml;base64," + data);
-            });
-        });
-
-
-    </script>
+<!--            $(".identicon").each(function () {-->
+<!--                var hash = md5($(this).data('id')).toString();-->
+<!--                var data = new Identicon(hash, {format: 'svg'}).toString();-->
+<!--                $(this).attr('src', "data:image/svg+xml;base64," + data);-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
 </head>
 <body>
 <div layout:fragment="content">
@@ -65,11 +65,12 @@
             </div>
             <div class="hr"></div>
             <div class="mention-and-remention">
-                <input type="hidden" th:value="${mention.no}" id="parent-mention"></input>
+                <input type="hidden" th:value="${mention.no}" id="parent-mention">
                 <div class="mention-content" >
                     <div class="mention-top">
                         <div class="profile-img">
-                            <img class="identicon" data-id="hazsoo"/>
+                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                 width="60" height="60" class="rounded border bg-light"></svg>
                         </div>
                         <div class="nickname-box">
                             <a href="" class="nickname" th:text="${mention.member.nickname}">닉네임</a>
@@ -79,11 +80,17 @@
                         </div>
                     </div>
                     <div class="mention-bottom">
-                        <div class="content" th:text="${mention.content}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
+                        <div class="content" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
                         <div class="mention-info">
-                            <div class="upload-time" th:text="${mention.regdate}">2021년 8월 22일 오후 4:27</div>
+                            <div class="upload-time" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}">2021년 8월 22일 오후 4:27</div>
                             <div class="dot">·</div>
                             <div class="location" th:text="${mention.location}">롯데월드</div>
+                        </div>
+                        <div style="float: left;" class="mention-delete" th:if="${currentMember.no==mention.member.no}">
+                            <form id="delete-form" th:action="@{'/delete/' + ${mention.no}}" method="post">
+                                <input type="hidden" name="delete_mention" value="delete"/>
+                                <button id="delete-btn">삭제</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -91,34 +98,34 @@
                     <form id="re-mention-form" th:object="${reMentionForm}" >
                         <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
                         <div class="profile-img">
-                            <img class="identicon" data-id="hazsoo"/>
+                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"
+                                 width="60" height="60" class="rounded border bg-light"></svg>
                         </div>
                         <div class="remention-write">
                             <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
                         </div>
                         <div class="remention-write-submit" id="remention-save-btn">
                             <div class="remention-btn">
-                                <p class="remention-btn-text" >말하기</p>
+                                <p class="remention-btn-text">올리기</p>
                             </div>
-
                         </div>
                     </form>
                 </div>
-                <div id = "re-mention-list">
-                    <div th:each="reMention:${reMentionList}">
-                        <div class="re-mention-info">
-                            <img class="identicon">
-                            <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
-                            <div id="re-mention-content" th:text="${reMention.content}">내용</div>
-                        </div>
+            <div id = "re-mention-list">
+                <div th:each="reMention:${reMentionList}">
+                    <div class="re-mention-info">
+                        <img class="identicon">
+                        <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
+                        <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
                     </div>
-
                 </div>
             </div>
         </div>
         <div class="sidebar">
             <div class="search">
-                <input type="textarea" class="search-text" placeholder="멘션 검색하기">
+                <form method="get" name="search-mention" th:action="@{search}">
+                    <input type="text" class="search-mention" name="keyword" placeholder="멘션 검색하기">
+                </form>
             </div>
             <div class="trend">
                 <div class="trend-box">
@@ -134,6 +141,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

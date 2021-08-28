@@ -1,9 +1,10 @@
 .container{
     text-align: center;
     border: none;
+    margin-top: 80px;
 }
 .login-header{
-    margin-top: 50px;
+    margin-top: 80px;
     margin-bottom: 30px;
 }
 .login-title{

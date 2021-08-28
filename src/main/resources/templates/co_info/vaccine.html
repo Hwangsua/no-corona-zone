@@ -425,21 +425,26 @@
                 });
             }) // function
         </script>
-        <div class="vaccine-right">
-            <div class="news-thumbnail">
-                <img class="news-thumbnail-img" src="" alt="">
-            </div>
-            <div class="news-content">
-                <div class="news-content-headline">
-                    <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
-                </div>
-                <div class="news-content-content">
-                    <span>
+        <div th:fragment="ArticleListFragment(articleList)">
+            <div th:each="article:${articleList}">
+                <div class="vaccine-right" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">
+                    <div class="news-thumbnail">
+                        <img class="news-thumbnail-img" th:src="${article.articleImgUrl}" alt="">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-content-headline">
+                            <span th:text="${article.articleTitle}">경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+                        </div>
+                        <div class="news-content-content">
+                    <span th:text="${article.articleContent}">
                         경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
                     </span>
-                </div>
-                <div class="news-content-source">
-                    <span>출처: news1</span>
+                        </div>
+                        <div class="news-content-source">
+                            <img class="article-content-img" th:src="${article.pressImgUrl}" alt="">
+                            <span th:text="${article.pressName}">출처: news1</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
