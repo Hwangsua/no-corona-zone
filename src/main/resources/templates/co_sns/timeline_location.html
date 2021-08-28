@@ -8,8 +8,10 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb2c655475454d2f0e54c0e3f5e5d1ff&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오api키&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+    
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -53,7 +55,7 @@
                                 <div class="dot">·</div>
                                 <div class="upload-time" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}">20시간</div>
                             </div>
-                            <div class="content" th:text="${mention.content}">가나다라마바다아자차카타파하!!!!!!!!</div>
+                            <div class="content" th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!</div>
                         </div>
                     </div>
                 </div>

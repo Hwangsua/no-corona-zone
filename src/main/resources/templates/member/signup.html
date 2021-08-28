@@ -3,7 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}"  th:with="activeTab='signup', title='Sign Up'">
-
 <head>
     <script th:src="@{/js/member/form-validation.js}"></script>
     <script th:src="@{/js/member/daum-address.js}"></script>
@@ -102,10 +101,10 @@
         <div class = "check_font" id="nicknameCheck"></div>
         <!--        <div class="signup-button">-->
         <div class="item">
-            <a href="/oauth2/authorization/google" role="button"><img class="google-btn" th:src="@{img/google.png}"></a>
+            <a href="/oauth2/authorization/google" role="button"><img class="google-btn" th:src="@{img/google-signup.png}"></a>
         </div>
         <div class="item">
-            <a href="/oauth2/authorization/facebook" role="button"><img class="facebook-btn" th:src="@{img/facebook_continue.png}"></a>
+            <a href="/oauth2/authorization/naver" role="button"><img class="facebook-btn" th:src="@{img/facebook-signup.png}"></a>
         </div>
         <!--        </div>-->
         <!--        <div class="none"></div>-->

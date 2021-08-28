@@ -5,10 +5,11 @@ import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
-import com.megait.nocoronazone.domain.SafetyIndex;
-import com.megait.nocoronazone.form.*;
 import com.megait.nocoronazone.domain.Mention;
-import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.domain.SafetyIndex;
+import com.megait.nocoronazone.domain.Mention;
+import com.megait.nocoronazone.form.*;
+import com.megait.nocoronazone.service.*;
 import com.megait.nocoronazone.service.DetailSafetyService;
 import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import com.megait.nocoronazone.service.MemberService;
@@ -34,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +48,7 @@ public class MainController {
     private final DetailSafetyService detailSafetyService;
     private final SafetyService safetyService;
     private final VaccineXml vaccineXml;
+    private final ArticleService articleService;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final HttpSession httpSession;
     private final MemberService memberService;
@@ -53,7 +56,8 @@ public class MainController {
     private final ReMentionService reMentionService;
 
     String colorConfirmed = "235, 64, 52"; // red
-    String colorDensity = "158, 0, 158"; // purple
+//    String colorDensity = "158, 0, 158"; // purple
+    String colorDensity = "168, 118, 0"; // yellow
 
     // 전체
     String[] City = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종"};
@@ -116,15 +120,19 @@ public class MainController {
 
     @GetMapping("/density")
     public String density(Model model) {
+        List<SafetyIndex> safetyList = safetyService.getSafetyList();
+        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("color", colorDensity);
         for(int i = 0; i < City.length; ++i){
             model.addAttribute(City2[i], safetyService.getSafetytoAlpha(City[i]));
         }
-        model.addAttribute("color", colorDensity);
         return "index";
     }
 
     @GetMapping("/detail")
     public String detail(Model model, @Param(value = "district")String district) {
+        List<SafetyIndex> safetyList = safetyService.getSafetyList();
+        model.addAttribute("safetyList", safetyList);
         model.addAttribute("color", colorDensity);
         if (district.equals("Seoul")){
             for(int i = 0; i < seoulDistrict.length; ++i){
@@ -304,7 +312,9 @@ public class MainController {
     public String profilePage(@PathVariable String nickname, Model model) {
 
         List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
+        System.out.println(memberMentionList);
         Member profileMember = memberService.getNicknameMember(nickname);
+        System.out.println(profileMember);
         model.addAttribute("profileMember", profileMember);
         model.addAttribute("memberMentionList", memberMentionList);
 
@@ -337,8 +347,17 @@ public class MainController {
     public String vaccine(Model model) {
         VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
         int totalPopulation = vaccineXml.getTotalPopulation();
+        List<Integer> cityPopulationList = vaccineXml.getCityPopulation();
         model.addAttribute("vaccineCountVo", vaccineCountVo);
         model.addAttribute("totalPopulation", totalPopulation);
+        model.addAttribute("cityPopulationList", cityPopulationList);
+
+        try {
+            model.addAttribute("articleList",articleService.getVaccineArticleList());
+        }catch (IOException  e){
+            e.printStackTrace();
+        }
+
         return "co_info/vaccine";
     }
 
@@ -353,10 +372,33 @@ public class MainController {
     @GetMapping("/video")
     public String co_info_video() { return "/co_info/video";}
 
-    @GetMapping("/article")
-    public String article() {
+    @RequestMapping("/article")
+    public String article(Model model) {
+
+        try {
+            model.addAttribute("articleList",articleService.getLocalArticleList("서울", "전체"));
+        }catch (IOException  e){
+            e.printStackTrace();
+            //return "" //TODO - 점검페이지가 있으면 어떨까..
+        }
+
         return "co_info/article";
     }
+
+    @GetMapping("/local_article")
+    public String article(@RequestParam String mainCityName, @RequestParam String subCityName, Model model){
+
+        try {
+            model.addAttribute("articleList",articleService.getLocalArticleList(mainCityName, subCityName));
+        }catch (IOException e){
+            e.printStackTrace();
+            // return "점검 페이지"
+        }
+
+        return "/co_info/article :: #article-list";
+    }
+
+
 
     // ================= co_sns ============================
 
@@ -370,6 +412,7 @@ public class MainController {
         model.addAttribute("mention",mentionService);
         model.addAttribute("mentionFormList", mentionFormList);
         model.addAttribute("mentionForm", new MentionForm());
+
         return "co_sns/timeline_follow";
     }
 
@@ -377,7 +420,6 @@ public class MainController {
     @GetMapping("/timeline_location")
     public String timelineLocation(Model model)
     {
-        System.out.println("Get");
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
 
@@ -415,7 +457,8 @@ public class MainController {
             model.addAttribute("mention", parentMention );
             model.addAttribute("reMentionForm", new ReMentionForm());
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
-            model.addAttribute("member", memberService.getMember(member));
+            model.addAttribute("currentMember", memberService.getMember(member));
+            
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }
@@ -432,6 +475,7 @@ public class MainController {
             reMentionService.saveReMention(member, parentMention,reMentionForm);
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
             model.addAttribute("member", memberService.getMember(member));
+
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }

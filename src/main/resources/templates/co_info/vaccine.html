@@ -67,41 +67,6 @@
                         </g>
                     </svg>
                 </div>
-<!--                <div class="vaccine-chart-border">-->
-<!--                    <div class="vaccine-chart-total-count">-->
-<!--                        <span class="count-date">8월 11일 ~ 8월 17일</span>-->
-<!--                        <div class="total-count">-->
-<!--                            <span class="label">누적</span>-->
-<!--                            <span class="num">3,292,888</span>-->
-<!--                            <span class="tail">명</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <table class="charts-css column show-4-secondary-axes data-spacing-20 show-labels" id="vaccine-chart">-->
-<!--                        <tbody>-->
-<!--                        <tr>-->
-<!--                            <th id="vaccine-chart-date-5"></th>-->
-<!--                            <td style="&#45;&#45;start: 1.0; &#45;&#45;size: 0.3"> <span class="data"></span> </td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <th id="vaccine-chart-date-4"></th>-->
-<!--                            <td style="&#45;&#45;start: 0.2; &#45;&#45;size: 0.4"> <span class="data"></span> </td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <th id="vaccine-chart-date-3"></th>-->
-<!--                            <td style="&#45;&#45;start: 0.4; &#45;&#45;size: 0.8"> <span class="data"></span> </td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <th id="vaccine-chart-date-2"></th>-->
-<!--                            <td style="&#45;&#45;start: 0.8; &#45;&#45;size: 0.6"> <span class="data"></span> </td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <th id="vaccine-chart-date-1"></th>-->
-<!--                            <td data-id="chart-1"> <span class="data"></span> </td>-->
-<!--                        </tr>-->
-<!--                        </tbody>-->
-
-<!--                    </table>-->
-<!--                </div>-->
             </div>
         </div>
         <script th:inline="javascript">
@@ -121,87 +86,99 @@
                 return +(Math.round(num + "e+1")  + "e-1");
             }
 
-            /* 그래프 날짜 (일주일 단위로 이틀 전까지) */
-            function minusWeek(e) {
-                var date2 = date.getTime() - ((e * 7) * 24 * 60 * 60 * 1000);
-                date.setTime(date2);
-                return ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
-            }
+            // /* 그래프 날짜 (일주일 단위로 이틀 전까지) */
+            // function minusWeek(e) {
+            //     var date2 = date.getTime() - ((e * 7) * 24 * 60 * 60 * 1000);
+            //     date.setTime(date2);
+            //     return ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
+            // }
+            //
+            // var date = new Date();
+            //
+            // var month = date.getMonth() + 1;
+            // month = month < 10 ? '0' + month.toString() : month.toString();
+            //
+            // var day = date.getDate();
+            // day = (day - 2) < 10 ? '0' + day.toString() - 2 : day.toString() - 2;
+            //
+            // var a = month + "/" + day;
+            // var b = minusWeek(1);
+            // var c = minusWeek(1);
+            // var d = minusWeek(1);
+            // var e = minusWeek(1);
+            //
+            // document.getElementById('vaccine-chart-date-1').innerHTML = a;
+            // document.getElementById('vaccine-chart-date-2').innerHTML = b;
+            // document.getElementById('vaccine-chart-date-3').innerHTML = c;
+            // document.getElementById('vaccine-chart-date-4').innerHTML = d;
+            // document.getElementById('vaccine-chart-date-5').innerHTML = e;
 
-            var date = new Date();
 
-            var month = date.getMonth() + 1;
-            month = month < 10 ? '0' + month.toString() : month.toString();
-
-            var day = date.getDate();
-            day = (day - 2) < 10 ? '0' + day.toString() - 2 : day.toString() - 2;
-
-            var a = month + "/" + day;
-            var b = minusWeek(1);
-            var c = minusWeek(1);
-            var d = minusWeek(1);
-            var e = minusWeek(1);
-
-            document.getElementById('vaccine-chart-date-1').innerHTML = a;
-            document.getElementById('vaccine-chart-date-2').innerHTML = b;
-            document.getElementById('vaccine-chart-date-3').innerHTML = c;
-            document.getElementById('vaccine-chart-date-4').innerHTML = d;
-            document.getElementById('vaccine-chart-date-5').innerHTML = e;
 
             /* 일주일 단위 백신 1차 접종자수 json */
+            var cityPopulationList = [[${cityPopulationList}]];
             $(function () {
                 let date0 = new Date();
                 var day2 = date0.getDate();
-                day2 = (day2 - 2) < 10 ? '0' + day2.toString() - 8 : day2.toString() - 8;
+                day2 = (day2 - 2) < 10 ? '0' + day2.toString() - 1 : day2.toString() - 1;
                 var month2 = date0.getMonth() + 1;
                 month2 = month2 < 10 ? '0' + month2.toString() : month2.toString();
-                var weekTotalFirstCnt = 0;
                 console.log(date0.getFullYear().toString() + '-' + month2 + '-' + day2);
-                $.ajax({
-                    url: "https://api.odcloud.kr/api/15077756/v1/vaccine-stat",
-                    dataType: "json",
-                    async: false,
-                    data: {
-                        "page": 1,
-                        "perPage": 7,
-                        "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
-                        "cond[sido::EQ]": "전국",
-                        "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        $.each(data.data, function (i, data){
-                            firstCnt = parseInt(data.firstCnt);
-                            secondCnt = parseInt(data.secondCnt);
-                            weekTotalFirstCnt = weekTotalFirstCnt + firstCnt + secondCnt;
-                            console.log(firstCnt);
-                            console.log(secondCnt);
-                            console.log(weekTotalFirstCnt);
-                        });
-                        $('<style>').text("#vaccine-chart-date-1{--start: 0.6; --size: 0.9}").appendTo(document.getElementById('head'));
-                    }
-                })
+                var city = ["서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시", "세종특별자치시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주특별자치도"];
+                for (var i = 0; i < city.length; i++) {
+                    $.ajax({
+                        url: "https://api.odcloud.kr/api/15077756/v1/vaccine-stat",
+                        dataType: "json",
+                        async: false,
+                        data: {
+                            "page": 1,
+                            "perPage": 1,
+                            "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
+                            "cond[sido::EQ]": city[i],
+                            "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            $.each(data.data, function (ii, data) {
+                                cityTotalFirstCnt = parseInt(data.totalFirstCnt);
+                                cityTotalSecondCnt = parseInt(data.totalSecondCnt);
+                                console.log(cityPopulationList);
 
+                                // percentCityFirstCnt = cityTotalFirstCnt / cityPopulationList[i] * 100;
+
+                                console.log(cityTotalFirstCnt);
+                                console.log(cityTotalSecondCnt);
+                                // console.log(percentCityFirstCnt);
+                            });
+                            // $('<style>').text("#vaccine-chart-date-1{--start: 0.6; --size: 0.9}").appendTo(document.getElementById('head'));
+                        }
+                    }) // ajax 끝
+                } // for문 끝
 
             })
 
 
         </script>
-        <div class="vaccine-right">
-            <div class="news-thumbnail">
-                <img class="news-thumbnail-img" src="" alt="">
-            </div>
-            <div class="news-content">
-                <div class="news-content-headline">
-                    <span>경기 부천 28명 신규 확진...확진자 접촉 25명</span>
-                </div>
-                <div class="news-content-content">
-                    <span>
+        <div th:fragment="ArticleListFragment(articleList)">
+            <div th:each="article:${articleList}">
+                <div class="vaccine-right" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">
+                    <div class="news-thumbnail">
+                        <img class="news-thumbnail-img" th:src="${article.articleImgUrl}" alt="">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-content-headline">
+                            <span th:text="${article.articleTitle}">경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+                        </div>
+                        <div class="news-content-content">
+                    <span th:text="${article.articleContent}">
                         경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
                     </span>
-                </div>
-                <div class="news-content-source">
-                    <span>출처: news1</span>
+                        </div>
+                        <div class="news-content-source">
+                            <img class="article-content-img" th:src="${article.pressImgUrl}" alt="">
+                            <span th:text="${article.pressName}">출처: news1</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

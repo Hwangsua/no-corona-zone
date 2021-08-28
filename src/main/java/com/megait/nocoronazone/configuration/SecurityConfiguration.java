@@ -20,18 +20,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                
+
                 .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**", "/map/**").permitAll()
 
 
                 .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout",
                         "/infection", "/density", "/distancing", "/clinic",
-                        "/video","/news","/article","/svg","/vaccine",
+                        "/video","/news","/article","/local_article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
                         "/timeline_follow", "/remention", "/search", "/following","/follower","/{nickname}",
                         "/chat", "/mention").permitAll()
-
-                .mvcMatchers("/menu/mobile_menu.html").permitAll()
 
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
 
@@ -43,7 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .userInfoEndpoint()
 //                .userService(customOAuth2UserService)
 
-//                .and()
                 .and()
                 .formLogin()
                 .loginPage("/login")

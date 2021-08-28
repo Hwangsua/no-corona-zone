@@ -1,5 +1,5 @@
 .home {
-
+    margin-top: 70px;
 }
 .home-left {
     display: block;
@@ -17,11 +17,7 @@
     margin-left: 5px;
     line-height: 25px;
     text-align: center;
-    background: lightgray;
     border-radius: 5px;
-}
-.infection-info {
-    display: none;
 }
 .home-map {
     width: 100%;
@@ -41,49 +37,69 @@
     .home {
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 15px;
     }
     .home-left {
         display: block;
         width: 250px;
-        margin-top: 10px;
     }
     .map-collect {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         width: 100%;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     .map-collect-item {
-        height: 35px;
-        width: 80px;
-        margin: 0;
+        height: 36px;
+        width: 65px;
+        margin: 0 2px;
         line-height: 35px;
-        text-align: center;
-        background: lightgray;
+        border: 1px solid lightgray;
         border-radius: 5px;
     }
     .infection-info {
         display: block;
     }
-    .total-infection {
-        height: 100px;
-        width: 100%;
-        margin-top: 10px;
-        background: lightgray;
+    .infection-list {
+        height: inherit;
+        width: 80%;
+        margin: 5px auto;
+        border: 1px solid lightgray;
         border-radius: 5px;
+    }
+    .infection-list-label {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        margin: 10px auto;
+    }
+    .infection-each {
+        display: flex;
+        justify-content: center;
+        height: 33px;
+        text-align: center;
+
+    }
+    .infection-each-city {
+        width: 60px;
+        height: 30px;
+        margin-right: 5px;
+        font-weight: bold;
+    }
+    .infection-each-confiremed {
+        width: 70px;
+        height: 30px;
+        font-size: 1.1rem;
+    }
+    .infection-each-density {
+        width: 70px;
+        height: 30px;
+
     }
     .home-map {
         position: relative;
         max-width: 650px;
     }
-    /*.home-map .map {*/
-    /*    display: block;*/
-    /*    position: absolute;*/
-    /*    max-height: 800px;*/
-    /*    max-width: 100%;*/
-    /*    margin: 0 auto;*/
-    /*}*/
     .home-right {
         display: block;
         width: 250px;

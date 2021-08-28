@@ -28,6 +28,7 @@ public class Mention {
     @NotNull
     private String content;
 
+
     @NotNull
     private LocalDateTime regdate;
 
@@ -39,6 +40,9 @@ public class Mention {
 
     @OneToMany(mappedBy = "mention", cascade = CascadeType.ALL)
     private List<ReMention> reMentions;
+
+    @Transient
+    private String nlString;
 
     @Builder
     public Mention(){

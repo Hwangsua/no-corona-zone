@@ -54,7 +54,7 @@ public class ApiController {
     Daily DayToDay[] = new Daily[19];
     LocaleCode lcode[][] = new LocaleCode[19][1000000];
 
-    @GetMapping("/LatestStatusAPI")//http://localhost:8080/LatestStatusAPI
+    @GetMapping("/LatestStatusAPI")// http://localhost:8080/LatestStatusAPI
     public String callAPI() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 

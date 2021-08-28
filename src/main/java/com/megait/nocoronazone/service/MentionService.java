@@ -46,6 +46,7 @@ public class MentionService {
                     .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
+                    .nlString(System.getProperty("line.separator").toString())
                     .location(mentions.getLocation())
                     .regdate(mentions.getRegdate())
                     .build();
@@ -62,7 +63,9 @@ public class MentionService {
             throw new IllegalArgumentException("wrong mention no");
         }
 
-        return optionalMention.get();
+        Mention parentMention = optionalMention.get();
+        parentMention.setNlString(System.getProperty("line.separator").toString());
+        return parentMention;
     }
 
 
@@ -71,7 +74,7 @@ public class MentionService {
 
     public List<Mention> getNearLocationMentionList(double currentLatitude,double currentLongitude){
 
-        List<Mention> Mentions = mentionRepository.findAll();
+        List<Mention> Mentions = mentionRepository.findAll(Sort.by(Sort.Direction.DESC,"regdate"));
         List<Mention> mentionList = new ArrayList<>();
 
         for(Mention m : Mentions){
@@ -89,6 +92,7 @@ public class MentionService {
                         .no(m.getNo())
                         .member(m.getMember())
                         .content(m.getContent())
+                        .nlString(System.getProperty("line.separator").toString())
                         .location(m.getLocation())
                         .build();
 

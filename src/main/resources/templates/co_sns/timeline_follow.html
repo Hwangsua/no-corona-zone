@@ -9,16 +9,8 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb2c655475454d2f0e54c0e3f5e5d1ff&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오api키&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
-    <script>
-        $(document).ready(function () {
-
-            if([[${result}]]) {
-                alert('삭제 성공!');
-            }
-        });
-    </script>
 
 </head>
 <body>
@@ -53,15 +45,12 @@
                             <div class="mention-btn" >
                                 <input type="submit" value="올리기">
                             </div>
-
                         </div>
                     </form>
                 </div>
-
-
-
                 <!-- 멘션 목록 -->
                 <div class="mention-list">
+                    <div onclick="location.href='/mention_detail'" class="mention-each">
                     <div class="mention-each" th:each="mention : ${mentionFormList}">
                         <div class="mention-left">
                             <div class="profile-img">
@@ -89,17 +78,14 @@
                             </div>
                             <div class="content">
                                 <a th:href="@{'/mention_detail/' + ${mention.no}}">
+<!--                                    <span th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}"></span>-->
                                     <span th:text="${mention.content}"></span>
                                 </a>
                             </div>
-                            <div class="delete">
-
-                            </div>
                         </div>
                     </div>
+                    </div>
                 </div>
-                <!-- 멘션 끝!! -->
-
             </div>
         </div>
         <div class="sidebar">
@@ -121,7 +107,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
     <div class="modal fade" id="location-modal" role="dialog">
         <div class="modal-dialog">
 
@@ -139,7 +125,6 @@
                     <div id="map-div">
                         <div id="map" style="width:100%;height:350px;"></div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <input type="text" class="search-text" name="location-select" id ="location-select">

@@ -12,12 +12,17 @@
     <div class="home">
         <div class="home-left">
             <div class="map-collect">
-                <a th:href="@{/infection}" class="map-collect-item infection">확진</a>
-                <a th:href="@{/density}" class="map-collect-item density">밀집</a>
-                <a href="#" class="map-collect-item distancing">거리두기</a>
+                <a th:href="@{/infection}" class="map-collect-item infection" id="item-infection">확진</a>
+                <a th:href="@{/density}" class="map-collect-item density" id="item-density">밀집</a>
+                <a href="#" class="map-collect-item distancing" id="item-distancing">거리두기</a>
             </div>
             <div class="infection-info">
                 <div class="infection-list">
+                    <div class="infection-list-label">
+                        <span>지역</span>
+                        <span style="font-size: 0.8rem">오늘 확진자</span>
+                        <span style="font-size: 0.8rem">밀집도</span>
+                    </div>
                     <div class="infection-each" th:each="safety : ${safetyList}">
                         <div class="infection-each-city">
                             <span th:text="${safety.city}"></span>
@@ -26,10 +31,9 @@
                             <span th:text="${safety.confirmed}"></span>
                         </div>
                         <div class="infection-each-density">
-                            <span th:text="${#numbers.formatDecimal(safety.index,0,2)}"></span>
+                            <span th:text="${#numbers.formatDecimal(safety.index, 0, 2)}"></span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -37,7 +41,7 @@
         <div class="home-map" id="home-map">
 
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap"
-                 width="29000000px38." height="2560.000000px"
+                 width="29000000px" height="2560px"
                  preserveAspectRatio="xMidYMid meet"xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
                 <defs>
 
@@ -81,13 +85,65 @@
                           th:attr="fill=${'rgba(' + color + ', ' + Sejong + ')'}" id="KR-50" title="Sejong" class="none" d="M180.84,395.146L182.397,397.326L182.086,400.128L179.906,400.751L182.709,404.176L182.709,406.979L183.159,408.328L186.491,408.523L186.398,409.979L185.573,411.799L186.651,412.939L184.789,419.024L185.367,418.243L185.766,417.918L186.472,418.063L187.087,418.922L187.396,418.957L187.068,422.235L186.134,425.039L182.709,426.596L181.798,426.639L179.283,427.218L179.596,435.937L177.416,438.428L175.713,436.376L173.965,435.031L172.754,431.937L172.888,427.902L172.619,425.077L171.274,421.176L168.583,419.697L166.7,417.141L166.566,415.123L167.642,412.702L167.642,409.608L167.507,406.11L167.239,402.747L167.911,400.326L167.642,397.231L167.104,395.215L166.028,393.197L166.431,391.447L169.122,390.371L171.677,391.178L173.157,392.793L175.848,394.407L178.403,395.348z"/>
                 </g>
             </svg>
-
         </div>
         <div class="home-right">
-            <div class="news-img"></div>
+            <div class="news-slide-container">
+                <div class="news-slide fade">
+                    <img src="img/corona1.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <div class="news-slide fade">
+                    <img src="img/corona2.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <div class="news-slide fade">
+                    <img src="img/corona3.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <div class="news-slide fade">
+                    <img src="img/corona4.png">
+                    <div class="text">NEWS TITLE</div>
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+            <div style="text-align: center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+            <script>
+                var slideIndex = 1;
+                showSlides(slideIndex);
+
+                function plusSlides(n){
+                    showSlides(slideIndex+=n);
+                }
+                function currentSlide(n){
+                    showSlides(slideIndex=n);
+                }
+                function showSlides(n){
+                    var i;
+                    var slides = document.getElementsByClassName("news-slide");
+                    var dots = document.getElementsByClassName("dot");
+                    if(n>slides.length){slideIndex=1}
+                    if(n<1){slideIndex = slides.length}
+                    for(i=0;i<slides.length;i++){
+                        slides[i].style.display="none";
+                    }
+                    for(i=0;i<dots.length;i++){
+                        dots[i].className=dots[i].className.replace(" active","");
+                    }
+                    slides[slideIndex-1].style.display="block";
+                    dots[slideIndex-1].className+=" active";
+                }
+            </script>
             <div class="chat"></div>
             <!-- 채팅 -->
-            <div>
+            <div class="chat">
                 <div id="username-page">
                     <div class="username-page-container">
                         <h2 class="title">채팅 아이디를 입력해주세요!</h2>
@@ -128,33 +184,17 @@
         </div>
     </div>
     <script>
-
-        function changeMap(district) {
-            document.querySelector('.home-map').add('.district-hidden');
-            document.querySelector(district).remove('.district-hidden');
+        // 지도 선택 버튼 색 지정
+        if(window.location.href.indexOf("infection") > -1){ // 확진 지도일때
+            document.getElementById("item-infection").style.background = "rgb(125, 204, 171)";
+        } else if(window.location.href.indexOf("density") > -1){ // 밀집 지도일때
+            document.getElementById("item-density").style.background = "rgb(125, 204, 171)";
+        } else if(window.location.href.indexOf("distancing") > -1){ // 거리두기 지도일때
+            document.getElementById("item-distancing").style.background = "rgb(125, 204, 171)";
+        } else { // 나머지. "/" 포함.
+            document.getElementById("item-infection").style.background = "rgb(125, 204, 171)";
         }
     </script>
-
-
-    <script>
-        $('.density').on('click',function() {
-            var cbDistrict = ["Boeun-gun", "Cheongju-si", "Chungju-si", "Danyang-gun", "Goesan-gun", "Jecheon-si", "Jeungpyeong-gun", "Jincheon-gun", "Okcheon-gun", "Eumseong-gun", "Yeongdong-gun"];
-            var cbDistrict2 = ["Boeun_gun", "Cheongju_si", "Chungju_si", "Danyang_gun", "Goesan_gun", "Jecheon_si", "Jeungpyeong_gun", "Jincheon_gun", "Okcheon_gun", "Eumseong_gun", "Yeongdong_gun"];
-
-
-            $.ajax({
-                url: "/density",
-                data: {
-                    "cbDistrict": cbDistrict,
-                    "cbDistrict2": cbDistrict2
-                },
-                success: function () {
-
-                }
-            });
-        });
-    </script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="/js/co_info/chat.js"></script>

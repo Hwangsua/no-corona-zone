@@ -81,13 +81,13 @@
                         </div>
                     </div>
                     <div class="mention-bottom">
-                        <div class="content" th:text="${mention.content}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
+                        <div class="content" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
                         <div class="mention-info">
                             <div class="upload-time" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}">2021년 8월 22일 오후 4:27</div>
                             <div class="dot">·</div>
                             <div class="location" th:text="${mention.location}">롯데월드</div>
                         </div>
-                        <div align="left" class="mention-delete" th:if="${member.no==mention.member.no}">
+                        <div align="left" class="mention-delete" th:if="${currentMember.no==mention.member.no}">
                             <form id="delete-form" th:action="@{'/delete/' + ${mention.no}}" method="post">
                                 <input type="hidden" name="delete_mention" value="delete"/>
                                 <button id="delete-btn">삭제</button>
@@ -99,7 +99,7 @@
                     <form id="re-mention-form" th:object="${reMentionForm}" >
                         <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
                         <div class="profile-img">
-                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${member.nickname}"
+                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"
                                  width="60" height="60" class="rounded border bg-light"></svg>
                         </div>
                         <div class="remention-write">
@@ -109,20 +109,16 @@
                             <div class="remention-btn">
                                 <p class="remention-btn-text" >말하기</p>
                             </div>
-
                         </div>
                     </form>
                 </div>
-                <div id = "re-mention-list">
-                    <div th:each="reMention:${reMentionList}">
-                        <div class="re-mention-info">
-                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${member.nickname}"
-                                 width="60" height="60" class="rounded border bg-light"></svg>
-                            <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
-                            <div id="re-mention-content" th:text="${reMention.content}">내용</div>
-                        </div>
+            <div id = "re-mention-list">
+                <div th:each="reMention:${reMentionList}">
+                    <div class="re-mention-info">
+                        <img class="identicon">
+                        <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
+                        <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -146,6 +142,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

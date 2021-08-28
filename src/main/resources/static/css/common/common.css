@@ -74,9 +74,105 @@ a {
     height: 44px;
     margin-top: 20px;
 }
+.dropdown-item{
+    display: block;
+    font-size: 8px;
+    text-align: left;
+}
 .global-nav-menus,
 .global-nav-users {
     display: none;
+}
+.dropdown .newsDropdown{
+    cursor : pointer;
+}
+.logoutBtn{
+    border: none;
+    background-color: white;
+}
+.dropdown-content{
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+.dropdown-item{
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.show {
+    display: block;
+}
+/*모바일 메뉴 좌측*/
+.sidepanel{
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    height: 310px;
+    background-color: rgb(125, 204, 171);
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 5px;
+}
+.sidepanel-right{
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    height: 310px;
+    background-color: rgb(125, 204, 171);;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 5px;
+}
+.mobile-menu-item{
+    font-weight: bold;
+    color: #0a3027;
+    margin-top: 30px;
+}
+.menu{
+    display: block;
+    font-weight: bold;
+    color: #0a3027;
+    margin-top: 30px;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 23px;
+    text-align: center;
+    display: block;
+    transition: 0.3s;
+}
+.sidepanel .closebtn{
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 30px;
+    color: #0a3027;
+}
+.sidepanel-right .closebtn{
+    position: absolute;
+    top: 0;
+    font-size: 30px;
+    color: #0a3027;
+}
+.sidepanel a{
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 23px;
+    text-align: center;
+    display: block;
+    transition: 0.3s;
+}
+.sidepanel-right a{
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 23px;
+    text-align: center;
+    display: block;
+    transition: 0.3s;
 }
 .mobile-nav-menus,
 .mobile-nav-users {
@@ -131,11 +227,9 @@ a {
         text-align: center;
         width: 300px;
     }
-    .home-btn {
-        font-weight: bold;
-        font-size: 1.7vw;
+    .icon-home:hover {
+        cursor: pointer;
     }
-
     a:hover {
         text-decoration: none;
     }
