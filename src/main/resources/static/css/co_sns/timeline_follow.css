@@ -278,6 +278,11 @@
         border:none;
         outline: none;
     }
+    .search-mention{
+        border: none;
+        background-color: rgb(245, 245, 245);
+        border: 1px solid rgb(245, 245, 245);
+    }
     #map-div{
         margin-top: 7px;
     }

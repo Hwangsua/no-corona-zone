@@ -149,7 +149,7 @@
 }
 /*********************************************************************/
 @media (min-width: 940px) {
-    .container {
+    .container-timeline {
         height: auto;
         display: flex;
         justify-content: center;

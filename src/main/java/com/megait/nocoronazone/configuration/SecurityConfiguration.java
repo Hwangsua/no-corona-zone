@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService)
 
                 .and()
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
@@ -53,7 +54,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/") // 로그아웃하면 메인으로 가게
         ;
     }
-
 
     @Override
     public void configure(WebSecurity web) throws Exception {

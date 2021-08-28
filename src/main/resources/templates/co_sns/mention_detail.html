@@ -12,43 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
-    <script>
-        $(document).ready(function () {
-
-            $('#remention-save-btn').click(function () {
-
-<!--                console.log($('#content').val().length);-->
-<!--                if($('#content').val().replace(/\s| /gi, "").length==0){-->
-<!--                    alert("내용을 입력해주세요.");-->
-<!--                    return false;-->
-<!--                }-->
-
-<!--                document.getElementById("parent-mention-no").value= $('#parent-mention').val();-->
-
-<!--                var token = $("meta[name='_csrf']").attr("content");-->
-<!--                var header = $("meta[name='_csrf_header']").attr("content");-->
-
-<!--                $.ajax({-->
-<!--                    url : '/remention',-->
-<!--                    type : 'POST',-->
-<!--                    data : $('#re-mention-form').serialize(),-->
-<!--                    beforeSend: function (xhr){-->
-<!--                        xhr.setRequestHeader(header, token);-->
-<!--                    },-->
-<!--                }).done(function (fragment) {-->
-
-<!--                    $("#re-mention-list").replaceWith(fragment);-->
-<!--                    document.getElementById("content").value= null;-->
-<!--                });-->
-<!--            });-->
-
-<!--            $(".identicon").each(function () {-->
-<!--                var hash = md5($(this).data('id')).toString();-->
-<!--                var data = new Identicon(hash, {format: 'svg'}).toString();-->
-<!--                $(this).attr('src', "data:image/svg+xml;base64," + data);-->
-<!--            });-->
-<!--        });-->
-<!--    </script>-->
 </head>
 <body>
 <div layout:fragment="content">
@@ -67,23 +30,25 @@
             <div class="mention-and-remention">
                 <input type="hidden" th:value="${mention.no}" id="parent-mention">
                 <div class="mention-content" >
-                    <div class="mention-top">
-                        <div class="profile-img">
-                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                                 width="60" height="60" class="rounded border bg-light"></svg>
-                        </div>
-                        <div class="nickname-box">
-                            <a href="" class="nickname" th:text="${mention.member.nickname}">닉네임</a>
-                        </div>
-                        <div class="vaccine">
-                            <img src="img/vaccine.png" alt="" class="vaccine">
-                        </div>
-                    </div>
                     <div class="mention-bottom">
-                        <div class="content" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!가나다라마바다아자차카타</div>
                         <div class="mention-info">
+                            <div class="profile-img">
+                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                     width="60" height="60" class="rounded border bg-light"></svg>
+                            </div>
+                            <div class="content" style="height: auto" th:text="${mention.content}">가나다라마바다아자차카타</div>
+                        </div>
+                        <div class="mention-info" style="margin-top: 8px">
+                            <div class="nickname-box">
+                                <a href="" class="nickname" th:text="${mention.member.nickname}">닉네임</a>
+                            </div>
+                            <div class="dot">|</div>
+                            <div class="vaccine">
+                                <img src="img/vaccine.png" alt="" class="vaccine">
+                            </div>
+                            <div class="dot">|</div>
                             <div class="upload-time" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}">2021년 8월 22일 오후 4:27</div>
-                            <div class="dot">·</div>
+                            <div class="dot">|</div>
                             <div class="location" th:text="${mention.location}">롯데월드</div>
                         </div>
                         <div style="float: left;" class="mention-delete" th:if="${currentMember.no==mention.member.no}">
@@ -97,17 +62,17 @@
                 <div class="remention-content" >
                     <form id="re-mention-form" th:object="${reMentionForm}" >
                         <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
-                        <div class="profile-img">
-                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"
-                                 width="60" height="60" class="rounded border bg-light"></svg>
-                        </div>
-                        <div class="remention-write">
-                            <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
+                        <div class="mention-info">
+                            <div class="profile-img">
+                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"
+                                     width="60" height="60" class="rounded border bg-light"></svg>
+                            </div>
+                            <div class="remention-write">
+                                <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
+                            </div>
                         </div>
                         <div class="remention-write-submit" id="remention-save-btn">
-                            <div class="remention-btn">
-                                <p class="remention-btn-text">올리기</p>
-                            </div>
+                                <button class="remention-btn">올리기</button>
                         </div>
                     </form>
                 </div>
@@ -121,6 +86,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <div class="sidebar">
             <div class="search">
                 <form method="get" name="search-mention" th:action="@{search}">
@@ -140,7 +106,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </div>
 </body>
