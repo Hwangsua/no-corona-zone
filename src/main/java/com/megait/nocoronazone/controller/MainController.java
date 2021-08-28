@@ -3,7 +3,6 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
-import com.google.gson.JsonObject;
 import com.megait.nocoronazone.domain.ChatMessage;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
@@ -12,9 +11,15 @@ import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
 import com.megait.nocoronazone.form.LocationSearchForm;
-import com.megait.nocoronazone.form.SignUpForm;
+import com.megait.nocoronazone.domain.Mention;
+import com.megait.nocoronazone.form.*;
 import com.megait.nocoronazone.service.*;
 import com.megait.nocoronazone.service.DetailSafetyService;
+import com.megait.nocoronazone.service.CustomOAuth2UserService;
+import com.megait.nocoronazone.service.MemberService;
+import com.megait.nocoronazone.service.MentionService;
+import com.megait.nocoronazone.service.SafetyService;
+import com.megait.nocoronazone.service.ReMentionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -36,6 +41,7 @@ import javax.validation.Valid;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -86,7 +92,8 @@ public class MainController {
     String[] ulsanDistrict = {"Jung-gu", "Nam-gu", "Dong-gu", "Buk-gu", "Ulju-gun"};
     // 인천
     String[] incheonDistrict = {"Jung-gu", "Dong-gu", "Michuhol-gu", "Yeonsu-gu", "Namdong-gu", "Bupyeong-gu", "Gyeyang-gu", "Seo-gu", "Ganghwa-gun", "Ongjin-gun"};
-
+    // 광주
+    String[] gwangjuDistrict = {"Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Gwangsan-gu"};
 
 
 
@@ -95,7 +102,7 @@ public class MainController {
     public String index(Model model) {
         model.addAttribute("member", memberService);
 
-    
+
         List<SafetyIndex> safetyList = safetyService.getSafetyList();
         model.addAttribute("safetyList", safetyList);
         model.addAttribute("color", colorConfirmed);
@@ -134,52 +141,52 @@ public class MainController {
         model.addAttribute("color", colorDensity);
         if (district.equals("Seoul")){
             for(int i = 0; i < seoulDistrict.length; ++i){
-                model.addAttribute(seoulDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(seoulDistrict[i]));
+                model.addAttribute(("Seoul-" + seoulDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Seoul-" + seoulDistrict[i]));
             }
             return "map/seoul";
         } else if (district.equals("Chungbuk")) {
             for (int i = 0; i < cbDistrict.length; ++i) {
-                model.addAttribute(cbDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(cbDistrict[i]));
+                model.addAttribute(("Chungcheongbuk-do-" + cbDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Chungcheongbuk-do-" + cbDistrict[i]));
             }
             return "map/chungbuk";
         } else if (district.equals("Chungnam")) {
             for (int i = 0; i < cnDistrict.length; ++i) {
-                model.addAttribute(cnDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(cnDistrict[i]));
+                model.addAttribute(("Chungcheongnam-do-" + cnDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Chungcheongnam-do-" + cnDistrict[i]));
             }
             return "map/chungnam";
         } else if (district.equals("Gyeongbuk")) {
             for (int i = 0; i < gbDistrict.length; ++i) {
-                model.addAttribute(gbDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(gbDistrict[i]));
+                model.addAttribute(("Gyeongsangbuk-do-" + gbDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gyeongsangbuk-do-" + gbDistrict[i]));
             }
             return "map/gyeongbuk";
         } else if (district.equals("Gyeongnam")) {
             for (int i = 0; i < gnDistrict.length; ++i) {
-                model.addAttribute(gnDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(gnDistrict[i]));
+                model.addAttribute(("Gyeongsangnam-do-" + gnDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gyeongsangnam-do-" + gnDistrict[i]));
             }
             return "map/gyeongnam";
         } else if (district.equals("Jeonbuk")) {
             for (int i = 0; i < jbDistrict.length; ++i) {
-                model.addAttribute(jbDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(jbDistrict[i]));
+                model.addAttribute(("Jeollabuk-do-" + jbDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Jeollabuk-do-" + jbDistrict[i]));
             }
             return "map/jeonbuk";
         } else if (district.equals("Jeonnam")) {
             for (int i = 0; i < jnDistrict.length; ++i) {
-                model.addAttribute(jnDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(jnDistrict[i]));
+                model.addAttribute(("Jeollanam-do-" + jnDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Jeollanam-do-" + jnDistrict[i]));
             }
             return "map/jeonnam";
         } else if (district.equals("Gyeonggi")) {
             for (int i = 0; i < ggDistrict.length; ++i) {
-                model.addAttribute(ggDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(ggDistrict[i]));
+                model.addAttribute(("Gyeonggi-do-" + ggDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gyeonggi-do-" + ggDistrict[i]));
             }
             return "map/gyeonggi";
         } else if (district.equals("Busan")) {
             for (int i = 0; i < busanDistrict.length; ++i) {
-                model.addAttribute(busanDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(busanDistrict[i]));
+                model.addAttribute(("Busan-" + busanDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Busan-" + busanDistrict[i]));
             }
             return "map/busan";
         } else if (district.equals("Gangwon")) {
             for (int i = 0; i < gangwonDistrict.length; ++i) {
-                model.addAttribute(gangwonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(gangwonDistrict[i]));
+                model.addAttribute(("Gangwon-do-" + gangwonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gangwon-do-" + gangwonDistrict[i]));
             }
             return "map/gangwon";
         } else if (district.equals("Jeju")) {
@@ -189,27 +196,27 @@ public class MainController {
             return "map/jeju";
         } else if (district.equals("Ulsan")) {
             for (int i = 0; i < ulsanDistrict.length; ++i) {
-                model.addAttribute(ulsanDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(ulsanDistrict[i]));
+                model.addAttribute(("Ulsan-" + ulsanDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Ulsan-" + ulsanDistrict[i]));
             }
-            return "map/Ulsan";
+            return "map/ulsan";
         } else if (district.equals("Incheon")) {
             for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+                model.addAttribute(("Incheon-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Incheon-" + incheonDistrict[i]));
             }
             return "map/incheon";
         } else if (district.equals("Daegu")) {
             for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+                model.addAttribute(("Daegu-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daegu-" + incheonDistrict[i]));
             }
             return "map/daegu";
         } else if (district.equals("Daejeon")) {
             for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+                model.addAttribute(("Daejeon-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daejeon-" + incheonDistrict[i]));
             }
             return "map/daejeon";
         } else if (district.equals("Gwangju")) {
-            for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(incheonDistrict[i].replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha(incheonDistrict[i]));
+            for (int i = 0; i < gwangjuDistrict.length; ++i) {
+                model.addAttribute(("Gwangju-" + gwangjuDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Gwangju-" + gwangjuDistrict[i]));
             }
             return "map/gwangju";
         }
@@ -283,7 +290,7 @@ public class MainController {
 
         Member member = memberService.processNewUser(signUpForm);
 
-        //memberService.login(member);
+        memberService.login(member);
 
         return "/member/email_check";
     }
@@ -306,8 +313,17 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile/{id}")
-    public String coSns_Memberpage() {
+    @GetMapping("/profile/{nickname}")
+    public String profilePage(@PathVariable String nickname, Model model) {
+
+        List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
+        System.out.println(memberMentionList);
+        Member profileMember = memberService.getNicknameMember(nickname);
+        System.out.println(profileMember);
+        model.addAttribute("profileMember", profileMember);
+        model.addAttribute("memberMentionList", memberMentionList);
+
+
         return "co_sns/profile";
     }
 
@@ -316,34 +332,19 @@ public class MainController {
     @GetMapping("/settings")
     public String setting(Model model, @AuthenticationMember Member member){
         model.addAttribute("member", memberService.getMember(member));
-        return "member/settings_test";
+        return "member/settings";
     }
 
-//    @PostMapping("/settings")
-//    public String updateMember(Model model, @Valid SettingForm settingForm, @AuthenticationMember Member member) {
-//        Member updateMember = memberService.updateMember(member.getNo(), settingForm);
-//        model.addAttribute("result", true);
-//
-//        return setting(model, member);
-//
-//    }
+    @PostMapping("/settings")
+    public String updateMember(Model model, @Valid SettingForm settingForm, @AuthenticationMember Member member) {
 
+            Member updateMember = memberService.updateMember(member.getNo(), settingForm);
+            model.addAttribute("updateMember",updateMember);
+            model.addAttribute("result", true);
 
+        return setting(model, member);
 
-//    //유저 검색
-//    @GetMapping("/admin")
-//    public Member findMember(@RequestParam Long no){
-//        Optional<Member> member = memberRepository.findByNo(no);
-//
-//        return member.get();
-//    }
-
-
-
-
-
-
-
+    }
 
     // ================= co_info ============================
 
@@ -351,7 +352,7 @@ public class MainController {
     public String vaccine(Model model) {
         VaccineCountVo vaccineCountVo = vaccineXml.getVaccineCount();
         int totalPopulation = vaccineXml.getTotalPopulation();
-        List<Integer> cityPopulationList = vaccineXml.getCityPopulation();
+        List<String> cityPopulationList = vaccineXml.getCityPopulation();
         model.addAttribute("vaccineCountVo", vaccineCountVo);
         model.addAttribute("totalPopulation", totalPopulation);
         model.addAttribute("cityPopulationList", cityPopulationList);
@@ -409,6 +410,7 @@ public class MainController {
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
     public String timelineFollow(Model model){
+
         List<Mention> mentionFormList = mentionService.getMentionlist();
 
         model.addAttribute("member", memberService);
@@ -454,14 +456,14 @@ public class MainController {
     }
 
     @GetMapping("/mention_detail/{no}")
-    public String mentionDetail(@PathVariable Long no, Model model){
-
+    public String mentionDetail(@PathVariable Long no, Model model, @AuthenticationMember Member member){
         try {
             Mention parentMention = mentionService.getMention(no);
             model.addAttribute("mention", parentMention );
             model.addAttribute("reMentionForm", new ReMentionForm());
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
-
+            model.addAttribute("currentMember", memberService.getMember(member));
+            
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
         }
@@ -472,10 +474,12 @@ public class MainController {
     @PostMapping("/remention")
     public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model){
 
+
         try {
             Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
             reMentionService.saveReMention(member, parentMention,reMentionForm);
             model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+            model.addAttribute("member", memberService.getMember(member));
 
         }catch (IllegalArgumentException e){
             return "co_sns/timeline_location";
@@ -484,10 +488,30 @@ public class MainController {
         return "co_sns/mention_detail :: #re-mention-list";
     }
 
+
     @GetMapping("/search")
-    public String searchCoSns(){
-        return "co_sns/search";
+    public String search(@RequestParam(value="keyword") String keyword, Model model) {
+        List<Mention> mentionFormList = mentionService.searchMentions(keyword);
+
+        model.addAttribute("member", memberService);
+        model.addAttribute("mention",mentionService);
+        model.addAttribute("mentionFormList", mentionFormList);
+        model.addAttribute("mentionForm", new MentionForm());
+
+        return "co_sns/timeline_follow";
+
     }
+
+
+    @PostMapping("/delete/{no}")
+    public String delete(@PathVariable Long no,Model model){
+
+        mentionService.deleteMention(no);
+        model.addAttribute("result", true);
+
+        return "redirect:/timeline_follow";
+    }
+
 
     //TODO - 트렌드, 강사님이 도와주신다고 하심
 
@@ -501,9 +525,5 @@ public class MainController {
 //        return "co_sns/follower";
 //    }
 
-//    @GetMapping("/{nickname}")
-//    public String profile(@PathVariable String nickname){
-//        return "co_sns/profile";
-//    }
 
 }

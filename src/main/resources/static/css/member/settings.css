@@ -1,19 +1,36 @@
 .container{
     border: none;
-    height: auto;
+    margin-top: 80px;
 }
 .settings-header{
     margin-top: 20px;
     display: flex;
 }
+#nickname-duplicate-check{
+    display: block;
+    float: right;
+    border: none;
+    width: 36px;
+    height: 30px;
+    margin-left: 10px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 8px;
+}
 .btn-style{
     display: block;
+    /*float: right;*/
     border: none;
-    width: 50px;
+    width: 36px;
     height: 30px;
-    font-weight: bold;
-    border-radius: 3px;
+    background-color: #D1B6E1;
+    color: white;
     margin: auto 0;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 8px;
 }
 .hr{
     position: static;
@@ -57,13 +74,12 @@
     display: block;
     width: 75px;
     height: 75px;
-    border: 1px solid lightgray;
-    border-radius: 50%;
+    line-height: 75px;
 }
 .vaccine{
     display: block;
-    width: 75px;
-    height: 75px;
+    width: 73px;
+    height: 73px;
     border: 1px solid lightgray;
 }
 .content-img{
@@ -106,5 +122,40 @@
         width: 350px;
         height: 10px;
         border-bottom: 2px solid lightgrey;
+    }
+    /*.btn-style{*/
+    /*    display: block;*/
+    /*    border: none;*/
+    /*    width: 50px;*/
+    /*    height: 30px;*/
+    /*    font-weight: bold;*/
+    /*    border-radius: 3px;*/
+    /*    margin: auto 0;*/
+    /*}*/
+    .btn-style{
+        display: block;
+        /*float: right;*/
+        border: none;
+        width: 36px;
+        height: 30px;
+        background-color: #D1B6E1;
+        color: white;
+        margin: auto 0;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 8px;
+    }
+    #nickname-duplicate-check{
+        display: block;
+        float: right;
+        border: none;
+        width: 36px;
+        height: 30px;
+        margin-left: 10px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 8px;
     }
 }

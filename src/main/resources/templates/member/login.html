@@ -30,7 +30,7 @@
                     <div class="checks">
                         <div class="form-check"> <!-- 자동 로그인 -->
                             <input type="checkbox" class="form-check-input" id="remember-me"
-                                   name="remember-me" checked/>
+                                   name="remember-me"/>
                             <label class="form-check-label" for="remember-me" aria-describedby="rememberMeHelp">아이디 저장</label>
                         </div>
                         <div class="find-info">
@@ -49,7 +49,7 @@
                         <a href="/oauth2/authorization/naver" role="button"><img class="naver-btn" th:src="@{img/naver-login.png}"></a>
                     </div>
                     <div class="item">
-                        <button type="button" class="buttons">회원가입</button>
+                        <a class="signup-btn" th:href="@{/signup}">회원가입</a>
                     </div>
                 </form>
             </div>

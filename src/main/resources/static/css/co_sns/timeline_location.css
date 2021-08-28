@@ -28,12 +28,6 @@
     font-weight: bold;
     margin-top: 10px;
 }
-.search-btn {
-    height: 35px;
-    width: 70px;
-    background-color: lightgrey;
-    border-radius: 10px;
-}
 .search-btn-text {
     margin-top: 10px;
     margin-left: 15px;
@@ -64,13 +58,6 @@
     justify-content: flex-end;
     align-items: flex-end;
 }
-.location-btn {
-    height: 35px;
-    width: 45px;
-    margin-right: 3px;
-    background-color: lightgrey;
-    border-radius: 10px;
-}
 .location-btn-text {
     margin-top: 10px;
     margin-left: 15px;
@@ -88,6 +75,58 @@
     padding: 10px;
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
+}
+#keyword-search{
+    display: block;
+    float: right;
+    border: none;
+    width: 36px;
+    height: 23px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 8px;
+}
+#location-save-btn{
+    display: block;
+    float: right;
+    border: none;
+    width: 36px;
+    height: 23px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 8px;
+    margin-top: -3px;
+}
+.search-text{
+    ackground-color: rgb(245, 245, 245);
+    border: 1px solid rgb(245, 245, 245);
+    width: 200px;
+    height: 23px;
+    margin-left: 130px;
+    text-align: center;
+}
+.search-text3{
+    background-color: rgb(245, 245, 245);
+    border: 1px solid rgb(245, 245, 245);
+    width: 200px;
+    height: 23px;
+    margin-top: -3px;
+    text-align: center;
+}
+#location-btn{
+    display: block;
+    height: 26px;
+    width: 40px;
+    margin-right: 3px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    border:none;
 }
 .mention-left {
     height: 70px;
@@ -110,7 +149,7 @@
 }
 /*********************************************************************/
 @media (min-width: 940px) {
-    .container {
+    .container-timeline {
         height: auto;
         display: flex;
         justify-content: center;
@@ -176,6 +215,24 @@
         position: sticky;
         top: 15px;
     }
+    #location-btn {
+        display: block;
+        height: 26px;
+        width: 85px;
+        margin-top: 23px;
+        margin-right: 3px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        border:none;
+    }
+    #map-div{
+        margin-top: 7px;
+    }
+    .location-search{
+        margin-top: -10px;
+    }
     .search {
         height: 40px;
         margin: 0 20px;
@@ -188,10 +245,52 @@
     .search-box {
         /*margin-top: 10px;*/
     }
-    .search-text {
+    .search-text{
+        background-color: rgb(245, 245, 245);
+        border: 1px solid rgb(245, 245, 245);
+        width: 400px;
+        height: 23px;
+        margin-left: 20px;
+        text-align: center;
+    }
+    .search-text2 {
         background-color: rgb(245, 245, 245);
         border: none;
         outline: none;
+    }
+    .search-text3{
+        background-color: rgb(245, 245, 245);
+        border: 1px solid rgb(245, 245, 245);
+        width: 400px;
+        height: 23px;
+        margin-top: -3px;
+        text-align: center;
+    }
+    #keyword-search{
+        display: block;
+        float: right;
+        border: none;
+        width: 36px;
+        height: 23px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 8px;
+        /*border:none;*/
+    }
+    #location-save-btn{
+        display: block;
+        float: right;
+        border: none;
+        width: 36px;
+        height: 23px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 8px;
+        margin-top: -3px;
     }
     .trend-box {
         height: 300px;
@@ -233,13 +332,6 @@
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
-    }
-    .location-btn {
-        height: 35px;
-        width: 45px;
-        margin-right: 3px;
-        background-color: lightgrey;
-        border-radius: 10px;
     }
     .location-btn-text {
         margin-top: 10px;

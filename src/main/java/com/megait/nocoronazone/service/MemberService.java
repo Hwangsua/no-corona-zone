@@ -3,6 +3,8 @@ package com.megait.nocoronazone.service;
 import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
+import com.megait.nocoronazone.domain.Mention;
+import com.megait.nocoronazone.form.SettingForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.MemberRepository;
 import com.megait.nocoronazone.service.EmailService;
@@ -121,37 +123,28 @@ public class MemberService implements UserDetailsService {
     }
 
 
-//    @Transactional
-//    public Member updateMember(Long no, SettingForm settingForm) {
-//        Member member = memberRepository.findByNo(no).get();
-//        member.update(settingForm);
-//
-//        return member;
-//    }
+    @Transactional
+    public Member updateMember(Long no, SettingForm settingForm) {
+        Member member = memberRepository.findByNo(no).get();
+        member.update(settingForm);
 
+        return member;
+    }
 
-//    public boolean modifyMember(Member request) {
-//        Member member;
-//        if (request.getNo() == null || request.getNo() == 0) {
-//            member = new Member();
-//            member.setNickname(request.getNickname());
-//            member.setPassword(request.getPassword());
-//            member.setIntroduce(request.getIntroduce());
-//            member.setCertification(request.isCertification());
-//        } else {
-//            member = request;
-//        }
-//        memberRepository.save(member);
-//        return true;
-//    }
-
-//    public boolean deleteMember(Member request) {
-//        memberRepository.deleteById(request.getNo());
-//        return true;
-//    }
 
     public Object getMember(Member member) {
         return memberRepository.getById(member.getNo());
+    }
+
+
+    public Member getNicknameMember(String nickname) {
+        Optional<Member> optionalMember = memberRepository.findByNickname(nickname);
+
+        if(optionalMember.isEmpty()){
+            throw new IllegalArgumentException("wrong nickname");
+        }
+
+        return optionalMember.get();
     }
 }
 

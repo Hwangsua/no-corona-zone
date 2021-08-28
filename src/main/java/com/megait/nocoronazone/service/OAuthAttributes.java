@@ -107,13 +107,16 @@ public class OAuthAttributes {
 //    }
 
     public Member toEntity() {
+        int num = (int)(Math.random()*100000);
+        String nickname = Integer.toString(num);
+
         return Member.builder()
                 .name(name)
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
                 .certification(true)
                 .introduce("{noop}")
-                .nickname("{noop}")
+                .nickname(nickname)
                 .authType(authType)
                 .emailVerified(true)
                 .password("{noop}")

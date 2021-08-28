@@ -37,7 +37,7 @@
     .home {
         display: flex;
         justify-content: center;
-        margin-top: 15px;
+        margin-top: 5px;
     }
     .home-left {
         display: block;
@@ -76,7 +76,7 @@
     .infection-each {
         display: flex;
         justify-content: center;
-        height: 33px;
+        height: 30px;
         text-align: center;
 
     }
@@ -89,7 +89,7 @@
     .infection-each-confiremed {
         width: 70px;
         height: 30px;
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
     .infection-each-density {
         width: 70px;

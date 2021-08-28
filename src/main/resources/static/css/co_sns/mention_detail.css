@@ -1,3 +1,6 @@
+/*.container-header{*/
+/*    display: none;*/
+/*}*/
 .container-mention {
     height: auto;
     display: flex;
@@ -43,10 +46,9 @@
 }
 .mention-content {
     display: flex;
-    flex-direction: column;
     overflow: hidden;
     height: auto;
-    padding: 10px;
+    padding: 5px;
     border-bottom: 1px solid lightgray;
 }
 .mention-top {
@@ -70,8 +72,8 @@
 }
 .mention-bottom .content {
     height: 100%;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
+    margin-left: 10px;
+    font-size: 1rem;
 }
 .mention-info {
     height: auto;
@@ -81,12 +83,25 @@
     margin: 0 5px;
 }
 .remention-content {
-    display: flex;
     height: auto;
     padding: 5px;
     min-height: 50px;
     overflow: hidden;
     border-bottom: 1px solid lightgray;
+}
+
+#delete-btn {
+    display: block;
+    font-size: 13px;
+    height: 26px;
+    width: 55px;
+    margin-top: 5px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    outline: none;
 }
 .profile-img {
     margin: auto 0;
@@ -107,15 +122,17 @@
     margin: auto;
 }
 .remention-btn {
-    height: 35px;
-    width: 70px;
-    padding-top: 9.5px;
-    background-color: lightgrey;
-    border-radius: 10px;
-}
-.remention-btn-text {
-    margin-left: 15px;
+    display: block;
+    margin-top: 7px;
+    height: 26px;
+    width: 55px;
+    font-size: 13px;
+    background-color: #D1B6E1;
+    color: white;
     font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    outline: none;
 }
 .sidebar {
     display: none;
@@ -127,7 +144,7 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        margin-top: 0;
+        margin-top: 10px;
     }
     .mention-detail {
         width: 600px;
@@ -153,6 +170,19 @@
         margin-top: 20px;
         margin-left: 10px;
     }
+    #delete-btn {
+        display: block;
+        margin-left: 527px;
+        font-size: 13px;
+        height: 26px;
+        width: 55px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+    }
     .hr {
         border: 1px solid lightgrey;
         border-radius: 0.5px;
@@ -168,7 +198,6 @@
     }
     .mention-content {
         display: flex;
-        flex-direction: column;
         overflow: hidden;
         height: auto;
         padding: 10px;
@@ -181,6 +210,7 @@
         width: 40px;
     }
     .mention-top .nickname-box {
+        margin-left: 5px;
         height: 20px;
         width: auto;
         margin: auto 0;
@@ -199,7 +229,7 @@
     .mention-bottom .content {
         height: 100%;
         margin-bottom: 10px;
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
     .mention-info {
         height: auto;
@@ -209,13 +239,14 @@
         margin: 0 5px;
     }
     .remention-content {
-        display: flex;
         height: auto;
-        padding-top: 5px;
-        padding-left: 10px;
+        padding: 10px;
         min-height: 50px;
         overflow: hidden;
         border-bottom: 1px solid lightgray;
+    }
+    #parent-mention-no{
+        display: flex;
     }
     .profile-img {
         margin: auto 0;
@@ -226,10 +257,10 @@
     }
     .remention-write textarea {
         height: inherit;
-        width: 97%;
+        width: 500px;
+        height: 60px;
         resize: none;
         border: none;
-        margin: 10px;
         outline: none;
         overflow: visible;
     }
@@ -237,16 +268,20 @@
         margin: auto;
     }
     .remention-btn {
-        height: 35px;
-        width: 70px;
-        padding-top: 9.5px;
-        background-color: lightgrey;
-        border-radius: 10px;
-    }
-    .remention-btn-text {
-        margin-left: 15px;
+        display: block;
+        float: right;
+        height: 26px;
+        width: 55px;
+        background-color: #D1B6E1;
+        color: white;
         font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        text-align: center;
+        margin-top: 6px;
     }
+
     .sidebar {
         display: block;
         height: auto;
@@ -269,6 +304,11 @@
         background-color: rgb(245, 245, 245);
         border: none;
         outline: none;
+    }
+    .search-mention{
+        border: none;
+        background-color: rgb(245, 245, 245);
+        border: 1px solid rgb(245, 245, 245);
     }
     .trend-box {
         height: 300px;

@@ -11,7 +11,7 @@
         $(document).ready(function (){
 
             if([[${result}]]) {
-                alert('Save complete');
+                alert('저장 성공!');
             }
 
             let nicknameRegexCheck = true;
@@ -34,7 +34,7 @@
                     $('#nicknameCheck').css('color','red');
                 }
             });
-            $("#nicknameDuplicateCheck").click(function () {
+            $("#nickname-duplicate-check").click(function () {
 
                 let nickname = $('#nickname').val();
                 console.log(nickname);
