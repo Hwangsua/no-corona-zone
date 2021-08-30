@@ -3,10 +3,7 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
-import com.megait.nocoronazone.domain.ChatMessage;
-import com.megait.nocoronazone.domain.Member;
-import com.megait.nocoronazone.domain.Mention;
-import com.megait.nocoronazone.domain.SafetyIndex;
+import com.megait.nocoronazone.domain.*;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
@@ -51,6 +48,7 @@ public class MainController {
 
     private final DetailSafetyService detailSafetyService;
     private final SafetyService safetyService;
+    private final DistancingService distancingService;
     private final VaccineXml vaccineXml;
     private final ArticleService articleService;
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -61,6 +59,7 @@ public class MainController {
 
     String colorConfirmed = "235, 64, 52"; // red
     String colorDensity = "168, 118, 0"; // yellow
+    String colorDistancing = "124, 0, 173"; // purple
 
     // 전체
     String[] City = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종"};
@@ -68,7 +67,7 @@ public class MainController {
     // 충청북도
     String[] cbDistrict = {"Boeun-gun", "Cheongju-si", "Chungju-si", "Danyang-gun", "Goesan-gun", "Jecheon-si", "Jeungpyeong-gun", "Jincheon-gun", "Okcheon-gun", "Eumseong-gun", "Yeongdong-gun"};
     // 충청남도
-    String[] cnDistrict = {"Dangjin-si", "Cheongju-si", "Seosan-si", "Nonsan-si", "Cheonan-si", "Gongju-si", "Boryeong-si", "Asan-si", "Gyeryong-si", "Geumsan-gun", "Buyeo-gun", "Seocheon-gun", "Cheongyang-gun", "Hongseong-gun", "Yesan-gun", "Taean-gun", "Eumseong-gun"};
+    String[] cnDistrict = {"Dangjin-si", "Seosan-si", "Nonsan-si", "Cheonan-si", "Gongju-si", "Boryeong-si", "Asan-si", "Gyeryong-si", "Geumsan-gun", "Buyeo-gun", "Seocheon-gun", "Cheongyang-gun", "Hongseong-gun", "Yesan-gun", "Taean-gun"};
     // 경상북도
     String[] gbDistrict = {"Pohang-si", "Gyeongju-si", "Gimcheon-si", "Andong-si", "Gumi-si", "Yeongju-si", "Yeongcheon-si", "Sangju-si", "Mungyeong-si", "Gyeongsan-si", "Gunwi-gun", "Uiseong-gun", "Cheongsong-gun", "Yeongyang-gun", "Yeongdeok-gun", "Cheongdo-gun", "Goryeong-gun", "Seongju-gun", "Chilgok-gun", "Yecheon-gun", "Bonghwa-gun", "Uljin-gun", "Ulleung-gun"};
     // 경상남도
@@ -78,7 +77,7 @@ public class MainController {
     // 전라남도
     String[] jnDistrict = {"Mokpo-si", "Yeosu-si", "Suncheon-si", "Naju-si", "Gwangyang-si", "Damyang-gun", "Gokseong-gun", "Gurye-gun", "Goheung-gun", "Boseong-gun", "Hwasun-gun", "Jangheung-gun", "Gangjin-gun", "Haenam-gun", "Yeongam-gun", "Muan-gun", "Hampyeong-gun", "Yeonggwang-gun", "Jangseong-gun", "Wando-gun", "Jindo-gun", "Sinan-gun"};
     // 경기
-    String[] ggDistrict = {"Suwon-si", "Seongnam-si", "Uijeongbu-si", "Anyang-si", "Bucheon-si", "Gwangmyeong-si", "Pyeongtaek-si", "Dongducheon-si", "Ansan-si", "Goyang-si", "Gwacheon-si", "Guri-si", "Namyangju-si", "Osan-si", "Siheung-si", "Gunpo-si", "Uiwang-si", "Hanam-si", "Yongin-si", "Paju-si", "Icheon-si", "Anseong-si", "Gimpo-si", "Hwaseong-si", "Gwangju-si", "Yangju-si", "Pocheon-si", "Yeoju-si", "Yeoncheon-gun", "Gapyeong-gun", "Yangpyeong-gun", "Sinan_gun"};
+    String[] ggDistrict = {"Suwon-si", "Seongnam-si", "Uijeongbu-si", "Anyang-si", "Bucheon-si", "Gwangmyeong-si", "Pyeongtaek-si", "Dongducheon-si", "Ansan-si", "Goyang-si", "Gwacheon-si", "Guri-si", "Namyangju-si", "Osan-si", "Siheung-si", "Gunpo-si", "Uiwang-si", "Hanam-si", "Yongin-si", "Paju-si", "Icheon-si", "Anseong-si", "Gimpo-si", "Hwaseong-si", "Gwangju-si", "Yangju-si", "Pocheon-si", "Yeoju-si", "Yeoncheon-gun", "Gapyeong-gun", "Yangpyeong-gun"};
     // 서울
     String[] seoulDistrict = {"Jongno-gu", "Jung-gu", "Yongsan-gu", "Seongdong-gu", "Gwangjin-gu", "Dongdaemun-gu", "Jungnang-gu", "Seongbuk-gu", "Gangbuk-gu", "Dobong-gu", "Nowon-gu", "Eunpyeong-gu", "Seodaemun-gu", "Mapo-gu", "Yangcheon-gu", "Gangseo-gu", "Guro-gu", "Geumcheon-gu", "Yeongdeungpo-gu", "Dongjak-gu", "Gwanak-gu", "Seocho-gu", "Gangnam-gu", "Songpa-gu", "Gangdong-gu"};
     // 부산
@@ -93,8 +92,8 @@ public class MainController {
     String[] incheonDistrict = {"Jung-gu", "Dong-gu", "Michuhol-gu", "Yeonsu-gu", "Namdong-gu", "Bupyeong-gu", "Gyeyang-gu", "Seo-gu", "Ganghwa-gun", "Ongjin-gun"};
     // 광주
     String[] gwangjuDistrict = {"Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Gwangsan-gu"};
-
-
+    // 대구
+    String[] daeguDistrict = {"Jung-gu", "Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Suseong-gu", "Dalseo-gu", "Dalseong-gun"};
 
     // ================= 메인 ============================
     @RequestMapping("/")
@@ -102,8 +101,8 @@ public class MainController {
         model.addAttribute("member", memberService);
 
 
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorConfirmed);
         for(int i = 0; i < City.length; ++i){
             model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
@@ -113,8 +112,8 @@ public class MainController {
 
     @GetMapping("/infection")
     public String infection(Model model) {
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorConfirmed);
         for(int i = 0; i < City.length; ++i){
             model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
@@ -124,8 +123,8 @@ public class MainController {
 
     @GetMapping("/density")
     public String density(Model model) {
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorDensity);
         for(int i = 0; i < City.length; ++i){
             model.addAttribute(City2[i], safetyService.getSafetytoAlpha(City[i]));
@@ -133,10 +132,22 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/distancing")
+    public String distancing(Model model) {
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
+        model.addAttribute("color", colorDistancing);
+        for(int i = 0; i < City.length; ++i){
+            model.addAttribute(City2[i], distancingService.getDistancingtoAlpha(City[i]));
+            model.addAttribute(City2[i] + "d", distancingService.getDistancing(City[i]));
+        }
+        return "co_info/distancing";
+    }
+
     @GetMapping("/detail")
     public String detail(Model model, @Param(value = "district")String district) {
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorDensity);
         if (district.equals("Seoul")){
             for(int i = 0; i < seoulDistrict.length; ++i){
@@ -204,8 +215,8 @@ public class MainController {
             }
             return "map/incheon";
         } else if (district.equals("Daegu")) {
-            for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(("Daegu-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daegu-" + incheonDistrict[i]));
+            for (int i = 0; i < daeguDistrict.length; ++i) {
+                model.addAttribute(("Daegu-" + daeguDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daegu-" + daeguDistrict[i]));
             }
             return "map/daegu";
         } else if (district.equals("Daejeon")) {
@@ -383,7 +394,6 @@ public class MainController {
             model.addAttribute("articleList",articleService.getLocalArticleList("서울", "전체"));
         }catch (IOException  e){
             e.printStackTrace();
-            //return "" //TODO - 점검페이지가 있으면 어떨까..
         }
 
         return "co_info/article";

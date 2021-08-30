@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="show-city-percent">
-                    <p id="vaccine-city">서울특별시</p>
+                    <p id="vaccine-city">클릭하세요</p>
                     <p id="vaccine-percent"></p>
                 </div>
             </div>
@@ -135,7 +135,6 @@
                         } // success
                     }) // ajax
                 } // for
-                document.getElementById('vaccine-percent').innerHTML = roundToTwo(percentList1[0] * 100) + "%";
                 // 지역 hover 시 호출
                 let land = [".land0", ".land1", ".land2", ".land3", ".land4", ".land5", ".land6", ".land7", ".land8", ".land9", ".land10", ".land11", ".land12", ".land13", ".land14", ".land15", ".land16"];
                 $(land[0]).click(function () {
@@ -243,7 +242,6 @@
                         } // success
                     }) // ajax
                 } // for
-                document.getElementById('vaccine-percent').innerHTML = roundToTwo(percentList1[0] * 100) + "%";
                 // 지역 hover 시 호출
                 let land = [".land0", ".land1", ".land2", ".land3", ".land4", ".land5", ".land6", ".land7", ".land8", ".land9", ".land10", ".land11", ".land12", ".land13", ".land14", ".land15", ".land16"];
                 $(land[0]).click(function () {
@@ -345,7 +343,6 @@
                         } // success
                     }) // ajax
                 } // for
-                document.getElementById('vaccine-percent').innerHTML = roundToTwo(percentList2[0] * 100) + "%";
                 // 지역 hover 시 호출
                 let land = [".land0", ".land1", ".land2", ".land3", ".land4", ".land5", ".land6", ".land7", ".land8", ".land9", ".land10", ".land11", ".land12", ".land13", ".land14", ".land15", ".land16"];
                 $(land[0]).click(function () {

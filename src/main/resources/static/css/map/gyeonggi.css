@@ -22,28 +22,17 @@
 .infection-info {
     display: none;
 }
-.infection-today {
-    height: 30px;
-    width: 80%;
-    margin: 5px auto;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    text-align: center;
-}
-.infection-today div {
-    margin-top: 6px;
-    font-weight: bold;
-}
 .home-map {
     position: relative;
-    width: 100%;
+    max-width: 100%;
 }
 .home-map svg {
     display: block;
     position: absolute;
     max-height: 800px;
     max-width: 100%;
-    margin: 10px auto;
+    margin-top: -150px;
+    margin-left: -20px;
 }
 .home-right {
     display: none;
@@ -88,6 +77,12 @@
         margin-top: 6px;
         font-weight: bold;
     }
+    .infection-today {
+        height: 30px;
+        width: 80%;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+    }
     .infection-list {
         height: inherit;
         width: 80%;
@@ -124,23 +119,23 @@
     .infection-each-density {
         width: 70px;
         height: 30px;
-
     }
     .home-map {
         position: relative;
-        max-width: 650px;
-    }
-    .home-right {
-        display: block;
-        width: 250px;
+        width: 650px;
     }
     .home-map svg {
         display: block;
         position: absolute;
         max-height: 800px;
         max-width: 100%;
-        margin-top: 30px;
+        margin-top: -80px;
     }
+    .home-right {
+        display: block;
+        width: 250px;
+    }
+
 
 }
 
