@@ -21,7 +21,7 @@ public class SafetyService {
     }
 
     public int getConfirmedSUM() {
-        String[] city = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종"};
+        String[] city = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종", "검역"};
         int confirmedSUM = 0;
         for (int i = 0; i < city.length; ++i) {
             int confirmed = safetyIndexRepository.getById(city[i]).getConfirmed();

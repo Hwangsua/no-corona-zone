@@ -40,9 +40,15 @@
     font-size: 4vw;
     font-weight: bold;
 }
+.article-content-img {
+    width: 20px;
+}
 
 /*********************************************************************/
 @media (min-width: 940px) {
+    .content {
+        height: auto;
+    }
     .article {
         display: flex;
         justify-content: center;
@@ -78,5 +84,8 @@
     .article-content-headline {
         font-size: 1.2rem;
         font-weight: bold;
+    }
+    .article-content-img {
+        width: 20px;
     }
 }

@@ -66,10 +66,10 @@
         font-size: 1rem;
     }
     .map-collect-item {
-        height: 36px;
+        height: 30px;
         width: 65px;
         margin: 0 2px;
-        line-height: 35px;
+        line-height: 27px;
         border: 1px solid lightgray;
         border-radius: 5px;
     }

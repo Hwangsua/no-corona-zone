@@ -98,9 +98,6 @@ public class MainController {
     // ================= 메인 ============================
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("member", memberService);
-
-
         model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
         model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorConfirmed);
