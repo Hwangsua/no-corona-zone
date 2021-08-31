@@ -24,8 +24,7 @@ public class DistancingSchduler {
 
     private final DistancingRepository distancingRepository;
 
-//    @Scheduled(cron = "0 0 0 * * *")
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void setSocialDistancingFile() {
 
         String socialCsvPath = "csv/social_distancing.csv";
@@ -88,7 +87,7 @@ public class DistancingSchduler {
 
     public void updateDistancing(List<SocialDistancing> distancingList){
         for (SocialDistancing s : distancingList){
-            distancingRepository.updateDistancingById(s.getPopulationNumber(), s.getLocalName());
+            distancingRepository.updateDistancing(s.getPopulationNumber(), s.getLocalName());
         }
     }
 

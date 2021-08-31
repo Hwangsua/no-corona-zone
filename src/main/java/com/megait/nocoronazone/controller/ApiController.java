@@ -5,7 +5,6 @@ import com.megait.nocoronazone.domain.SafetyIndex;
 import com.megait.nocoronazone.repository.DetailSafetyRepository;
 import com.megait.nocoronazone.repository.SafetyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -170,8 +169,8 @@ public class ApiController {
         return jsonInString;
     }
 
-    @GetMapping("/callAPI3")//http://localhost:8080/callAPI3
-    @Scheduled(fixedRate = 1200000) //20분
+    @GetMapping("/callAPI3")// http://localhost:8080/callAPI3
+    @Scheduled(fixedRate = 1200000) // 20분
     public String callAPI3() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
@@ -214,7 +213,7 @@ public class ApiController {
                     {
                         detail /= cnt2;
                         detailSafetyRepository.save(DetailSafetyIndex.builder()
-                                .district(lcode[i][j].siDo+"_"+lcode[i][j].siGunGu.toString())
+                                .district(lcode[i][j].siDo+"-"+lcode[i][j].siGunGu.toString())
                                 .index(detail)
                                 .build());
                         detail = 0;

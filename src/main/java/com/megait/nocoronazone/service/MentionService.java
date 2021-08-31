@@ -119,7 +119,7 @@ public class MentionService {
 
         distance = 2 * radius * Math.asin(squareRoot);
 
-        if (0 <= distance && distance <= 10) {
+        if (0 <= distance && distance <= 1) {
             return true;
         }
 

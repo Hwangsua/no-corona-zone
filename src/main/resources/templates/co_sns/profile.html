@@ -8,7 +8,92 @@
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   <link th:href="@{/css/co_sns/profile.css}" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async></script>
+  <script th:inline="javascript">
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+
+    function follow(whomNickname){
+      $.ajax({
+        url: '/follow',
+        type: 'POST',
+        data: {'whomNickname': whomNickname},
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+      }).done(function (result) {
+        alert(result.message);
+        window.location.reload();
+      });
+    }
+
+    function unfollow(whomNickname){
+      $.ajax({
+        url: '/unfollow',
+        type: 'POST',
+        data: {'whomNickname': whomNickname},
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+      }).done(function (result) {
+        alert(result.message);
+        window.location.reload();
+      });
+    }
+
+    function deleteFollower(whoNickname){
+      $.ajax({
+        url: '/delete_follower',
+        type: 'POST',
+        data: {'whoNickname': whoNickname},
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+      }).done(function (result) {
+        alert(result.message);
+        window.location.reload();
+      });
+    }
+
+    $(document).ready(function () {
+
+      $('#my-profile-follow-btn').click(function () {
+        /*<![CDATA[*/
+        let pageNickname = /*[[${profileMember.nickname}]]*/;
+        /*]]>*/
+        follow(pageNickname);
+      });
+
+      $('#my-profile-unfollow-btn').click(function () {
+        /*<![CDATA[*/
+        let pageNickname = /*[[${profileMember.nickname}]]*/;
+        /*]]>*/
+        unfollow(pageNickname);
+      });
+
+      $("body").on("click", "[id^=follow-btn]", function(event) {
+        follow(this.value);
+      });
+
+      $("body").on("click", "[id^=unfollow-btn]", function(event) {
+        unfollow(this.value);
+      });
+
+      $("body").on("click", "[id^=delete-btn-my-follower]", function(event) {
+        deleteFollower(this.value);
+      });
+
+
+    });
+
+
+
+  </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -25,29 +110,39 @@
               <span th:text="${profileMember.nickname}"></span>
             </div>
 
-
             <div class="imgs">
               백신인증표시
             </div>
           </div>
           <div class="info-list">자기소개</div>
-            <span class="introduce" th:text="${profileMember.introduce}"></span>
+          <span class="introduce" th:text="${profileMember.introduce}"></span>
           <div class="info-list">
-          <span class="info-name">사용자 프로필 메세지</span>
-          <div class="detail"></div>
+            <span class="info-name">사용자 프로필 메세지</span>
+            <div class="detail"></div>
           </div>
           <div class="info-list">
             <span class="info-name">팔로잉</span>
-            <div class="detail follows"></div>
+            <div class="detail follows" th:text="${followInfoForm.followingNumber}"></div>
             <span class="info-name">팔로워</span>
-            <div class="detail"></div>
+            <div class="detail" th:text="${followInfoForm.followerNumber}"></div>
+          </div>
+        </div>
+        <div>
+          <div class="myhistory-btn" th:if="${currentMember.no == profileMember.no}">
+            <button type="submit" class="btn-style" onclick="location.href='/settings'">정보수정</button>
+          </div>
+          <div th:if="${currentMember.no != profileMember.no}">
+            <div th:if="${!followInfoForm.followStatus}">
+              <button type="button" class="btn-style" id="my-profile-follow-btn">팔로우</button>
+            </div>
+            <div th:if="${followInfoForm.followStatus}">
+              <button type="button" class="btn-style" id="my-profile-unfollow-btn">팔로우취소</button>
+            </div>
           </div>
 
         </div>
-        <div class="myhistory-btn">
-          <a th:href="@{/settins}">정보수정</a>
-        </div>
-          <button type="submit" class="btn-style" onclick="location.href='/settings'">정보수정</button>
+
+
       </div>
       <div class="hr"></div>
       <!--            TODO 타임리프 for문으로 돌리기 -->
@@ -62,19 +157,20 @@
           <div class="mention-right">
             <div class="myhistory-info">
               <div class="nickname">
-                  <a th:href="@{'/profile/' + ${mention.member.nickname}}">
-                    <span th:text="${mention.member.nickname}"></span>
-                  </a>
+                <a th:href="@{'/profile/' + ${mention.member.nickname}}">
+                  <span th:text="${mention.member.nickname}"></span>
+                </a>
               </div>
               <div class="vaccine">
-                  <img src="img/vaccine.png" alt="" class="vaccine">
+                <img src="img/vaccine.png" alt="" class="vaccine">
               </div>
               <div class="location">
-                  <span th:text="${mention.location}"></span>
+                <span th:text="${mention.location}"></span>
               </div>
               <div class="dot">·</div>
               <div class="myhistory-time">
-                  <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                                <span class="viewTime"
+                                      th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
             </div>
             <div class="myhistory-content">
@@ -95,25 +191,61 @@
           </form>
         </div>
       </div>
-      <div class="trend">
-        <div class="trend-box">
-          <div class="trend-head">
-            실시간 트렌드
+      <div th:if="${currentMember.no == profileMember.no}">
+        <div class="follower">
+          <div class="following-box">
+            <div class="following-head">
+              팔로잉
+            </div>
+            <div th:each="following,num:${followInfoForm.followingList}">
+              <div class="following-list" th:text="${following.nickname}">nickname</div>
+              <button type="button" th:id="unfollow-btn-my-following+${num.index}" th:value="${following.nickname}">팔로잉</button>
+            </div>
           </div>
-          <div class="trend-rank 1">1</div>
-          <div class="trend-rank 2">2</div>
-          <div class="trend-rank 3">3</div>
-          <div class="trend-rank 4">4</div>
-          <div class="trend-rank 5">5</div>
+          <div class="following-box">
+            <div class="following-head">
+              팔로워
+            </div>
+            <div th:each="follower,num:${followInfoForm.followerList}" var=”item” varStatus=”status”>
+              <div class="following-list" th:text="${follower.nickname}">nickname</div>
+              <button type="button" th:id="delete-btn-my-follower+${num.index}" th:value="${follower.nickname}">삭제</button>
+            </div>
           </div>
-<!--      <div class="following">-->
-<!--        <div class="following-box">-->
-<!--          <div class="following-head">-->
-<!--            팔로잉 목록-->
-<!--          </div>-->
-<!--          <div class="following-list" th:each="num:${following}"></div>-->
-<!--        </div>-->
-<!--      </div>-->
+        </div>
+      </div>
+      <div th:if="${currentMember.no != profileMember.no}">
+        <div class="follower">
+          <div class="following-box">
+            <div class="following-head">
+              팔로잉
+            </div>
+            <div th:each="following:${followInfoForm.followingMap}">
+              <div class="following-list" th:text="${following.key}">nickname</div>
+              <div th:if="${following.key != currentMember.nickname and following.value}">
+                <button type="button" th:id="unfollow-btn-following-following" th:value="${following.key}">팔로잉</button>
+              </div>
+              <div th:if="${following.key != currentMember.nickname and !following.value}">
+                <button type="button" th:id="follow-btn-another-following" th:value="${following.key}">팔로우</button>
+              </div>
+            </div>
+          </div>
+          <div class="following-box">
+            <div class="following-head">
+              팔로워
+            </div>
+            <div th:each="follower:${followInfoForm.followerMap}">
+              <div class="following-list" th:text="${follower.key}">nickname</div>
+              <div th:if="${follower.key != currentMember.nickname and follower.value}">
+                <button type="button" th:id="unfollow-btn-another-follower" th:value="${follower.key}">팔로잉</button>
+              </div>
+              <div th:if="${follower.key != currentMember.nickname and !follower.value}">
+                <button type="button" th:id="follow-btn-another-follower" th:value="${follower.key}">팔로우</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

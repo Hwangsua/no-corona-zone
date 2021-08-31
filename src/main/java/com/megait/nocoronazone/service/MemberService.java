@@ -47,13 +47,46 @@ public class MemberService implements UserDetailsService {
                 .email("admin@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("하하")
+                .nickname("admin01")
                 .authType(AuthType.GENERAL)
                 .build();
 
         memberRepository.save(member);
 
     }
+
+    @PostConstruct
+    @Profile("local")
+    public void createNewMember2(){
+
+        Member member = Member.builder()
+                .email("test@test.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("test02")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+    }
+
+    @PostConstruct
+    @Profile("local")
+    public void createNewMember3(){
+
+        Member member = Member.builder()
+                .email("qwe@qwe.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("qwe03")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+    }
+
 
     public Member processNewUser(SignUpForm signUpForm){
 

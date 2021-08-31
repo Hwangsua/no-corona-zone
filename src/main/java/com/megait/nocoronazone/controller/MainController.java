@@ -47,7 +47,7 @@ import java.util.Optional;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class MainController {
+public class  MainController {
 
     private final DetailSafetyService detailSafetyService;
     private final SafetyService safetyService;
@@ -58,6 +58,7 @@ public class MainController {
     private final MemberService memberService;
     private final MentionService mentionService;
     private final ReMentionService reMentionService;
+    private final FollowService followService;
 
     String colorConfirmed = "235, 64, 52"; // red
 //    String colorDensity = "158, 0, 158"; // purple
@@ -313,20 +314,6 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/profile/{nickname}")
-    public String profilePage(@PathVariable String nickname, Model model) {
-
-        List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
-        System.out.println(memberMentionList);
-        Member profileMember = memberService.getNicknameMember(nickname);
-        System.out.println(profileMember);
-        model.addAttribute("profileMember", profileMember);
-        model.addAttribute("memberMentionList", memberMentionList);
-
-
-        return "co_sns/profile";
-    }
-
 
 
     @GetMapping("/settings")
@@ -515,15 +502,64 @@ public class MainController {
 
     //TODO - 트렌드, 강사님이 도와주신다고 하심
 
-//    @GetMapping("/following")
-//    public String followingList(){
-//        return "co_sns/following";
-//    }
-//
-//    @GetMapping("/follower")
-//    public String followerList(){
-//        return "co_sns/follower";
-//    }
+    @ResponseBody
+    @PostMapping("/follow")
+    public String follow(@AuthenticationMember Member loginMember,String whomNickname){
 
+        JsonObject object = new JsonObject();
+
+        Member whomMember = memberService.getNicknameMember(whomNickname);
+        followService.follow(loginMember, whomMember);
+
+        object.addProperty("result", true);
+        object.addProperty("message", "팔로우를 했습니다.");
+        return object.toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/unfollow")
+    public String unfollow(@AuthenticationMember Member loginMember,String whomNickname){
+
+        JsonObject object = new JsonObject();
+
+        Member whomMember = memberService.getNicknameMember(whomNickname);
+
+        followService.unfollow(loginMember, whomMember);
+
+        object.addProperty("result", true);
+        object.addProperty("message", "팔로우를 취소했습니다.");
+        return object.toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/delete_follower")
+    public String deleteFollower(@AuthenticationMember Member loginMember,String whoNickname){
+
+        JsonObject object = new JsonObject();
+
+        Member whoMember = memberService.getNicknameMember(whoNickname);
+
+        followService.unfollow(whoMember, loginMember);
+
+        object.addProperty("result", true);
+        object.addProperty("message", "팔로워를 삭제했습니다.");
+        return object.toString();
+    }
+
+
+    @GetMapping("/profile/{nickname}")
+    public String profilePage(@PathVariable String nickname, Model model, @AuthenticationMember Member member) {
+
+        List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
+        System.out.println(memberMentionList);
+        Member profileMember = memberService.getNicknameMember(nickname);
+        System.out.println(profileMember);
+        model.addAttribute("profileMember", profileMember);
+        model.addAttribute("memberMentionList", memberMentionList);
+        model.addAttribute("currentMember", memberService.getMember(member));
+        model.addAttribute("followInfoForm",followService.getFollowInfo(member, profileMember));
+
+        return "co_sns/profile";
+    }
 
 }

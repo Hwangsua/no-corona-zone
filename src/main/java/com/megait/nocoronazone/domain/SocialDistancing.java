@@ -15,10 +15,11 @@ import javax.persistence.Id;
 @ToString
 public class SocialDistancing {
 
-    @Id
-    @GeneratedValue
-    private Long no;
+//    @Id
+//    @GeneratedValue
+//    private Long no;
 
+    @Id
     private String localName;
 
     private String populationNumber;
