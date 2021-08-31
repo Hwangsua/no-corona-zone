@@ -15,6 +15,37 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <script>
+        $(document).ready(function () {
+
+            $('#remention-save-btn').click(function () {
+
+                console.log($('#content').val().length);
+                if($('#content').val().replace(/\s| /gi, "").length==0){
+                    alert("내용을 입력해주세요.");
+                    return false;
+                }
+
+                document.getElementById("parent-mention-no").value= $('#parent-mention').val();
+
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+
+                $.ajax({
+                    url : '/remention',
+                    type : 'POST',
+                    data : $('#re-mention-form').serialize(),
+                    beforeSend: function (xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                }).done(function (fragment) {
+
+                    $("#re-mention-list").replaceWith(fragment);
+                    document.getElementById("content").value= null;
+                });
+            });
+        });
+    </script>
     <div class="container-mention">
         <div class="mention-detail">
             <div class="mention-header">
@@ -72,16 +103,16 @@
                             </div>
                         </div>
                         <div class="remention-write-submit" id="remention-save-btn">
-                                <button class="remention-btn">올리기</button>
+                                <button class="remention-btn">작성</button>
                         </div>
                     </form>
                 </div>
+                <h6>댓글</h6>
             <div id = "re-mention-list">
                 <div th:each="reMention:${reMentionList}">
                     <div class="re-mention-info">
-                        <img class="identicon">
-                        <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
-                        <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
+                        <span style="margin-left: 3px;font-weight: bold">닉네임&nbsp;</span><div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>&nbsp;&nbsp;
+                        <span style="margin-left: 3px;font-weight: bold">내용&nbsp;</span><div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>&nbsp;&nbsp;
                     </div>
                 </div>
             </div>

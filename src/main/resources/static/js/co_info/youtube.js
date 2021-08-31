@@ -1,4 +1,5 @@
-let apikey = "AIzaSyCdW0U4HuSoXPmWFbRy7Z-VYLxhtvtIcWM"
+// let apikey = "AIzaSyCdW0U4HuSoXPmWFbRy7Z-VYLxhtvtIcWM"
+let apikey = "AIzaSyAl3Cd1dxfvABLMjNJx6IcK1q9m9YY_zjA" // 할당량 초과되면 위의 api키 주석 풀기!
 let keyword = "코로나"
 let maxResults = 30
 

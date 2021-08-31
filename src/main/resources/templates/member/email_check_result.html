@@ -4,17 +4,18 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='signup', title='Sign up'">
-
 <head>
+  <link th:href="@{/css/member/email_check_result.css}" rel="stylesheet">
 </head>
-
 <body>
-<div layout:fragment="content" class="justify-">
-  <p class="lead">My Book Store 이메일 확인</p>
-
-  <h2 th:if="${error == null}" class="text-center pb-4">
-    <span th:text="${success}"></span>
-    <span>가입에 감사드립니다.</span>
+<div layout:fragment="content">
+  <h2 th:if="${error == null}">
+    <div class="check-title">회원님의 가입을 진심으로 축하드립니다.</div>
+    <div class="check-title2">회원가입이 정상적으로 완료되었습니다.</div>
+    <br/>
+    <div class="item">
+      <a class="main-btn" th:href="@{/}">메인페이지로 이동</a>
+    </div>
   </h2>
   <p th:if="${error != null}" class="alert alert-danger" role="alert">이메일 확인 링크가 정확하지 않습니다.</p>
 </div>

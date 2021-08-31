@@ -49,7 +49,6 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-
     public void generateEmailCheckToken(){
         emailCheckToken = UUID.randomUUID().toString();
     }

@@ -40,7 +40,10 @@
     font-size: 4vw;
     font-weight: bold;
 }
-
+.article-content-img{
+    width: 20px;
+    height: 20px;
+}
 /*********************************************************************/
 @media (min-width: 940px) {
     .article {
@@ -74,6 +77,10 @@
         height: auto;
         gap: 7px 0;
         margin: 5px;
+    }
+    .article-content-img{
+        width: 20px;
+        height: 20px;
     }
     .article-content-headline {
         font-size: 1.2rem;

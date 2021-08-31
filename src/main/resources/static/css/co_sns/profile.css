@@ -133,7 +133,7 @@
         top: 15px;
     }
     .following-box {
-        height: 300px;
+        height: 200px;
         margin: 10px 20px;
         display: flex;
         flex-direction: column;
@@ -147,8 +147,24 @@
     }
     .following-list {
         flex-grow: 1;
+        overflow: auto;
         margin-top: 15px;
         margin-left: 20px;
         font-size: 1rem;
     }
+    /*.search {*/
+    /*    height: 40px;*/
+    /*    margin: 0 20px;*/
+    /*    padding-top: 8px;*/
+    /*    background-color: rgb(245, 245, 245);*/
+    /*    border: 1px solid rgb(245, 245, 245);*/
+    /*    border-radius: 10px;*/
+    /*    text-align: center;*/
+    /*    align-items: center;*/
+    /*}*/
+    /*.search-mention{*/
+    /*    border: none;*/
+    /*    background-color: rgb(245, 245, 245);*/
+    /*    border: 1px solid rgb(245, 245, 245);*/
+    /*}*/
 }

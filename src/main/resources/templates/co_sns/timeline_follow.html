@@ -56,7 +56,7 @@
                             <div class="mention-right">
                                 <div class="mention-info">
                                     <div class="nickname">
-                                        <a th:href="@{'/profile/' + ${mention.no}}">
+                                        <a th:href="@{'/profile/' + ${mention.member.nickname}}">
                                             <div th:text="${mention.member.nickname}"></div>
                                         </a>
                                     </div>

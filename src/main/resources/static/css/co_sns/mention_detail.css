@@ -89,7 +89,26 @@
     overflow: hidden;
     border-bottom: 1px solid lightgray;
 }
-
+.profile-img{
+    margin: auto 0;
+}
+.re-mention-info{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: auto;
+}
+#re-mention-nickname{
+    margin-left: 5px;
+}
+#re-mention-content{
+    margin-left: 5px;
+}
+h6{
+    margin-top: 8px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
 #delete-btn {
     display: block;
     font-size: 13px;

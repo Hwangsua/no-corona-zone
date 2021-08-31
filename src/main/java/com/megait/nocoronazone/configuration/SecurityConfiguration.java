@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**", "/map/**").permitAll()
 
 
-                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout",
+                .mvcMatchers("/","/slide", "/login", "/signup", "/nicknameCk","/logout",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/local_article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",

@@ -1,14 +1,17 @@
 .container{
     text-align: center;
     border: none;
-    margin-top: 80px;
+    margin-top: 60px;
+    height: auto;
 }
 .login-header{
-    margin-top: 80px;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 .login-title{
     font-size: 20px;
+    margin-top: 20px;
+    padding-top: 10px;
 }
 .login-style{
     width: 100%;
