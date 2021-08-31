@@ -53,7 +53,8 @@ public class ApiController {
     LocaleCode lcode[][] = new LocaleCode[19][1000000];
 
     @GetMapping("/LatestStatusAPI")// https://localhost:8443/LatestStatusAPI
-    @Scheduled(fixedRate = 86400000)//하루
+//    @Scheduled(fixedRate = 86400000)//하루
+    @Scheduled(cron = "0 * * * * *")
     public String callAPI() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
@@ -184,7 +185,8 @@ public class ApiController {
     }
 
     @GetMapping("/callAPI3")// https://localhost:8443/callAPI3
-    @Scheduled(fixedRate = 1200000) // 20분
+//    @Scheduled(fixedRate = 1200000) // 20분
+    @Scheduled(cron = "0 * * * * *")
     public String callAPI3() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 

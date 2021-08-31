@@ -94,6 +94,8 @@ public class MainController {
     String[] gwangjuDistrict = {"Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Gwangsan-gu"};
     // 대구
     String[] daeguDistrict = {"Jung-gu", "Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Suseong-gu", "Dalseo-gu", "Dalseong-gun"};
+    // 대전
+    String[] daejeonDistrict = {"Jung-gu", "Dong-gu", "Seo-gu", "Yuseong-gu", "Daedeok-gu"};
 
     // ================= 메인 ============================
     @RequestMapping("/")
@@ -217,8 +219,8 @@ public class MainController {
             }
             return "map/daegu";
         } else if (district.equals("Daejeon")) {
-            for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(("Daejeon-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daejeon-" + incheonDistrict[i]));
+            for (int i = 0; i < daejeonDistrict.length; ++i) {
+                model.addAttribute(("Daejeon-" + daejeonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daejeon-" + daejeonDistrict[i]));
             }
             return "map/daejeon";
         } else if (district.equals("Gwangju")) {
