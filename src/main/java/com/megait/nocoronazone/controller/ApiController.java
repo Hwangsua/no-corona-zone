@@ -52,7 +52,9 @@ public class ApiController {
     Daily DayToDay[] = new Daily[19];
     LocaleCode lcode[][] = new LocaleCode[19][1000000];
 
-    @GetMapping("/LatestStatusAPI")// http://localhost:8080/LatestStatusAPI
+    @GetMapping("/LatestStatusAPI")// https://localhost:8443/LatestStatusAPI
+//    @Scheduled(fixedRate = 86400000)//하루
+    @Scheduled(cron = "0 * * * * *")
     public String callAPI() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
@@ -82,6 +84,19 @@ public class ApiController {
             }
             for (Map obj : dboxoffList) {
                 if (idx == 2) {
+                    DayToDay[17].location = obj.get("location").toString();
+                    DayToDay[17].localCnt = obj.get("localCnt").toString();
+                    DayToDay[17].totalConfirmedCnt = obj.get("totalConfirmedCnt").toString();
+                    DayToDay[17].dailyConfirmedCnt = obj.get("dailyConfirmedCnt").toString();
+                    jsonInString += DayToDay[17].location; // 현재 지역
+                    jsonInString += DayToDay[17].localCnt; // 국내 감염
+                    jsonInString += DayToDay[17].totalConfirmedCnt; // 누적 감염
+                    jsonInString += DayToDay[17].dailyConfirmedCnt; // 일일 감염
+                    safetyRepository.save(SafetyIndex.builder()
+                            .city(DayToDay[17].location)
+                            .confirmed(Integer.parseInt(DayToDay[17].dailyConfirmedCnt))
+                            .index(0)
+                            .build());
                     idx++;
                     idxCompare++;
                     continue;
@@ -113,7 +128,7 @@ public class ApiController {
 
     }
 
-    @GetMapping("/callAPI2")//http://localhost:8080/callAPI2
+    @GetMapping("/callAPI2")//https://localhost:8443/callAPI2
     @Scheduled(fixedRate = 86400000)//하루
     public String callAPI2() {
         HashMap<String, Object> result = new HashMap<String, Object>();
@@ -169,8 +184,9 @@ public class ApiController {
         return jsonInString;
     }
 
-    @GetMapping("/callAPI3")// http://localhost:8080/callAPI3
-    @Scheduled(fixedRate = 1200000) // 20분
+    @GetMapping("/callAPI3")// https://localhost:8443/callAPI3
+//    @Scheduled(fixedRate = 1200000) // 20분
+    @Scheduled(cron = "0 * * * * *")
     public String callAPI3() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 

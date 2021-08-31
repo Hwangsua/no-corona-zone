@@ -31,7 +31,8 @@
     position: absolute;
     max-height: 800px;
     max-width: 100%;
-    margin-top: -180px;
+    margin-top: -150px;
+    margin-left: -20px;
 }
 .home-right {
     display: none;
@@ -75,6 +76,12 @@
     .infection-today div {
         margin-top: 6px;
         font-weight: bold;
+    }
+    .infection-today {
+        height: 30px;
+        width: 80%;
+        border: 1px solid lightgray;
+        border-radius: 5px;
     }
     .infection-list {
         height: inherit;

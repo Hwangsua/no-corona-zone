@@ -14,14 +14,20 @@
             <div class="map-collect">
                 <a th:href="@{/infection}" class="map-collect-item infection" id="item-infection">확진</a>
                 <a th:href="@{/density}" class="map-collect-item density" id="item-density">밀집</a>
-                <a href="#" class="map-collect-item distancing" id="item-distancing">거리두기</a>
+                <a th:href="@{/distancing}" class="map-collect-item distancing" id="item-distancing">거리두기</a>
             </div>
             <div class="infection-info">
+                <div class="infection-today">
+                    <div>
+                        <span>오늘 확진자 수</span>
+                        <span th:text="${confirmedSUM}"></span>
+                    </div>
+                </div>
                 <div class="infection-list">
                     <div class="infection-list-label">
                         <span>지역</span>
-                        <span style="font-size: 0.8rem">오늘 확진자</span>
-                        <span style="font-size: 0.8rem">밀집도</span>
+                        <span>오늘 확진자</span>
+                        <span>밀집도</span>
                     </div>
                     <div class="infection-each" th:each="safety : ${safetyList}">
                         <div class="infection-each-city">
@@ -41,7 +47,9 @@
         <div class="home-map" id="home-map">
             <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:cc="http://creativecommons.org/ns#"
                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                 width="29000000px" height="2560.000000px" version="1.1" id="Busan" inkscape:version="0.48.1 " sodipodi:docname="Map_Busan-gwangyeoksi.svg" x="0px" y="0px" enable-background="new -5.5 4.5 600 450" xml:space="preserve">
+                 width="29000000px" height="2560.000000px" version="1.1" id="Busan"
+                 inkscape:version="0.48.1 " sodipodi:docname="Map_Busan-gwangyeoksi.svg" x="0px" y="0px"
+                 enable-background="new -5.5 4.5 600 450" xml:space="preserve">
                 <path id="Buk-gu" th:attr="fill=${'rgba(' + color + ', ' + Busan_Buk_gu + ')'}" stroke="#FEFEE9" d="M284.25,207.25c-4.375-2.125-0.25-10.75,1.875-13.75s-5.75-16.625-9.75-23.875  s4.375-16,6-18.25s0.985-7.084,0.985-7.084c-1.524,0.309-8.844,1.391-16.445,2.503c-7.601,1.112-14.749,1.94-15.732,2.756  c-0.668,0.555-1.659,1.478-1.97,3.083c-0.311,1.606-0.006,5.206,0.292,7.74c0.356,3.028,0.641,4.543,0.475,5.732  s-1.701,1.779-3.043,3.583c-4.318,5.804-6.722,8.9-8.537,15.812c-0.539,2.052-1.377,7.323-2.261,8.769  c-0.885,1.446-2.169,2.322-3.54,3.351c-1.716,1.288-4.661,2.693-7.582,4.265c0.572-0.064,1.303,0.652,0.984,5.116  c-0.5,7-3.25,14.25-3.25,18.75c0,4.028,2.303,16.949,1.15,19.998l2.6,2.252c0,0,14.25,4.875,18.75,7.375  c1.584,0.88,3.494,1.122,5.229,0.99c3.195-0.243,6.208-1.725,8.396-2.615c3.218-1.312,12.729-5.583,20.776-9.791  c0.392-0.205,0.966-0.631,1.349-0.834c8.25-4.375,9.75-12.875,11.25-14.25s4.945-10.651,4.82-12.651S288.625,209.375,284.25,207.25z  "/>
                 <path id="Busanjin-gu" th:attr="fill=${'rgba(' + color + ', ' + Busan_Busanjin_gu + ')'}" stroke="#FEFEE9" d="M324.012,291.91c-2.651-1.768-3.535-5.303-1.944-6.895  c1.591-1.59-0.354-7.601-1.768-10.783c-1.415-3.182-10.077-3.005-12.198-3.358s-3.182-4.243-5.656-6.364s-9.016-1.414-10.96-2.651  c-1.945-1.237-6.01-9.899-6.541-10.783s-5.293-7.116-5.293-7.116c-8.047,4.208-17.558,8.479-20.776,9.791  c-2.187,0.891-5.2,2.372-8.396,2.615c0,0,3.175,1.074,2.114,3.549c-1.061,2.475-4.419,13.789-4.242,19.092  s3.712,13.258,4.065,15.732c0.354,2.476-0.884,11.668-1.591,13.966s-2.652,7.602-4.243,8.132l16.016,7.718  c0.191-0.147,0.392-0.304,0.602-0.47c3.359-2.652,3.182-1.768,6.541-3.713c3.359-1.943,5.657-6.01,6.011-7.248  c0.354-1.236,7.248-1.768,9.192-1.768c1.944,0,4.065,1.238,5.48,2.121c1.414,0.885,8.574-0.441,8.574-0.441  c-0.53-1.768,1.148-0.973,1.855-1.68c0.708-0.707,1.769-3.005,3.536-3.535s9.192-1.061,14.318-4.42  c5.127-3.358,9.013-10.43,9.013-10.43C326.35,292.691,325.045,292.599,324.012,291.91z"/>
                 <path id="Dong-gu" th:attr="fill=${'rgba(' + color + ', ' + Busan_Dong_gu + ')'}" stroke="#FEFEE9" d="M300.324,338.049c1.944-1.944,0.707-11.667,1.061-14.849  c0.354-3.183-1.855-8.397-2.387-10.165c0,0-7.16,1.326-8.574,0.441c-1.415-0.883-3.536-2.121-5.48-2.121  c-1.945,0-8.839,0.531-9.192,1.768c-0.354,1.238-2.652,5.305-6.011,7.248c-3.358,1.945-3.182,1.061-6.541,3.713  c-0.21,0.166-0.411,0.322-0.602,0.47h0h0c-2.864,2.213-3.641,2.513-3.641,4.833c0,2.476-1.414,5.48-1.591,7.072  c-0.177,1.59-0.884,4.242,1.591,4.596c2.475,0.354,2.298,0.53,4.419,2.828c0.53,0.574,1.069,1.104,1.207,1.535  c0,0,8.869-0.298,14.879,0.586c5.136,0.756,11.609,2.539,13.39,3.043c0.275-1.241,1.06-1.969,2.792-3.331  c1.087-0.855,2.287-1.595,3.515-2.121c-0.614-0.426-1.763-1.337-2.02-2.363C296.788,339.816,298.379,339.994,300.324,338.049z"/>
@@ -101,14 +109,14 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
+    <script>
+        // 지도 선택 버튼 색 지정
+        if(window.location.href.indexOf("detail") > -1){ // 밀집 지도일때
+            document.getElementById("item-density").style.background = "rgb(125, 204, 171)";
+        }
+    </script>
 </div>
-</div>
-<script>
-    // 지도 선택 버튼 색 지정
-    if(window.location.href.indexOf("detail") > -1){ // 밀집 지도일때
-        document.getElementById("item-density").style.background = "rgb(125, 204, 171)";
-    }
-</script>
 </body>
 </html>

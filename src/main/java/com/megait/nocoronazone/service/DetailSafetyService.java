@@ -26,9 +26,4 @@ public class DetailSafetyService {
         return result;
     }
 
-    public List<DetailSafetyIndex> getDetailSafetyIndexList() {
-        List<DetailSafetyIndex> detailSafetyIndexList = detailSafetyRepository.findAll();
-        return detailSafetyIndexList;
-    }
-
 }

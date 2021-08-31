@@ -14,14 +14,20 @@
             <div class="map-collect">
                 <a th:href="@{/infection}" class="map-collect-item infection" id="item-infection">확진</a>
                 <a th:href="@{/density}" class="map-collect-item density" id="item-density">밀집</a>
-                <a href="#" class="map-collect-item distancing" id="item-distancing">거리두기</a>
+                <a th:href="@{/distancing}" class="map-collect-item distancing" id="item-distancing">거리두기</a>
             </div>
             <div class="infection-info">
+                <div class="infection-today">
+                    <div>
+                        <span>오늘 확진자 수</span>
+                        <span th:text="${confirmedSUM}"></span>
+                    </div>
+                </div>
                 <div class="infection-list">
                     <div class="infection-list-label">
                         <span>지역</span>
-                        <span style="font-size: 0.8rem">오늘 확진자</span>
-                        <span style="font-size: 0.8rem">밀집도</span>
+                        <span>오늘 확진자</span>
+                        <span>밀집도</span>
                     </div>
                     <div class="infection-each" th:each="safety : ${safetyList}">
                         <div class="infection-each-city">
@@ -40,7 +46,7 @@
         <!-- 지도 -->
         <div class="home-map" id="home-map">
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                 width="29000000px" height="2560.000000px" viewBox="0 0 3600.000000 2600.000000"
+                 width="29000000px" height="2560.000000px" viewBox="0 200 3600 2600"
                  preserveAspectRatio="xMidYMid meet" class="cb">
                 <g transform="translate(0.000000,2700.000000) scale(0.100000,-0.100000)"
                    th:attr="fill=${'rgba(' + color + ', ' + Seoul_Gangnam_gu + ')'}" stroke="none">
