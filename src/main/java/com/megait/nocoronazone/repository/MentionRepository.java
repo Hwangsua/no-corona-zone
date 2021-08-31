@@ -14,7 +14,7 @@ public interface MentionRepository extends JpaRepository<Mention, Long> {
 
         List<Mention> findByContentContaining(String keyword);
 
-        List<Mention> findByMember_NicknameContainsOrderByRegdateDesc(String nickname);
+        List<Mention> findByMember_NicknameOrderByRegdateDesc(String nickname);
 
         List<Mention> findAll();
 

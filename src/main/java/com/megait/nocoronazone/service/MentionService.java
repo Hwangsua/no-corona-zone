@@ -136,7 +136,7 @@ public class MentionService {
 
     @Transactional
     public List<Mention> getMemberMentions(String nickname) {
-        List<Mention> mentionEntities = mentionRepository.findByMember_NicknameContainsOrderByRegdateDesc(nickname);
+        List<Mention> mentionEntities = mentionRepository.findByMember_NicknameOrderByRegdateDesc(nickname);
         List<Mention> memberMentionList = new ArrayList<>();
 
         for (Mention mentions : mentionEntities) {
@@ -144,6 +144,7 @@ public class MentionService {
                     .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
+                    .nlString(System.getProperty("line.separator").toString())
                     .location(mentions.getLocation())
                     .regdate(mentions.getRegdate())
                     .build();
@@ -169,6 +170,7 @@ public class MentionService {
                     .no(mentions.getNo())
                     .member(mentions.getMember())
                     .content(mentions.getContent())
+                    .nlString(System.getProperty("line.separator").toString())
                     .location(mentions.getLocation())
                     .regdate(mentions.getRegdate())
                     .build();

@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb2c655475454d2f0e54c0e3f5e5d1ff&libraries=services"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
 
 </head>
 <body>
@@ -44,7 +44,7 @@
                         <div class="mention-right">
                             <div class="mention-info">
                                 <div class="nickname" th:text="${mention.member.nickname}">닉네임</div>
-                                <div class="vaccine">
+                                <div class="vaccine" th:if="${mention.member.certification} == true">
                                     <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
                                 <div class="location" th:text="${mention.location}">롯데월드</div>
