@@ -14,9 +14,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class Member {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long no;
 
     @Column(nullable = false, updatable = false)
@@ -35,7 +35,6 @@ public class Member {
 
     private String introduce;
 
-    @Column(nullable = false)
     private boolean certification;
 
     private String emailCheckToken;
@@ -49,6 +48,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private ProfileImage profileImage;
 
     public void generateEmailCheckToken(){
         emailCheckToken = UUID.randomUUID().toString();
@@ -78,9 +79,27 @@ public class Member {
         this.nickname = nickname;
     }
 
+    public boolean isCertification() {
+        return certification;
+    }
+
+    public void setCertification(boolean certification) {
+        this.certification = certification;
+    }
+
+    public ProfileImage getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public void update(SettingForm settingForm) {
         this.nickname = settingForm.getNickname();
         this.password = settingForm.getPassword();
         this.introduce = settingForm.getIntroduce();
+        this.certification = settingForm.isCertification();
+        this.profileImage=settingForm.getProfileImage();
     }
 }

@@ -32,7 +32,6 @@ public class Mention {
 
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime regdate;
 
     private Double latitude;
@@ -50,7 +49,6 @@ public class Mention {
     @Builder
     public Mention(){
         regdate = LocalDateTime.now();
-        //DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
         reMentions = new ArrayList<>();
     }
 

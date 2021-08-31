@@ -8,26 +8,32 @@
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   <link th:href="@{/css/co_sns/profile.css}" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+  <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
 </head>
 <body>
 <div layout:fragment="content">
   <div class="container">
     <div class="myhistory">
       <div class="myhistory-header">
+<!--        <div class="myhistory-img" th:if="${(memberImage.profileImagePath)!=null}">-->
+<!--          <img th:src="@{${memberImage.profileImagePath}}"/>-->
+<!--        </div>-->
+<!--        <div class="myhistory-img" th:if="${(memberImage.profileImagePath)==null}">-->
         <div class="myhistory-img">
-          <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
-               width="60" height="60" class="rounded border bg-light"></svg>
+          <svg data-jdenticon-value="user" th:text="${profileMember.nickname}"
+               width="75" height="75" class="rounded border bg-light"></svg>
         </div>
+
         <div class="myhistory-info">
           <div class="info-list">
             <div class="imgs">
               <span th:text="${profileMember.nickname}"></span>
             </div>
-
-
             <div class="imgs">
               백신인증표시
+            </div>
+            <div class="vaccine" th:if="${profileMember.certification} == true">
+              <img src="img/vaccine.png" alt="" class="vaccine">
             </div>
           </div>
           <div class="info-list">자기소개</div>
@@ -44,30 +50,28 @@
           </div>
 
         </div>
-        <div class="myhistory-btn">
-          <a th:href="@{/settins}">정보수정</a>
-        </div>
+        <div class="myhistory-btn" th:if="${currentMember.no == profileMember.no}">
           <button type="submit" class="btn-style" onclick="location.href='/settings'">정보수정</button>
+        </div>
       </div>
       <div class="hr"></div>
-      <!--            TODO 타임리프 for문으로 돌리기 -->
       <div class="myhistory-list">
         <div class="mention-each" th:each="mention : ${memberMentionList}">
           <div class="mention-left">
             <div class="profile-img">
-              <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                   width="60" height="60" class="rounded border bg-light"></svg>
+              <svg data-jdenticon-value="user" th:text="${profileMember.nickname}"
+                   width="75" height="75" class="rounded border bg-light"></svg>
             </div>
           </div>
           <div class="mention-right">
             <div class="myhistory-info">
               <div class="nickname">
-                  <a th:href="@{'/profile/' + ${mention.member.nickname}}">
-                    <span th:text="${mention.member.nickname}"></span>
+                  <a th:href="@{'/profile/' + ${profileMember.nickname}}">
+                    <span th:text="${profileMember.nickname}"></span>
                   </a>
               </div>
-              <div class="vaccine">
-                  <img src="img/vaccine.png" alt="" class="vaccine">
+              <div class="vaccine" th:if="${profileMember.certification} == true">
+                  <img  src="img/vaccine.png" alt="" class="vaccine">
               </div>
               <div class="location">
                   <span th:text="${mention.location}"></span>

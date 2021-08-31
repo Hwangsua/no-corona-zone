@@ -9,9 +9,41 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/mention_detail.css}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.7.0/js/md5.min.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
+    <script>
+        $(document).ready(function () {
+
+            $('#remention-save-btn').click(function () {
+
+                console.log($('#content').val().length);
+                if($('#content').val().replace(/\s| /gi, "").length==0){
+                    alert("내용을 입력해주세요.");
+                    return false;
+                }
+
+                document.getElementById("parent-mention-no").value= $('#parent-mention').val();
+
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+
+                $.ajax({
+                    url : '/remention',
+                    type : 'POST',
+                    data : $('#re-mention-form').serialize(),
+                    beforeSend: function (xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                }).done(function (fragment) {
+
+                    $("#re-mention-list").replaceWith(fragment);
+                    document.getElementById("content").value= null;
+                });
+            });
+        });
+
+
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -33,17 +65,19 @@
                     <div class="mention-bottom">
                         <div class="mention-info">
                             <div class="profile-img">
-                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                <svg data-jdenticon-value="user" th:text="${mention.member.nickname}"
                                      width="60" height="60" class="rounded border bg-light"></svg>
                             </div>
-                            <div class="content" style="height: auto" th:text="${mention.content}">가나다라마바다아자차카타</div>
+                            <div class="content" style="height: auto" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">내용</div>
                         </div>
                         <div class="mention-info" style="margin-top: 8px">
                             <div class="nickname-box">
-                                <a href="" class="nickname" th:text="${mention.member.nickname}">닉네임</a>
+                                <a th:href="@{'/profile/' + ${mention.member.nickname}}">
+                                    <span class="nickname" th:text="${mention.member.nickname}"></span>
+                                </a>
                             </div>
                             <div class="dot">|</div>
-                            <div class="vaccine">
+                            <div class="vaccine" th:if="${mention.member.certification} == true">
                                 <img src="img/vaccine.png" alt="" class="vaccine">
                             </div>
                             <div class="dot">|</div>
@@ -63,10 +97,11 @@
                     <form id="re-mention-form" th:object="${reMentionForm}" >
                         <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
                         <div class="mention-info">
-                            <div class="profile-img">
-                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"
-                                     width="60" height="60" class="rounded border bg-light"></svg>
-                            </div>
+<!--                            여긴 이미지 필요없을거같아서 지우면 될거같아요 div 때문에 혹시 모를까 남겨놨어요-->
+<!--                            <div class="profile-img">-->
+<!--                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"-->
+<!--                                     width="60" height="60" class="rounded border bg-light"></svg>-->
+<!--                            </div>-->
                             <div class="remention-write">
                                 <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
                             </div>
@@ -79,10 +114,22 @@
             <div id = "re-mention-list">
                 <div th:each="reMention:${reMentionList}">
                     <div class="re-mention-info">
-                        <img class="identicon">
-                        <div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>
+                        <div class="profile-img">
+                            <svg data-jdenticon-value="user" th:text="${reMention.member.nickname}"
+                                 width="75" height="75" class="rounded border bg-light"></svg>
+                        </div>
+                        <div id="re-mention-nickname">
+                            <a th:href="@{'/profile/' + ${mention.member.nickname}}">
+                                <span th:text="${reMention.member.nickname}"></span>
+                            </a>
+                        </div>
+                        <div class="dot">|</div>
+                        <div class="upload-time">
+                            <span class="viewTime" th:text="${#temporals.format(reMention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                        </div>
                         <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
                     </div>
+
                 </div>
             </div>
         </div>
