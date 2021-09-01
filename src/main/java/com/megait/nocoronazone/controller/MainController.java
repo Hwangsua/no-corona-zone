@@ -3,10 +3,7 @@ package com.megait.nocoronazone.controller;
 import com.google.gson.JsonObject;
 import com.megait.nocoronazone.api.VaccineCountVo;
 import com.megait.nocoronazone.api.VaccineXml;
-import com.megait.nocoronazone.domain.ChatMessage;
-import com.megait.nocoronazone.domain.Member;
-import com.megait.nocoronazone.domain.Mention;
-import com.megait.nocoronazone.domain.SafetyIndex;
+import com.megait.nocoronazone.domain.*;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.form.ReMentionForm;
@@ -33,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +39,6 @@ import javax.validation.Valid;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -51,6 +48,7 @@ public class  MainController {
 
     private final DetailSafetyService detailSafetyService;
     private final SafetyService safetyService;
+    private final DistancingService distancingService;
     private final VaccineXml vaccineXml;
     private final ArticleService articleService;
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -58,11 +56,12 @@ public class  MainController {
     private final MemberService memberService;
     private final MentionService mentionService;
     private final ReMentionService reMentionService;
+    private final ProfileImageService profileImageService;
     private final FollowService followService;
 
     String colorConfirmed = "235, 64, 52"; // red
-//    String colorDensity = "158, 0, 158"; // purple
     String colorDensity = "168, 118, 0"; // yellow
+    String colorDistancing = "124, 0, 173"; // purple
 
     // 전체
     String[] City = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "세종"};
@@ -70,7 +69,7 @@ public class  MainController {
     // 충청북도
     String[] cbDistrict = {"Boeun-gun", "Cheongju-si", "Chungju-si", "Danyang-gun", "Goesan-gun", "Jecheon-si", "Jeungpyeong-gun", "Jincheon-gun", "Okcheon-gun", "Eumseong-gun", "Yeongdong-gun"};
     // 충청남도
-    String[] cnDistrict = {"Dangjin-si", "Cheongju-si", "Seosan-si", "Nonsan-si", "Cheonan-si", "Gongju-si", "Boryeong-si", "Asan-si", "Gyeryong-si", "Geumsan-gun", "Buyeo-gun", "Seocheon-gun", "Cheongyang-gun", "Hongseong-gun", "Yesan-gun", "Taean-gun", "Eumseong-gun"};
+    String[] cnDistrict = {"Dangjin-si", "Seosan-si", "Nonsan-si", "Cheonan-si", "Gongju-si", "Boryeong-si", "Asan-si", "Gyeryong-si", "Geumsan-gun", "Buyeo-gun", "Seocheon-gun", "Cheongyang-gun", "Hongseong-gun", "Yesan-gun", "Taean-gun"};
     // 경상북도
     String[] gbDistrict = {"Pohang-si", "Gyeongju-si", "Gimcheon-si", "Andong-si", "Gumi-si", "Yeongju-si", "Yeongcheon-si", "Sangju-si", "Mungyeong-si", "Gyeongsan-si", "Gunwi-gun", "Uiseong-gun", "Cheongsong-gun", "Yeongyang-gun", "Yeongdeok-gun", "Cheongdo-gun", "Goryeong-gun", "Seongju-gun", "Chilgok-gun", "Yecheon-gun", "Bonghwa-gun", "Uljin-gun", "Ulleung-gun"};
     // 경상남도
@@ -80,7 +79,7 @@ public class  MainController {
     // 전라남도
     String[] jnDistrict = {"Mokpo-si", "Yeosu-si", "Suncheon-si", "Naju-si", "Gwangyang-si", "Damyang-gun", "Gokseong-gun", "Gurye-gun", "Goheung-gun", "Boseong-gun", "Hwasun-gun", "Jangheung-gun", "Gangjin-gun", "Haenam-gun", "Yeongam-gun", "Muan-gun", "Hampyeong-gun", "Yeonggwang-gun", "Jangseong-gun", "Wando-gun", "Jindo-gun", "Sinan-gun"};
     // 경기
-    String[] ggDistrict = {"Suwon-si", "Seongnam-si", "Uijeongbu-si", "Anyang-si", "Bucheon-si", "Gwangmyeong-si", "Pyeongtaek-si", "Dongducheon-si", "Ansan-si", "Goyang-si", "Gwacheon-si", "Guri-si", "Namyangju-si", "Osan-si", "Siheung-si", "Gunpo-si", "Uiwang-si", "Hanam-si", "Yongin-si", "Paju-si", "Icheon-si", "Anseong-si", "Gimpo-si", "Hwaseong-si", "Gwangju-si", "Yangju-si", "Pocheon-si", "Yeoju-si", "Yeoncheon-gun", "Gapyeong-gun", "Yangpyeong-gun", "Sinan_gun"};
+    String[] ggDistrict = {"Suwon-si", "Seongnam-si", "Uijeongbu-si", "Anyang-si", "Bucheon-si", "Gwangmyeong-si", "Pyeongtaek-si", "Dongducheon-si", "Ansan-si", "Goyang-si", "Gwacheon-si", "Guri-si", "Namyangju-si", "Osan-si", "Siheung-si", "Gunpo-si", "Uiwang-si", "Hanam-si", "Yongin-si", "Paju-si", "Icheon-si", "Anseong-si", "Gimpo-si", "Hwaseong-si", "Gwangju-si", "Yangju-si", "Pocheon-si", "Yeoju-si", "Yeoncheon-gun", "Gapyeong-gun", "Yangpyeong-gun"};
     // 서울
     String[] seoulDistrict = {"Jongno-gu", "Jung-gu", "Yongsan-gu", "Seongdong-gu", "Gwangjin-gu", "Dongdaemun-gu", "Jungnang-gu", "Seongbuk-gu", "Gangbuk-gu", "Dobong-gu", "Nowon-gu", "Eunpyeong-gu", "Seodaemun-gu", "Mapo-gu", "Yangcheon-gu", "Gangseo-gu", "Guro-gu", "Geumcheon-gu", "Yeongdeungpo-gu", "Dongjak-gu", "Gwanak-gu", "Seocho-gu", "Gangnam-gu", "Songpa-gu", "Gangdong-gu"};
     // 부산
@@ -95,19 +94,18 @@ public class  MainController {
     String[] incheonDistrict = {"Jung-gu", "Dong-gu", "Michuhol-gu", "Yeonsu-gu", "Namdong-gu", "Bupyeong-gu", "Gyeyang-gu", "Seo-gu", "Ganghwa-gun", "Ongjin-gun"};
     // 광주
     String[] gwangjuDistrict = {"Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Gwangsan-gu"};
-
-
+    // 대구
+    String[] daeguDistrict = {"Jung-gu", "Dong-gu", "Seo-gu", "Nam-gu", "Buk-gu", "Suseong-gu", "Dalseo-gu", "Dalseong-gun"};
+    // 대전
+    String[] daejeonDistrict = {"Jung-gu", "Dong-gu", "Seo-gu", "Yuseong-gu", "Daedeok-gu"};
 
     // ================= 메인 ============================
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("member", memberService);
-
-
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorConfirmed);
-        for(int i = 0; i < City.length; ++i){
+        for (int i = 0; i < City.length; ++i) {
             model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
         }
         return "index";
@@ -115,10 +113,10 @@ public class  MainController {
 
     @GetMapping("/infection")
     public String infection(Model model) {
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorConfirmed);
-        for(int i = 0; i < City.length; ++i){
+        for (int i = 0; i < City.length; ++i) {
             model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
         }
         return "index";
@@ -126,22 +124,34 @@ public class  MainController {
 
     @GetMapping("/density")
     public String density(Model model) {
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorDensity);
-        for(int i = 0; i < City.length; ++i){
+        for (int i = 0; i < City.length; ++i) {
             model.addAttribute(City2[i], safetyService.getSafetytoAlpha(City[i]));
         }
         return "index";
     }
 
+    @GetMapping("/distancing")
+    public String distancing(Model model) {
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
+        model.addAttribute("color", colorDistancing);
+        for(int i = 0; i < City.length; ++i){
+            model.addAttribute(City2[i], distancingService.getDistancingtoAlpha(City[i]));
+            model.addAttribute(City2[i] + "d", distancingService.getDistancing(City[i]));
+        }
+        return "co_info/distancing";
+    }
+
     @GetMapping("/detail")
     public String detail(Model model, @Param(value = "district")String district) {
-        List<SafetyIndex> safetyList = safetyService.getSafetyList();
-        model.addAttribute("safetyList", safetyList);
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
         model.addAttribute("color", colorDensity);
-        if (district.equals("Seoul")){
-            for(int i = 0; i < seoulDistrict.length; ++i){
+        if (district.equals("Seoul")) {
+            for (int i = 0; i < seoulDistrict.length; ++i) {
                 model.addAttribute(("Seoul-" + seoulDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Seoul-" + seoulDistrict[i]));
             }
             return "map/seoul";
@@ -206,13 +216,13 @@ public class  MainController {
             }
             return "map/incheon";
         } else if (district.equals("Daegu")) {
-            for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(("Daegu-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daegu-" + incheonDistrict[i]));
+            for (int i = 0; i < daeguDistrict.length; ++i) {
+                model.addAttribute(("Daegu-" + daeguDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daegu-" + daeguDistrict[i]));
             }
             return "map/daegu";
         } else if (district.equals("Daejeon")) {
-            for (int i = 0; i < incheonDistrict.length; ++i) {
-                model.addAttribute(("Daejeon-" + incheonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daejeon-" + incheonDistrict[i]));
+            for (int i = 0; i < daejeonDistrict.length; ++i) {
+                model.addAttribute(("Daejeon-" + daejeonDistrict[i]).replace("-", "_"), detailSafetyService.getDetailSafetytoAlpha("Daejeon-" + daejeonDistrict[i]));
             }
             return "map/daejeon";
         } else if (district.equals("Gwangju")) {
@@ -233,44 +243,43 @@ public class  MainController {
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
+    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         log.info("User : {}", chatMessage.getSender());
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
     }
 
 
-
     // ================= 사용자 ============================
     @ResponseBody
     @RequestMapping("/nicknameCk")
-    public String checkNickname(@RequestParam String nickname){
+    public String checkNickname(@RequestParam String nickname) {
 
         JsonObject object = new JsonObject();
 
-        try{
+        try {
             memberService.checkNickname(nickname);
             object.addProperty("result", false);
             object.addProperty("message", "사용 불가능한 닉네임입니다.");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             object.addProperty("result", true);
-            object.addProperty("message","사용 가능한 닉네임입니다.");
+            object.addProperty("message", "사용 가능한 닉네임입니다.");
         }
 
         return object.toString();
     }
 
-    @GetMapping ("/email_check_token")
-    public String emailCheckToken(String token, String email, Model model){
+    @GetMapping("/email_check_token")
+    public String emailCheckToken(String token, String email, Model model) {
 
-        try{
+        try {
             memberService.checkEmailToken(token, email);
-        }catch (IllegalArgumentException e){
-            model.addAttribute("error","wrong");
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "wrong");
             return "member/email_check_result";
         }
 
-        model.addAttribute("success","사용자님");
+        model.addAttribute("success", "사용자님");
         return "member/email_check_result";
 
     }
@@ -284,7 +293,7 @@ public class  MainController {
     @PostMapping("/signup")
     public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             System.out.println(errors);
             return "member/signup";
         }
@@ -315,23 +324,45 @@ public class  MainController {
     }
 
 
-
     @GetMapping("/settings")
-    public String setting(Model model, @AuthenticationMember Member member){
+    public String setting(Model model, @AuthenticationMember Member member) {
         model.addAttribute("member", memberService.getMember(member));
         return "member/settings";
     }
-
     @PostMapping("/settings")
-    public String updateMember(Model model, @Valid SettingForm settingForm, @AuthenticationMember Member member) {
+    public String updateMember(Model model,
+                               @Valid SettingForm settingForm,
+                               @AuthenticationMember Member member) {
 
-            Member updateMember = memberService.updateMember(member.getNo(), settingForm);
-            model.addAttribute("updateMember",updateMember);
-            model.addAttribute("result", true);
 
+        Member updateMember = memberService.updateMember(member.getNo(), settingForm);
+        model.addAttribute("updateMember", updateMember);
+        model.addAttribute("result", true);
         return setting(model, member);
-
     }
+
+    @PostMapping("/upload_image")
+    @ResponseBody
+    public String uploadImage(@RequestParam("profileImg") MultipartFile multipartFile,
+                              ProfileImage memberImage,
+                              @AuthenticationMember Member member) {
+        JsonObject jsonObject = new JsonObject();
+        if (multipartFile != null) {
+            ProfileImage savedMemberImage = null;
+            try {
+                savedMemberImage = profileImageService.saveProfileImage(member, memberImage, multipartFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            assert savedMemberImage != null;
+            jsonObject.addProperty("image", savedMemberImage.getFilePath());
+
+        }
+
+        return jsonObject.toString();
+    }
+
 
     // ================= co_info ============================
 
@@ -345,13 +376,15 @@ public class  MainController {
         model.addAttribute("cityPopulationList", cityPopulationList);
 
         try {
-            model.addAttribute("articleList",articleService.getVaccineArticleList());
-        }catch (IOException  e){
+            model.addAttribute("articleList", articleService.getVaccineArticleList());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return "co_info/vaccine";
     }
+    @GetMapping("/slide")
+    public String slide(){return "co_info/slide_image";}
 
     @GetMapping("/clinic")
     public String clinic() {
@@ -359,30 +392,33 @@ public class  MainController {
     }
 
     @GetMapping("/news")
-    public String co_info_news() { return "/co_info/main";}
+    public String co_info_news() {
+        return "/co_info/main";
+    }
 
     @GetMapping("/video")
-    public String co_info_video() { return "/co_info/video";}
+    public String co_info_video() {
+        return "/co_info/video";
+    }
 
     @RequestMapping("/article")
     public String article(Model model) {
 
         try {
-            model.addAttribute("articleList",articleService.getLocalArticleList("서울", "전체"));
-        }catch (IOException  e){
+            model.addAttribute("articleList", articleService.getLocalArticleList("서울", "전체"));
+        } catch (IOException e) {
             e.printStackTrace();
-            //return "" //TODO - 점검페이지가 있으면 어떨까..
         }
 
         return "co_info/article";
     }
 
     @GetMapping("/local_article")
-    public String article(@RequestParam String mainCityName, @RequestParam String subCityName, Model model){
+    public String article(@RequestParam String mainCityName, @RequestParam String subCityName, Model model) {
 
         try {
-            model.addAttribute("articleList",articleService.getLocalArticleList(mainCityName, subCityName));
-        }catch (IOException e){
+            model.addAttribute("articleList", articleService.getLocalArticleList(mainCityName, subCityName));
+        } catch (IOException e) {
             e.printStackTrace();
             // return "점검 페이지"
         }
@@ -391,17 +427,15 @@ public class  MainController {
     }
 
 
-
     // ================= co_sns ============================
 
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
-    public String timelineFollow(Model model){
-
+    public String timelineFollow(Model model) {
         List<Mention> mentionFormList = mentionService.getMentionlist();
 
         model.addAttribute("member", memberService);
-        model.addAttribute("mention",mentionService);
+        model.addAttribute("mention", mentionService);
         model.addAttribute("mentionFormList", mentionFormList);
         model.addAttribute("mentionForm", new MentionForm());
 
@@ -410,16 +444,14 @@ public class  MainController {
 
     //타임라인(위치)
     @GetMapping("/timeline_location")
-    public String timelineLocation(Model model)
-    {
+    public String timelineLocation(Model model) {
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
 
     }
 
     @PostMapping("/timeline_location")
-    public String searchLocation(@Valid LocationSearchForm locationSearchForm, Errors errors, Model model)
-    {
+    public String searchLocation(@Valid LocationSearchForm locationSearchForm, Errors errors, Model model) {
         System.out.println("Post");
         double lx = locationSearchForm.getLatitude();
         double ly = locationSearchForm.getLongitude();
@@ -431,9 +463,9 @@ public class  MainController {
     }
 
     @PostMapping("/timeline_follow")
-    public String write(@AuthenticationMember Member member,MentionForm mentionForm){
+    public String write(@AuthenticationMember Member member, MentionForm mentionForm) {
 
-        if (member == null){
+        if (member == null) {
             return "redirect:login";
         }
 
@@ -443,15 +475,15 @@ public class  MainController {
     }
 
     @GetMapping("/mention_detail/{no}")
-    public String mentionDetail(@PathVariable Long no, Model model, @AuthenticationMember Member member){
+    public String mentionDetail(@PathVariable Long no, Model model, @AuthenticationMember Member member) {
         try {
             Mention parentMention = mentionService.getMention(no);
-            model.addAttribute("mention", parentMention );
+            model.addAttribute("mention", parentMention);
             model.addAttribute("reMentionForm", new ReMentionForm());
-            model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+            model.addAttribute("reMentionList", reMentionService.getReMentionList(parentMention));
             model.addAttribute("currentMember", memberService.getMember(member));
-            
-        }catch (IllegalArgumentException e){
+
+        } catch (IllegalArgumentException e) {
             return "co_sns/timeline_location";
         }
         return "co_sns/mention_detail";
@@ -459,17 +491,16 @@ public class  MainController {
 
 
     @PostMapping("/remention")
-    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model){
-
+    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model) {
 
         try {
             Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
-            reMentionService.saveReMention(member, parentMention,reMentionForm);
-            model.addAttribute("reMentionList",reMentionService.getReMentionList(parentMention));
+            reMentionService.saveReMention(member, parentMention, reMentionForm);
+            model.addAttribute("reMentionList", reMentionService.getReMentionList(parentMention));
             model.addAttribute("member", memberService.getMember(member));
 
-        }catch (IllegalArgumentException e){
-            return "co_sns/timeline_location";
+        } catch (IllegalArgumentException e) {
+            return "co_sns/timeline_follow";
         }
 
         return "co_sns/mention_detail :: #re-mention-list";
@@ -477,11 +508,11 @@ public class  MainController {
 
 
     @GetMapping("/search")
-    public String search(@RequestParam(value="keyword") String keyword, Model model) {
+    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
         List<Mention> mentionFormList = mentionService.searchMentions(keyword);
 
         model.addAttribute("member", memberService);
-        model.addAttribute("mention",mentionService);
+        model.addAttribute("mention", mentionService);
         model.addAttribute("mentionFormList", mentionFormList);
         model.addAttribute("mentionForm", new MentionForm());
 
@@ -491,7 +522,7 @@ public class  MainController {
 
 
     @PostMapping("/delete/{no}")
-    public String delete(@PathVariable Long no,Model model){
+    public String delete(@PathVariable Long no, Model model) {
 
         mentionService.deleteMention(no);
         model.addAttribute("result", true);
@@ -499,8 +530,6 @@ public class  MainController {
         return "redirect:/timeline_follow";
     }
 
-
-    //TODO - 트렌드, 강사님이 도와주신다고 하심
 
     @ResponseBody
     @PostMapping("/follow")
@@ -551,9 +580,7 @@ public class  MainController {
     public String profilePage(@PathVariable String nickname, Model model, @AuthenticationMember Member member) {
 
         List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
-        System.out.println(memberMentionList);
         Member profileMember = memberService.getNicknameMember(nickname);
-        System.out.println(profileMember);
         model.addAttribute("profileMember", profileMember);
         model.addAttribute("memberMentionList", memberMentionList);
         model.addAttribute("currentMember", memberService.getMember(member));

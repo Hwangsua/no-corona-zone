@@ -2,14 +2,13 @@ package com.megait.nocoronazone.service;
 
 import com.megait.nocoronazone.domain.SocialDistancing;
 import com.megait.nocoronazone.repository.DistancingRepository;
-import com.megait.nocoronazone.thread.ProcessOutputThread;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,7 +23,8 @@ public class DistancingSchduler {
 
     private final DistancingRepository distancingRepository;
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *") //TODO - 나중에 바꾸기
+//    @Scheduled(cron = "0 * * * * *")
     public void setSocialDistancingFile() {
 
         String socialCsvPath = "csv/social_distancing.csv";
@@ -54,6 +54,7 @@ public class DistancingSchduler {
 //            process.waitFor();
 //            process.destroy();
 
+
             stringList = Files.readAllLines(Path.of(socialCsvPath), StandardCharsets.UTF_8);
 
             List<SocialDistancing> distancingList = new ArrayList<>();
@@ -61,13 +62,11 @@ public class DistancingSchduler {
             for(String s : stringList){
                 String[] arr = s.replaceAll("^\"|\"$", "").split("\\|");
                 SocialDistancing socialDistancing = SocialDistancing.builder()
-                        .localName(arr[0])
-                        .populationNumber(arr[1])
+                        .localName(arr[0].replace(new String(new byte[]{(byte)0xEF, (byte)0xBB, (byte)0xBF}), ""))
+                        .distancingNumber(arr[1])
                         .build();
                 distancingList.add(socialDistancing);
-
             }
-
             if (distancingRepository.findAll().isEmpty()){
                 distancingRepository.saveAll(distancingList);
             }else{
@@ -78,18 +77,14 @@ public class DistancingSchduler {
             e.printStackTrace();
         }
 
-//        catch (IOException | InterruptedException  e) {
-//            e.printStackTrace();
-//        }
-
-
     }
 
     public void updateDistancing(List<SocialDistancing> distancingList){
         for (SocialDistancing s : distancingList){
-            distancingRepository.updateDistancing(s.getPopulationNumber(), s.getLocalName());
+            distancingRepository.updateDistancing(s.getDistancingNumber(), s.getLocalName());
         }
     }
+
 
 
 }

@@ -39,8 +39,8 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @PostConstruct
-    @Profile("local")
+//    @PostConstruct
+//    @Profile("local")
     public void createNewMember(){
 
         Member member = Member.builder()
@@ -53,13 +53,7 @@ public class MemberService implements UserDetailsService {
 
         memberRepository.save(member);
 
-    }
-
-    @PostConstruct
-    @Profile("local")
-    public void createNewMember2(){
-
-        Member member = Member.builder()
+        member = Member.builder()
                 .email("test@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
@@ -69,13 +63,7 @@ public class MemberService implements UserDetailsService {
 
         memberRepository.save(member);
 
-    }
-
-    @PostConstruct
-    @Profile("local")
-    public void createNewMember3(){
-
-        Member member = Member.builder()
+        member = Member.builder()
                 .email("qwe@qwe.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
@@ -84,8 +72,8 @@ public class MemberService implements UserDetailsService {
                 .build();
 
         memberRepository.save(member);
-
     }
+
 
 
     public Member processNewUser(SignUpForm signUpForm){

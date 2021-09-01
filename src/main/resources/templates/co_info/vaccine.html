@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="show-city-percent">
-                    <p id="vaccine-city">서울특별시</p>
+                    <p id="vaccine-city">클릭하세요</p>
                     <p id="vaccine-percent"></p>
                 </div>
             </div>
@@ -126,23 +126,15 @@
                             console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalFirstCnt = parseInt(data.totalFirstCnt); // 1차 접종 누적
-                                cityTotalSecondCnt = parseInt(data.totalSecondCnt); // 2차 접종 누적
-
                                 percentCityFirstCnt = cityTotalFirstCnt / cityPopulationList[i]; // 1차 접종률(지역별)
-                                percentCitySecondCnt = cityTotalSecondCnt / cityPopulationList[i]; // 2차 접종률(지역별)
 
                                 percentList1.push(percentCityFirstCnt);
-                                console.log(percentList1);
-                                percentList2.push(percentCitySecondCnt);
 
-                                // console.log(percentCityFirstCnt);
-                                // console.log(percentCitySecondCnt);
                                 $('<style>').text(".vaccine-map .land" + [i] + "{fill: rgba(38, 57, 201," + percentCityFirstCnt + ")}").appendTo(document.getElementById('svg'));
                             });
                         } // success
                     }) // ajax
                 } // for
-                document.getElementById('vaccine-percent').innerHTML = roundToTwo(percentList1[0] * 100) + "%";
                 // 지역 hover 시 호출
                 let land = [".land0", ".land1", ".land2", ".land3", ".land4", ".land5", ".land6", ".land7", ".land8", ".land9", ".land10", ".land11", ".land12", ".land13", ".land14", ".land15", ".land16"];
                 $(land[0]).click(function () {
@@ -250,7 +242,6 @@
                         } // success
                     }) // ajax
                 } // for
-                document.getElementById('vaccine-percent').innerHTML = roundToTwo(percentList1[0] * 100) + "%";
                 // 지역 hover 시 호출
                 let land = [".land0", ".land1", ".land2", ".land3", ".land4", ".land5", ".land6", ".land7", ".land8", ".land9", ".land10", ".land11", ".land12", ".land13", ".land14", ".land15", ".land16"];
                 $(land[0]).click(function () {
@@ -352,7 +343,6 @@
                         } // success
                     }) // ajax
                 } // for
-                document.getElementById('vaccine-percent').innerHTML = roundToTwo(percentList2[0] * 100) + "%";
                 // 지역 hover 시 호출
                 let land = [".land0", ".land1", ".land2", ".land3", ".land4", ".land5", ".land6", ".land7", ".land8", ".land9", ".land10", ".land11", ".land12", ".land13", ".land14", ".land15", ".land16"];
                 $(land[0]).click(function () {
@@ -425,7 +415,7 @@
                 });
             }) // function
         </script>
-        <div th:fragment="ArticleListFragment(articleList)">
+        <div th:fragment="ArticleListFragment(articleList)" class="vaccine-article">
             <div th:each="article:${articleList}">
                 <div class="vaccine-right" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">
                     <div class="news-thumbnail">
@@ -436,9 +426,9 @@
                             <span th:text="${article.articleTitle}">경기 부천 28명 신규 확진...확진자 접촉 25명</span>
                         </div>
                         <div class="news-content-content">
-                    <span th:text="${article.articleContent}">
-                        경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
-                    </span>
+                            <span th:text="${article.articleContent}">
+                                경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
+                            </span>
                         </div>
                         <div class="news-content-source">
                             <img class="article-content-img" th:src="${article.pressImgUrl}" alt="">

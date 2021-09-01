@@ -1,7 +1,9 @@
 .container{
     margin-top: 60px;
+    height: auto;
 }
 .signup-title{
+    font-size: 20px;
     margin-top: 20px;
     padding-top: 10px;
 }
@@ -26,7 +28,6 @@
     color: white;
     font-weight: bold;
 }
-
 .item{
     margin-top: 15px;
     text-align: center;
@@ -37,7 +38,7 @@
 }
 .container{
     text-align: center;
-    border: none;;
+    border: none;
 }
 .signup-form2{
     display: inline-block;

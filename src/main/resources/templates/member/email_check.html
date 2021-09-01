@@ -4,15 +4,16 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='signup', title='Sign up'">
-
 <head>
+    <link th:href="@{/css/member/email_check.css}" rel="stylesheet">
 </head>
-
 <body>
-<div layout:fragment="content" class="justify-">
-
-    <h2>이메일을 확인해주세요!</h2>
-
+<div layout:fragment="content">
+    <div class="check-title">
+        <h2>인증 메일이 발송되었습니다.</h2>
+        <br/>
+        <h2>이메일 인증을 완료 후 서비스 이용이 가능합니다.</h2>
+    </div>
 </div>
 </body>
 </html>

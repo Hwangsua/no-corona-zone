@@ -1,0 +1,20 @@
+@media(min-width: 940px){
+    .check-title{
+        margin-top: 200px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    h2{
+        margin: 10px;
+    }
+}
+.check-title{
+    margin-top: 200px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+h2{
+    margin: 10px;
+}

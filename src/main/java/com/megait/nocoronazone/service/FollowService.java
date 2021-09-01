@@ -29,7 +29,7 @@ public class FollowService {
         if(memberFollow.isEmpty()){
             Follow follow = new Follow();
             follow.setWho(member);
-            followRepository.save(follow);
+            //followRepository.save(follow)
             return follow;
         }
         return memberFollow.get();
@@ -45,7 +45,6 @@ public class FollowService {
         }
         return false;
     }
-
 
     public void follow(Member who, Member whom){
         Follow findFollow = getFollow(who);
@@ -136,7 +135,6 @@ public class FollowService {
 
 
         if (loginMember.getNo() == pageMember.getNo()){
-            System.out.println("같은사람!");
             pageFollowInfo.setFollowingList(getFollowingList(pageMember));
             pageFollowInfo.setFollowerList(getFollowerList(pageMember));
         }else{

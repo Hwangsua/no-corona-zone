@@ -3,7 +3,6 @@ package com.megait.nocoronazone.domain;
 import lombok.*;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
@@ -15,14 +14,10 @@ import javax.persistence.Id;
 @ToString
 public class SocialDistancing {
 
-//    @Id
-//    @GeneratedValue
-//    private Long no;
-
     @Id
     private String localName;
 
-    private String populationNumber;
+    private String distancingNumber;
 
 
 }

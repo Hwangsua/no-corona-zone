@@ -9,8 +9,23 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣기d&libraries=services"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣기&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
+    <script>
+        $(document).ready(function () {
+
+            $('.submit-btn').click(function () {
+
+                console.log($('#content').val().length);
+                if($('#content').val().replace(/\s| /gi, "").length==0){
+                    alert("내용을 입력해주세요.");
+                    return false;
+                }
+            });
+        });
+
+
+    </script>
 
 </head>
 <body>
@@ -33,7 +48,7 @@
                         <div class="mention-write-submit">
                             <div class="mention-location">
                                 <button type="button" id="location-btn">위치</button>
-                                <input type="text" th:field="*{location}" class="search-text" name="location-name" id ="location-name" readonly>
+                                <input type="hidden" th:field="*{location}" class="search-text" name="location-name" id ="location-name">
                                 <input type="hidden" th:field="*{latitude}" name="location-latitude" id ="location-latitude">
                                 <input type="hidden" th:field="*{longitude}" name="location-longitude" id ="location-longitude">
                             </div>
@@ -48,10 +63,11 @@
                     <div onclick="location.href='/mention_detail'" class="mention-each">
                         <div class="mention-each2" th:each="mention : ${mentionFormList}">
                             <div class="mention-left">
-                                <div class="profile-img">
+                                <div class="profile-img" >
                                     <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                                         width="60" height="60" class="rounded border bg-light"></svg>
+                                         width="75" height="75" class="rounded border bg-light"></svg>
                                 </div>
+
                             </div>
                             <div class="mention-right">
                                 <div class="mention-info">
@@ -60,11 +76,12 @@
                                             <div th:text="${mention.member.nickname}"></div>
                                         </a>
                                     </div>
-                                    <div class="vaccine">
+                                    <div class="vaccine" th:if="${mention.member.certification} == true">
                                         <img src="img/vaccine.png" alt="" class="vaccine">
                                     </div>
-                                    <div class="location">
-                                        <div th:text="${mention.location}"></div>
+                                    <div class="location" th:if="${mention.location !=''}">
+                                        <img src="img/location.png" alt="" class="location-icon">
+                                        <!--                                        <div th:text="${mention.location}"></div>-->
                                     </div>
                                     <div class="dot">|</div>
                                     <div class="upload-time">
@@ -73,7 +90,7 @@
                                 </div>
                                 <div class="content">
                                     <a th:href="@{'/mention_detail/' + ${mention.no}}">
-                                        <span th:text="${mention.content}"></span>
+                                        <span th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}"></span>
                                     </a>
                                 </div>
                             </div>

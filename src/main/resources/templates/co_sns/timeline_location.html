@@ -44,7 +44,7 @@
                         <div class="mention-right">
                             <div class="mention-info">
                                 <div class="nickname" th:text="${mention.member.nickname}">닉네임</div>
-                                <div class="vaccine">
+                                <div class="vaccine" th:if="${mention.member.certification} == true">
                                     <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
                                 <div class="location" th:text="${mention.location}">롯데월드</div>

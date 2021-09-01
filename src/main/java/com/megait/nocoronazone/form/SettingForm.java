@@ -1,10 +1,8 @@
 package com.megait.nocoronazone.form;
 
 import com.megait.nocoronazone.domain.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import com.megait.nocoronazone.domain.ProfileImage;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -12,13 +10,16 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class SettingForm {
 
     private String email;
+    private Long fileNo;
 
 
     @Pattern(
@@ -35,6 +36,12 @@ public class SettingForm {
 
 
     private String introduce;
+
+    private boolean certification;
+
+    private ProfileImage profileImage;
+
+
 
 
 }

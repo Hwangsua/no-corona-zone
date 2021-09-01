@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/common_layout}" th:with="activeTab='index', title='Welcome!'">
 <head>
-    <link th:href="@{/css/map/chungbuk.css}" rel="stylesheet">
+    <link th:href="@{/css/map/seoul.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -14,14 +14,20 @@
             <div class="map-collect">
                 <a th:href="@{/infection}" class="map-collect-item infection" id="item-infection">확진</a>
                 <a th:href="@{/density}" class="map-collect-item density" id="item-density">밀집</a>
-                <a href="#" class="map-collect-item distancing" id="item-distancing">거리두기</a>
+                <a th:href="@{/distancing}" class="map-collect-item distancing" id="item-distancing">거리두기</a>
             </div>
             <div class="infection-info">
+                <div class="infection-today">
+                    <div>
+                        <span>오늘 확진자 수</span>
+                        <span th:text="${confirmedSUM}"></span>
+                    </div>
+                </div>
                 <div class="infection-list">
                     <div class="infection-list-label">
                         <span>지역</span>
-                        <span style="font-size: 0.8rem">오늘 확진자</span>
-                        <span style="font-size: 0.8rem">밀집도</span>
+                        <span>오늘 확진자</span>
+                        <span>밀집도</span>
                     </div>
                     <div class="infection-each" th:each="safety : ${safetyList}">
                         <div class="infection-each-city">

@@ -4,6 +4,7 @@ import com.megait.nocoronazone.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,14 +25,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/css/**","/img/**", "/js/**", "/svg/**", "/ws/**", "/map/**").permitAll()
 
 
-                .mvcMatchers("/", "/login", "/signup", "/nicknameCk","/logout",
+                .mvcMatchers("/","/slide", "/login", "/signup", "/nicknameCk","/logout",
                         "/infection", "/density", "/distancing", "/clinic",
                         "/video","/news","/article","/local_article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
                         "/timeline_follow", "/search",
                         "/chat", "/mention").permitAll()
 
+
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()
+
 
                 .anyRequest().authenticated()
 
@@ -41,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
 
-//                .and()
                 .and()
                 .and()
                 .formLogin()
