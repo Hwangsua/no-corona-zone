@@ -16,7 +16,7 @@
     <div class="myhistory">
       <div class="myhistory-header">
         <div class="myhistory-img">
-          <svg data-jdenticon-value="user" th:text="${profileMember.nickname}"
+          <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
                width="75" height="75" class="rounded border bg-light"></svg>
         </div>
 
@@ -56,7 +56,7 @@
         <div class="mention-each" th:each="mention : ${memberMentionList}">
           <div class="mention-left">
             <div class="profile-img">
-              <svg data-jdenticon-value="user" th:text="${profileMember.nickname}"
+              <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
                    width="75" height="75" class="rounded border bg-light"></svg>
             </div>
           </div>

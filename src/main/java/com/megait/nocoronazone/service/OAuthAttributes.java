@@ -95,7 +95,7 @@ public class OAuthAttributes {
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
                 .certification(true)
-                .introduce("{noop}")
+                .introduce("")
                 .nickname(nickname)
                 .authType(authType)
                 .emailVerified(true)

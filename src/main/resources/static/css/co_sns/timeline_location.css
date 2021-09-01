@@ -1,3 +1,11 @@
+.container-timeline{
+    width: 85%;
+    margin : auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
 .timeline {
     height: auto;
     width: 100%;
@@ -119,7 +127,7 @@
 }
 #location-btn{
     display: block;
-    height: 26px;
+    height: 30px;
     width: 40px;
     margin-right: 3px;
     background-color: #D1B6E1;

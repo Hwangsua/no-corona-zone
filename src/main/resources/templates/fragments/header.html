@@ -33,7 +33,7 @@
             </div>
             <!-- 메인으로 -->
             <div class="global-nav-home">
-                <img onclick="location.href='/'" src="img/ncz_logo.png" alt="" class="icon-home">
+                <img onclick="location.href='/'" th:src="@{/img/ncz_logo.png}" alt="" class="icon-home">
             </div>
             <!-- 우측 메뉴 (데스크탑) -->
             <div class="global-nav-users">
@@ -54,7 +54,7 @@
             <!-- 우측 메뉴 (모바일) -->
             <div class="mobile-nav-users openbtn" onclick="openNavRight()">
                 <a>
-                    <img src="img/social-icon.png" alt="" class="icon-social"></a>
+                    <img th:src="@{/img/social-icon.png}" alt="" class="icon-social"></a>
             </div>
             <div id="mySidepanel2" class="sidepanel-right">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNavRight()">X</a>
@@ -62,7 +62,7 @@
                 <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="mobile-menu-item">로그인</a>
                 <a th:href="@{/signup}" sec:authorize="!isAuthenticated()" class="mobile-menu-item">회원가입</a>
                 <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="mobile-menu-item">로그아웃</a>
-                <a th:href="@{/timeline_follow}" sec:authorize="!isAuthenticated()" class="mobile-menu-item">타임라인</a>
+                <a th:href="@{/timeline_follow}" class="mobile-menu-item">타임라인</a>
                 <a th:href="@{/profile}" sec:authorize="isAuthenticated()" class="mobile-menu-item">내프로필</a>
                 <a th:href="@{/settings}" sec:authorize="isAuthenticated()" class="mobile-menu-item">정보수정</a>
             </div>
@@ -71,11 +71,13 @@
     <script>
         function myFunction(){
             document.getElementById("myDropdown").classList.toggle("show");
+            var myDropdown = document.getElementById("myDropdown");
             var detail1 = document.getElementById("detail1");
             var detail2 = document.getElementById("detail2");
-            detail1.style.marginLeft="-5px";
-            detail2.style.marginLeft="-5px";
-            // detail2.style.marginTop="-5px";
+            myDropdown.style.backgroundColor="white";
+            myDropdown.style.width="45px";
+            detail1.style.marginLeft="-10px";
+            detail2.style.marginLeft="-10px";
             detail1.style.width="15px";
             detail2.style.width="15px";
             detail1.style.fontSize="13px";

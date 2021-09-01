@@ -89,9 +89,6 @@
     overflow: hidden;
     border-bottom: 1px solid lightgray;
 }
-.profile-img{
-    margin: auto 0;
-}
 .re-mention-info{
     display: flex;
     align-items: center;

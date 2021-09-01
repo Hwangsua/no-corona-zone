@@ -1,12 +1,14 @@
 .container{
-    border: none;
-    margin-top: 80px;
+    width: 90%;
+    position: relative;
+    top: 60px;
+    margin: auto;
 }
 .settings-header{
     margin-top: 20px;
     display: flex;
 }
-#nickname-duplicate-check{
+#nicknameDuplicateCheck{
     display: block;
     float: right;
     border: none;
@@ -19,18 +21,18 @@
     font-size: 12px;
     border-radius: 8px;
 }
-.btn-style{
+.settingComplete{
     display: block;
     /*float: right;*/
     border: none;
-    width: 36px;
-    height: 30px;
+    width: 40px;
+    height: 20px;
     background-color: #D1B6E1;
     color: white;
-    margin: auto 0;
     font-weight: bold;
     font-size: 12px;
-    border-radius: 8px;
+    border-radius: 6px;
+    margin-top: 8px;
 }
 .hr{
     position: static;
@@ -106,6 +108,7 @@
     height: 30px;
     margin-left: 90px;
 }
+
 @media (min-width: 940px) {
     .container{
         margin-top: 50px;
@@ -132,7 +135,7 @@
     /*    border-radius: 3px;*/
     /*    margin: auto 0;*/
     /*}*/
-    .btn-style{
+    .settingComplete{
         display: block;
         /*float: right;*/
         border: none;
@@ -145,13 +148,13 @@
         font-size: 12px;
         border-radius: 8px;
     }
-    #nickname-duplicate-check{
+    #nicknameDuplicateCheck{
         display: block;
         float: right;
         border: none;
         width: 36px;
         height: 30px;
-        margin-left: 10px;
+        margin-left: 3px;
         background-color: #D1B6E1;
         color: white;
         font-weight: bold;

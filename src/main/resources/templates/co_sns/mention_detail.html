@@ -47,37 +47,6 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <script>
-        $(document).ready(function () {
-
-            $('#remention-save-btn').click(function () {
-
-                console.log($('#content').val().length);
-                if($('#content').val().replace(/\s| /gi, "").length==0){
-                    alert("내용을 입력해주세요.");
-                    return false;
-                }
-
-                document.getElementById("parent-mention-no").value= $('#parent-mention').val();
-
-                var token = $("meta[name='_csrf']").attr("content");
-                var header = $("meta[name='_csrf_header']").attr("content");
-
-                $.ajax({
-                    url : '/remention',
-                    type : 'POST',
-                    data : $('#re-mention-form').serialize(),
-                    beforeSend: function (xhr){
-                        xhr.setRequestHeader(header, token);
-                    },
-                }).done(function (fragment) {
-
-                    $("#re-mention-list").replaceWith(fragment);
-                    document.getElementById("content").value= null;
-                });
-            });
-        });
-    </script>
     <div class="container-mention">
         <div class="mention-detail">
             <div class="mention-header">
@@ -96,7 +65,7 @@
                     <div class="mention-bottom">
                         <div class="mention-info">
                             <div class="profile-img">
-                                <svg data-jdenticon-value="user" th:text="${mention.member.nickname}"
+                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
                                      width="60" height="60" class="rounded border bg-light"></svg>
                             </div>
                             <div class="content" style="height: auto" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">내용</div>
@@ -107,7 +76,6 @@
                                     <span class="nickname" th:text="${mention.member.nickname}"></span>
                                 </a>
                             </div>
-                            <div class="dot">|</div>
                             <div class="vaccine" th:if="${mention.member.certification} == true">
                                 <img src="img/vaccine.png" alt="" class="vaccine">
                             </div>
@@ -149,8 +117,8 @@
                         <!-- <span style="margin-left: 3px;font-weight: bold">닉네임&nbsp;</span><div id="re-mention-nickname" th:text="${reMention.member.nickname}">닉네임</div>&nbsp;&nbsp;
                         <span style="margin-left: 3px;font-weight: bold">내용&nbsp;</span><div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>&nbsp;&nbsp; -->
                         <div class="profile-img">
-                            <svg data-jdenticon-value="user" th:text="${reMention.member.nickname}"
-                                 width="75" height="75" class="rounded border bg-light"></svg>
+                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${reMention.member.nickname}"
+                                 width="60" height="60" class="rounded border bg-light"></svg>
                         </div>
                         <div id="re-mention-nickname">
                             <a th:href="@{'/profile/' + ${mention.member.nickname}}">
