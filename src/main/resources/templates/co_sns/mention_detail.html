@@ -35,7 +35,6 @@
                         xhr.setRequestHeader(header, token);
                     },
                 }).done(function (fragment) {
-
                     $("#re-mention-list").replaceWith(fragment);
                     document.getElementById("content").value= null;
                 });
@@ -96,17 +95,17 @@
                     <form id="re-mention-form" th:object="${reMentionForm}" >
                         <input type="hidden" th:field="*{parentMentionNo}" id="parent-mention-no">
                         <div class="mention-info">
-<!--                            여긴 이미지 필요없을거같아서 지우면 될거같아요 div 때문에 혹시 모를까 남겨놨어요-->
-<!--                            <div class="profile-img">-->
-<!--                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"-->
-<!--                                     width="60" height="60" class="rounded border bg-light"></svg>-->
-<!--                            </div>-->
+                            <!--                            여긴 이미지 필요없을거같아서 지우면 될거같아요 div 때문에 혹시 모를까 남겨놨어요-->
+                            <!--                            <div class="profile-img">-->
+                            <!--                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${currentMember.nickname}"-->
+                            <!--                                     width="60" height="60" class="rounded border bg-light"></svg>-->
+                            <!--                            </div>-->
                             <div class="remention-write">
                                 <textarea name="content" id="content" th:field="*{content}" placeholder="답글을 적어주세요."></textarea>
                             </div>
                         </div>
                         <div class="remention-write-submit" id="remention-save-btn">
-                                <button class="remention-btn">작성</button>
+                            <button class="remention-btn">올리기</button>
                         </div>
                     </form>
                 </div>
@@ -130,12 +129,12 @@
                             <span class="viewTime" th:text="${#temporals.format(reMention.regdate,'yyyy.MM.dd HH:mm')}"></span>
                         </div>
                         <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
-                    </div>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <div class="sidebar">
             <div class="search">
                 <form method="get" name="search-mention" th:action="@{search}">
@@ -155,7 +154,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </div>
 </body>
 </html>

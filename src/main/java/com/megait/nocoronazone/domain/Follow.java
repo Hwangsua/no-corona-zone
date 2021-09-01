@@ -16,10 +16,10 @@ public class Follow {
     @Id @GeneratedValue
     private Long no;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Member who;
 
-    @OneToMany
+    @ManyToMany
     private List<Member> whom;
 
     @Builder
@@ -27,5 +27,14 @@ public class Follow {
         whom = new ArrayList<>();
     }
 
+    public void addFollowMember(Member member){
+        this.whom.add(member);
+    }
+
+    public void removeFollowMember(int index){
+
+        this.whom.remove(index);
+
+    }
 
 }

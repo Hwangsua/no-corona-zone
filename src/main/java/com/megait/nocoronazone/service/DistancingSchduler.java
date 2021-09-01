@@ -23,7 +23,7 @@ public class DistancingSchduler {
 
     private final DistancingRepository distancingRepository;
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *") //TODO - 나중에 바꾸기
 //    @Scheduled(cron = "0 * * * * *")
     public void setSocialDistancingFile() {
 

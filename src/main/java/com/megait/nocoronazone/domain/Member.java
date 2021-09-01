@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long no;

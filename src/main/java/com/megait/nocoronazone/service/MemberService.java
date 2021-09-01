@@ -40,20 +40,41 @@ public class MemberService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 //    @PostConstruct
-    @Profile("local")
+//    @Profile("local")
     public void createNewMember(){
 
         Member member = Member.builder()
                 .email("admin@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("하하")
+                .nickname("admin01")
                 .authType(AuthType.GENERAL)
                 .build();
 
         memberRepository.save(member);
 
+        member = Member.builder()
+                .email("test@test.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("test02")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+        member = Member.builder()
+                .email("qwe@qwe.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("qwe03")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
     }
+
+
 
     public Member processNewUser(SignUpForm signUpForm){
 
