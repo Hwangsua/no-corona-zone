@@ -72,27 +72,6 @@ public class VaccineXml {
         return 0;
     }
 
-//    @PostConstruct
-    public void aa(){
-        try {
-            String url = "https://kosis.kr/openapi/statisticsData.do?method=getList&apiKey=NjM5ZGVmMDJmOWFmYzBmYTFjNmM4OTg0NzhjZDhmMDY=&format=sdmx&jsonVD=Y&userStatsId=cmlh21/101/DT_1B040A3/2/1/20210826035602&type=Generic&prdSe=M&newEstPrdCnt=1&version=v2_1";
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
-            Document doc = builder.parse(url);
-
-            doc.getDocumentElement().normalize();
-
-
-            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-
-            NodeList list = doc.getElementsByTagName("generic:Series");
-            System.out.println("list.length : " + list.getLength());
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
 
     public List<String> getCityPopulation() {
         try{

@@ -96,7 +96,7 @@
                     <div class="mention-bottom">
                         <div class="mention-info">
                             <div class="profile-img">
-                                <svg data-jdenticon-value="user" th:text="${mention.member.nickname}"
+                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
                                      width="60" height="60" class="rounded border bg-light"></svg>
                             </div>
                             <div class="content" style="height: auto" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">내용</div>

@@ -1,8 +1,12 @@
+.content {
+    height: 500px;
+}
 .home {
     margin-top: 70px;
 }
 .home-left {
     display: block;
+    z-index: 10;
 }
 .map-collect {
     display: flex;
@@ -12,11 +16,12 @@
     font-size: 3.5vw;
 }
 .map-collect-item {
-    height: 25px;
-    width: 60px;
+    height: 28px;
+    width: 65px;
     margin-left: 5px;
     line-height: 25px;
     text-align: center;
+    border: 1px solid lightgray;
     border-radius: 5px;
 }
 .infection-info {
@@ -34,16 +39,26 @@
     margin-top: 6px;
     font-weight: bold;
 }
+.show-city-distancing p {
+    margin: 5px 0;
+    font-size: 1vw;
+}
 .home-map {
-    position: relative;
+    display: flex;
+    flex-direction: column;
     max-width: 100%;
+}
+.show-city-distancing {
+    display: none;
 }
 .home-map svg {
     display: block;
-    position: absolute;
-    max-height: 800px;
+    max-height: 500px;
     max-width: 100%;
-    margin-top: -150px;
+    margin-top: 0;
+    margin-left: 20px;
+    width: 100%;
+    height: 100%;
 }
 .land {
     fill-opacity: 1;
@@ -58,64 +73,21 @@
 .home-right {
     display: none;
 }
-.news-slide-container{
-    position: relative;
-    margin: auto;
-}
-.prev, .next{
-    cursor:pointer;
+.map-standard {
     position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-.next{
-    right: 0;
-}
-.text{
-    font-size: 15px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
+    height: 10px;
     width: 100%;
+    margin-top: 450px;
     text-align: center;
-}
-.dot{
-    cursor:pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: backgroundcolor 0.6s ease;
-}
-.active, .dot:hover{
-    background-color: #717171;
-}
-.fade{
-    -webkit-animation-name: fade;
-    -webkit-animation-duration: 1.5s;
-    animation-name: fade;
-    animation-duration: 1.5s;
-}
-@-webkit-keyframes fade {
-    from{opacity: .4}
-    to{opacity: 1}
-}
-@keyframes fade {
-    from{opacity: .4}
-    to{opacity: 1}
+    color: gray;
+    font-size: 0.9rem;
+    z-index: 5;
 }
 /*********************************************************************/
 @media (min-width: 940px) {
+    .content {
+        height: 650px;
+    }
     .home {
         display: flex;
         justify-content: center;
@@ -191,7 +163,11 @@
         height: 30px;
 
     }
+    .home-map {
+        width: 650px;
+    }
     .show-city-distancing {
+        display: block;
         height: 50px;
         width: 80px;
         margin-top: 30px;
@@ -204,16 +180,15 @@
     .show-city-distancing p {
         margin: 5px 0;
         font-weight: bold;
-    }
-    .home-map {
-        width: 650px;
+        font-size: 1rem;
     }
     .home-map svg {
         display: block;
-        max-height: 800px;
+        max-height: 700px;
         max-width: 100%;
-        margin-left: 100px;
-        margin-top: -230px;
+        margin-top: -70px;
+        margin-left: 20px;
+        height: 100%;
     }
     .land {
         fill-opacity: 1;
@@ -225,22 +200,44 @@
         cursor: pointer;
         fill: lightgray;
     }
+    .distancing-chart {
+        display: none;
+    }
     .home-right {
         display: block;
         width: 250px;
-
+    }
+    .today-news{
+        width: 250px;
+        text-align: center;
+        font-weight: bold;
+        display: inline-block;
+    }
+    .video-img{
+        width: 250px;
+        height: 150px;
+    }
+    .map-standard {
+        height: 10px;
+        width: auto;
+        margin-top: 700px;
+        margin-left: 265px;
+        text-align: center;
+        color: gray;
+        font-size: 0.9rem;
+        z-index: 5;
     }
 }
 
 
 /*******************************************************/
 .chat {
-    width: 90%;
+    width: 320px;
+    text-align: center;
 }
 .hidden {
     display: none;
 }
-
 .form-control {
     width: 100%;
     min-height: 38px;
@@ -294,14 +291,16 @@ button.accent {
 
 #username-page {
     text-align: center;
+    width: 250px;
 }
 
 .username-page-container {
     max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #fff;
     margin-top: 30px;
+    width: 250px;
+    /*margin-right: auto;*/
+    background-color: #fff;
+    /*margin-top: 30px;*/
     height: calc(100% - 60px);
     max-height: 600px;
     position: relative;
@@ -311,10 +310,9 @@ button.accent {
 .username-page-container .username-submit {
     margin-top: 10px;
 }
-
-
 #chat-page {
     position: relative;
+    width: 250px;
     height: 100%;
 }
 
@@ -322,6 +320,7 @@ button.accent {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    width: 250px;
     background-color: #fff;
     margin-top: 30px;
     height: calc(100% - 60px);
@@ -338,11 +337,6 @@ button.accent {
     padding: 0 20px 0px 20px;
     height: calc(100% - 150px);
 }
-
-#chat-page #messageForm {
-    padding: 20px;
-}
-
 #chat-page ul li {
     line-height: 1.5rem;
     padding: 10px 20px;
@@ -391,7 +385,11 @@ button.accent {
     height: 38px;
     margin-left: 5px;
 }
-
+#messageArea{
+    width: 250px;
+    height: 257px;
+    overflow: auto;
+}
 .chat-header {
     text-align: center;
     padding: 5px;
@@ -399,8 +397,9 @@ button.accent {
 }
 
 .chat-header h2 {
-    margin: 0;
-    font-weight: 100;
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .connecting {

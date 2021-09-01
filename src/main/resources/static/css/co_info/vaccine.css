@@ -82,7 +82,7 @@
     position: absolute;
     top: 150px;
     margin-top: 90px;
-    margin-left: 80px;
+    margin-left: 40px;
 }
 .land {
     fill-opacity: 1;
@@ -90,8 +90,13 @@
     stroke-opacity: 1;
     stroke-width:0.5;
 }
-.vaccine-article {
-    margin-top: 500px;
+.vaccine-standard{
+    height: 10px;
+    margin-top: 510px;
+    text-align: center;
+    color: gray;
+    font-size: 0.9rem;
+    z-index: 5;
 }
 .vaccine-right {
     display: flex;
@@ -216,6 +221,14 @@
         stroke:white;
         stroke-opacity: 1;
         stroke-width:0.5;
+    }
+    .vaccine-standard{
+        height: 10px;
+        margin-top: 510px;
+        text-align: center;
+        color: gray;
+        font-size: 0.9rem;
+        z-index: 5;
     }
     .vaccine-right {
         display: flex;
