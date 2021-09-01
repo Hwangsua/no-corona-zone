@@ -9,7 +9,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣기&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
     <script>
         $(document).ready(function () {
@@ -48,7 +48,7 @@
                         <div class="mention-write-submit">
                             <div class="mention-location">
                                 <button type="button" id="location-btn">위치</button>
-                                <input type="hidden" th:field="*{location}" class="search-text" name="location-name" id ="location-name">
+                                <input type="text" th:field="*{location}" class="search-text" name="location-name" id ="location-name" readonly>
                                 <input type="hidden" th:field="*{latitude}" name="location-latitude" id ="location-latitude">
                                 <input type="hidden" th:field="*{longitude}" name="location-longitude" id ="location-longitude">
                             </div>
@@ -149,6 +149,7 @@
             let selectedPlaceLatitude = null;
             let selectedPlaceLongitude = null;
             let selectedPlaceName = null;
+
             // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
             let infowindow = new kakao.maps.InfoWindow({zIndex: 1});
             let mapContainer = document.getElementById('map'), // 지도를 표시할 div

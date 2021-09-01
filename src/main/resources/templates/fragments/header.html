@@ -36,6 +36,10 @@
                 <img onclick="location.href='/'" src="img/ncz_logo.png" alt="" class="icon-home">
             </div>
             <!-- 우측 메뉴 (데스크탑) -->
+            <div class="mobile-nav-users openbtn" onclick="openNavRight()">
+                <a>
+                    <img th:src="@{/img/social-icon.png}" alt="" class="icon-social"></a>
+            </div>
             <div class="global-nav-users">
                 <a th:href="@{/timeline_follow}" class="global-nav-item">CO-SNS</a>
                 <a th:href="@{/signup}" class="global-nav-item" sec:authorize="!isAuthenticated()">회원가입</a>

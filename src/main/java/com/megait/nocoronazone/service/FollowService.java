@@ -29,7 +29,7 @@ public class FollowService {
         if(memberFollow.isEmpty()){
             Follow follow = new Follow();
             follow.setWho(member);
-            //followRepository.save(follow)
+            followRepository.save(follow); //TODO - 수정해야함.
             return follow;
         }
         return memberFollow.get();
