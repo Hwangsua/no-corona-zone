@@ -8,8 +8,8 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오 api 키 넣기&libraries=services"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" async> </script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=732b7bd04a77dda331bb12e7a36dc72d&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
 
 </head>
 <body>
@@ -48,10 +48,9 @@
                                     <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
                                 <div class="location" th:text="${mention.location}">롯데월드</div>
-                                <div class="dot">·</div>
                                 <div class="upload-time" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}">20시간</div>
                             </div>
-                            <div class="content" th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!</div>
+                            <div class="write-content" th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!</div>
                         </div>
                     </div>
                 </div>
@@ -68,11 +67,11 @@
                     <div class="trend-head">
                         실시간 트렌드
                     </div>
-                    <div class="trend-rank 1">1</div>
-                    <div class="trend-rank 2">2</div>
-                    <div class="trend-rank 3">3</div>
-                    <div class="trend-rank 4">4</div>
-                    <div class="trend-rank 5">5</div>
+                    <div class="trend-rank 1">1 서울 연장</div>
+                    <div class="trend-rank 2">2 백신</div>
+                    <div class="trend-rank 3">3 거리두기</div>
+                    <div class="trend-rank 4">4 9시 이후</div>
+                    <div class="trend-rank 5">5 코로나</div>
                 </div>
             </div>
         </div>

@@ -63,7 +63,7 @@
                 </select>
             </div>
         </div>
-        <div id="article-list">
+        <div class="article-list">
             <div th:fragment="ArticleListFragment(articleList)">
                 <div th:each="article:${articleList}">
                     <div class="article" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">

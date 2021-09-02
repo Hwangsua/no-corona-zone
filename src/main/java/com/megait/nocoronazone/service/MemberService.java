@@ -40,7 +40,7 @@ public class MemberService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 //    @PostConstruct
-//    @Profile("local")
+    @Profile("local")
     public void createNewMember(){
 
         Member member = Member.builder()

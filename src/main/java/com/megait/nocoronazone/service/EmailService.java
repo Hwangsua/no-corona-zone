@@ -23,7 +23,6 @@ public class EmailService {
 
         member.generateEmailCheckToken();
 
-        //TODO - 0817 추후에 https 로 변경하기
         String url = "<html><body>" +
                 "<p>링크 : <a href=\"https://localhost:8443/email_check_token?token=" +
                 member.getEmailCheckToken() + "&email=" + member.getEmail() +

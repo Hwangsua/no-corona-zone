@@ -58,48 +58,9 @@
     cursor: pointer;
     fill: lightgray;
 }
-/*.home-right {*/
-/*    display: none;*/
-/*}*/
-/*.today-news{*/
-/*    width: 225px;*/
-/*    text-align: center;*/
-/*    font-weight: bold;*/
-/*    display: inline-block;*/
-/*    margin-left: 10px;*/
-/*}*/
-/*.news-slide{*/
-/*    display: none;*/
-/*    width: 225px;*/
-/*    height: 120px;*/
-/*    text-align: center;*/
-/*}*/
-/*.news-slide-container{*/
-/*    width: 225px;*/
-/*    position: relative;*/
-/*    margin: auto;*/
-/*}*/
-/*.text{*/
-/*    font-size: 15px;*/
-/*    padding: 8px 12px;*/
-/*    position: absolute;*/
-/*    bottom: 8px;*/
-/*    width: 100%;*/
-/*    text-align: center;*/
-/*}*/
-/*.dot{*/
-/*    cursor:pointer;*/
-/*    height: 10px;*/
-/*    width: 10px;*/
-/*    margin: 0 2px;*/
-/*    background-color: #bbb;*/
-/*    border-radius: 50%;*/
-/*    display: inline-block;*/
-/*    transition: backgroundcolor 0.6s ease;*/
-/*}*/
-/*.active, .dot:hover{*/
-/*    background-color: #717171;*/
-/*}*/
+.home-right {
+    display: none;
+}
 .video-img{
     width: 250px;
     height: 150px;
@@ -201,10 +162,10 @@
         cursor: pointer;
         fill: lightgray;
     }
-    /*.home-right {*/
-    /*    display: block;*/
-    /*    width: 250px;*/
-    /*}*/
+    .home-right {
+        display: block;
+        width: 250px;
+    }
     .today-news{
         width: 250px;
         text-align: center;
@@ -222,7 +183,7 @@
 /*******************************************************/
 .chat {
     width: 320px;
-    text-align: center;
+    /*text-align: center;*/
 }
 .hidden {
     display: none;
@@ -231,7 +192,6 @@
     width: 100%;
     min-height: 38px;
     font-size: 15px;
-    /*border: 1px solid #c8c8c8;*/
 }
 
 .form-group {
@@ -267,12 +227,10 @@ button.default {
     background-color: #e8e8e8;
     color: #333;
 }
-
-button.primary {
-    background-color: #128ff2;
+.submit-btn{
+    background-color: rgb(125, 204, 171);
     color: #fff;
 }
-
 button.accent {
     background-color: rgb(125, 204, 171);
     color: #fff;
@@ -330,7 +288,6 @@ button.accent {
     line-height: 1.5rem;
     padding: 10px 20px;
     margin: 0;
-    /*border-bottom: 1px solid #f4f4f4;*/
 }
 
 #chat-page ul li p {
@@ -340,6 +297,7 @@ button.accent {
 #chat-page .event-message {
     width: 100%;
     text-align: center;
+    margin-top: 5px;
     clear: both;
 }
 
@@ -352,6 +310,7 @@ button.accent {
 #chat-page .chat-message {
     padding-left: 10px;
     position: relative;
+    margin-top: 3px;
 }
 
 #chat-page .chat-message span {
