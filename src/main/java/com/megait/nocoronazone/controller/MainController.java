@@ -420,7 +420,7 @@ public class  MainController {
             model.addAttribute("articleList", articleService.getLocalArticleList(mainCityName, subCityName));
         } catch (IOException e) {
             e.printStackTrace();
-            // return "점검 페이지"
+            return "redirect:/";
         }
 
         return "co_info/article :: #article-list";
