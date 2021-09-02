@@ -36,6 +36,10 @@
                 <img onclick="location.href='/'" th:src="@{/img/ncz_logo.png}" alt="" class="icon-home">
             </div>
             <!-- 우측 메뉴 (데스크탑) -->
+            <div class="mobile-nav-users openbtn" onclick="openNavRight()">
+                <a>
+                    <img th:src="@{/img/social-icon.png}" alt="" class="icon-social"></a>
+            </div>
             <div class="global-nav-users">
                 <a sec:authorize="!isAuthenticated()" class="global-nav-item" style="cursor:pointer;"
                 onclick="document.getElementById('modal').style.display='block'">CO-SNS</a>

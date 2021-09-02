@@ -4,6 +4,7 @@ import com.megait.nocoronazone.domain.Follow;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.FollowInfoForm;
 import com.megait.nocoronazone.repository.FollowRepository;
+import com.megait.nocoronazone.repository.MemberRepository;
 import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,15 @@ import java.util.stream.Stream;
 public class FollowService {
 
     private final FollowRepository followRepository;
-
+    private final MemberRepository memberRepository;
     public Follow getFollow(Member member){
+        member = memberRepository.findByNo(member.getNo()).orElseThrow();
         Optional<Follow> memberFollow = followRepository.findByWho(member);
 
         if(memberFollow.isEmpty()){
             Follow follow = new Follow();
             follow.setWho(member);
-            followRepository.save(follow);
-            return follow;
+            return followRepository.save(follow);
         }
         return memberFollow.get();
     }

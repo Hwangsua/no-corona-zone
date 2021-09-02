@@ -420,7 +420,7 @@ public class  MainController {
             model.addAttribute("articleList", articleService.getLocalArticleList(mainCityName, subCityName));
         } catch (IOException e) {
             e.printStackTrace();
-            // return "점검 페이지"
+            return "redirect:/";
         }
 
         return "co_info/article :: #article-list";
@@ -489,21 +489,22 @@ public class  MainController {
         return "co_sns/mention_detail";
     }
 
-
+    @ResponseBody
     @PostMapping("/remention")
-    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model) {
+    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm) {
+
+        JsonObject object = new JsonObject();
 
         try {
             Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
             reMentionService.saveReMention(member, parentMention, reMentionForm);
-            model.addAttribute("reMentionList", reMentionService.getReMentionList(parentMention));
-            model.addAttribute("member", memberService.getMember(member));
+            object.addProperty("result", true);
 
         } catch (IllegalArgumentException e) {
-            return "co_sns/timeline_follow";
+            object.addProperty("result", false);
         }
 
-        return "co_sns/mention_detail :: #re-mention-list";
+       return object.toString();
     }
 
 
