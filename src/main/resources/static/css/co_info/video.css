@@ -1,6 +1,6 @@
-/*.container{*/
-/*    margin-top: 90px;*/
-/*}*/
+.container{
+    height: auto;
+}
 h4{
     margin-bottom: 8px;
     font-size: 16px;
@@ -29,6 +29,9 @@ h4{
     top: 0px;
 }
 @media (min-width: 940px) {
+    .container{
+        height: auto;
+    }
     .box{
         display: flex;
         margin-top: 15px;

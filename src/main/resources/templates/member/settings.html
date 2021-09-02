@@ -172,11 +172,6 @@
                 </div>
                 <div class="content-list content-img">
                     <div class="content-name">
-<!--                        <div class="profile" th:if="${(member?.profileImage?.filePath)!=null}">-->
-<!--                            <img id="profile-preview" th:src="@{${member?.profileImage?.filePath}}" width="75"-->
-<!--                                 height="75"/>-->
-<!--                        </div>-->
-<!--                        <div class="profile" th:if="${(member?.profileImage)==null}">-->
                         <div class="profile">
                             <svg data-jdenticon-value="user" th:data-jdenticon-value="${member.nickname}"
                                  width="75" height="75" class="rounded border bg-light"></svg>
@@ -197,19 +192,6 @@
                         <input type="checkbox" name="certification" id="certification" th:value="true"> 예
                     </div>
                 </div>
-
-
-                <!-- 사진이 아닌, 체크박스로 수정해서 아래 코드는 삭제해도 될거같습니다 혹시 몰라 코드 남겨놓습니다.-->
-                <!--        <div class="content-list content-img">-->
-                <!--          <div class="content-name">-->
-                <!--            <div class="vaccine"></div>-->
-                <!--          </div>-->
-                <!--          <div class="content-name-value">-->
-                <!--            <label for="vaccine-img" class="upload-btn">upload</label>-->
-                <!--            <input type="file" class="form-control"-->
-                <!--                   id="vaccine-img" name="vaccine-img" style="display: none">-->
-                <!--          </div>-->
-                <!--        </div>-->
             </div>
         </form>
     </div>

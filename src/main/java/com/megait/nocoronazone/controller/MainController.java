@@ -102,12 +102,12 @@ public class  MainController {
     // ================= 메인 ============================
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
-        model.addAttribute("safetyList", safetyService.getSafetyList());
-        model.addAttribute("color", colorConfirmed);
-        for (int i = 0; i < City.length; ++i) {
-            model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
-        }
+//        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+//        model.addAttribute("safetyList", safetyService.getSafetyList());
+//        model.addAttribute("color", colorConfirmed);
+//        for (int i = 0; i < City.length; ++i) {
+//            model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
+//        }
         return "index";
     }
 

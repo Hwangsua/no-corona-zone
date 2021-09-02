@@ -241,5 +241,27 @@ a {
         text-align: center;
         font-size: 0.8rem;
     }
+    .modal{
+        width: auto;
+        height: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background-color: white;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        border: 1px solid darkgrey;
+        border-radius: 5px;
+    }
+    .closebtn{
+        display: block;
+        float: right;
+        margin-top: -8px;
+        font-size: 35px;
+        cursor: pointer;
+    }
 
 }

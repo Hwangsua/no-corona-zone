@@ -1,6 +1,9 @@
 /*.container-header{*/
 /*    display: none;*/
 /*}*/
+.content{
+    overflow: auto;
+}
 .container-mention {
     height: auto;
     display: flex;
@@ -74,6 +77,7 @@
     height: 100%;
     margin-left: 10px;
     font-size: 1rem;
+    line-height: 1.5;
 }
 .mention-info {
     height: auto;
@@ -155,6 +159,9 @@ h6{
 }
 /*********************************************************************/
 @media (min-width: 940px) {
+    .content{
+        overflow: auto;
+    }
     .container-mention {
         height: auto;
         display: flex;
@@ -246,6 +253,7 @@ h6{
         height: 100%;
         margin-bottom: 10px;
         font-size: 1rem;
+        line-height: 1.5;
     }
     .mention-info {
         height: auto;

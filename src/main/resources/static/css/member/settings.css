@@ -1,6 +1,7 @@
 .container{
     width: 90%;
     position: relative;
+    height: auto;
     top: 60px;
     margin: auto;
 }
@@ -110,8 +111,13 @@
 }
 
 @media (min-width: 940px) {
+    .content{
+        overflow: auto;
+    }
     .container{
-        margin-top: 50px;
+        position: relative;
+        top: 20px;
+        height: auto;
     }
     .content-list{
         justify-content: center;
@@ -126,15 +132,6 @@
         height: 10px;
         border-bottom: 2px solid lightgrey;
     }
-    /*.btn-style{*/
-    /*    display: block;*/
-    /*    border: none;*/
-    /*    width: 50px;*/
-    /*    height: 30px;*/
-    /*    font-weight: bold;*/
-    /*    border-radius: 3px;*/
-    /*    margin: auto 0;*/
-    /*}*/
     .settingComplete{
         display: block;
         /*float: right;*/
