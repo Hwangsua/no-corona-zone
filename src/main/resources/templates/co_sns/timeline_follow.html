@@ -9,13 +9,12 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb2c655475454d2f0e54c0e3f5e5d1ff&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=kakao api 키 넣기&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
     <script>
         $(document).ready(function () {
 
             $('.submit-btn').click(function () {
-
                 console.log($('#content').val().length);
                 if($('#content').val().replace(/\s| /gi, "").length==0){
                     alert("내용을 입력해주세요.");
@@ -64,10 +63,15 @@
                         <div class="mention-each2" th:each="mention : ${mentionFormList}">
                             <div class="mention-left">
                                 <div class="profile-img" >
-                                    <svg data-jdenticon-value="user" th:text="${mention.member.nickname}"
-                                         width="75" height="75" class="rounded border bg-light"></svg>
+                                    <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)!=null}">
+                                        <img th:src="${mention.member.profileImage.filename}" width="75"
+                                             height="75"/>
+                                    </div>
+                                    <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)==null}">
+                                        <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                             width="75" height="75" class="rounded border bg-light"></svg>
+                                    </div>
                                 </div>
-
                             </div>
                             <div class="mention-right">
                                 <div class="mention-info">

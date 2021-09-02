@@ -6,6 +6,13 @@
 <head>
     <link th:href="@{/css/index.css}" rel="stylesheet">
     <script th:src="@{/js/co_info/youtube_thumbnail.js}"></script>
+    <script>
+        $(document).ready(function () {
+            if ([[${result}]]==false) {
+                alert('이메일 인증을 해주세요!');
+            }
+        });
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -92,12 +99,12 @@
                 <h6 class="today-news">오늘의 뉴스</h6>
             <div class="news-slide-container">
             </div>
-<!--            <div style="margin-left:10px; text-align:center">-->
-<!--                <span class="dot" onclick="currentSlide(1)"></span>-->
-<!--                <span class="dot" onclick="currentSlide(2)"></span>-->
-<!--                <span class="dot" onclick="currentSlide(3)"></span>-->
-<!--                <span class="dot" onclick="currentSlide(4)"></span>-->
-<!--            </div>-->
+            <div style="margin-left:10px; text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
             </div>
             <div class="chat"></div>
             <!-- 채팅 -->

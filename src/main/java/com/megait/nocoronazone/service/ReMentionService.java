@@ -9,6 +9,7 @@ import com.megait.nocoronazone.repository.ReMentionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,11 @@ public class ReMentionService {
         System.out.println(reMentionList);
         System.out.println(reMentionList.toString());
         return reMentionList;
+    }
+
+    @Transactional
+    public void deleteReMention(Long no) {
+        reMentionRepository.deleteByNo(no);
     }
 
 

@@ -66,25 +66,6 @@ public class OAuthAttributes {
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
-//    private static OAuthAttributes ofFacebook(String userNameAttributeName, Map<String, Object> attributes) {
-//        String email = (String) attributes.get("email");
-//        if (email == null) {
-//            email = ((String) attributes.get("name")) + "@facebook.com";
-//        }
-//
-//        Map<String, Object> picture = (Map<String, Object>) attributes.get("picture");
-//        Map<String, Object> picture_data = (Map<String, Object>) picture.get("data");
-//        String picture_url = (String) picture_data.get("url");
-//
-//        return OAuthAttributes.builder()
-//                .name((String) attributes.get("name"))
-//                .email(email)
-//                .picture(picture_url)
-//                .authType(AuthType.FACEBOOK)
-//                .attributes(attributes)
-//                .nameAttributeKey(userNameAttributeName)
-//                .build();
-//    }
 
     public Member toEntity() {
         int num = (int)(Math.random()*100000);
@@ -94,7 +75,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
-                .certification(true)
+                .certification(false)
                 .introduce("{noop}")
                 .nickname(nickname)
                 .authType(authType)
