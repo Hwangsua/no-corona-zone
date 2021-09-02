@@ -6,7 +6,6 @@
       layout:decorate="~{layout/common_layout}" th:with="activeTab='vaccine', title='Vaccine'">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
     <link th:href="@{/css/co_info/vaccine.css}" rel="stylesheet">
 </head>
 <body>
@@ -52,7 +51,7 @@
             </div>
             <div class="vaccine-map">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap"
-                     width="450" height="600px" viewBox="0 100 600 790" id="svg"
+                     viewBox="-20 100 450 790" id="svg"
                      preserveAspectRatio="xMidYMid meet"xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
                     <defs>
                         <amcharts:ammap projection="mercator" leftLongitude="125.384458" topLatitude="38.612296" rightLongitude="131.873029" bottomLatitude="33.194027"></amcharts:ammap>
@@ -131,7 +130,6 @@
                             "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                         },
                         success: function (data) {
-                            console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalFirstCnt = parseInt(data.totalFirstCnt); // 1차 접종 누적
                                 percentCityFirstCnt = cityTotalFirstCnt / cityPopulationList[i]; // 1차 접종률(지역별)
@@ -236,7 +234,6 @@
                             "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                         },
                         success: function (data) {
-                            console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalFirstCnt = parseInt(data.totalFirstCnt); // 1차 접종 누적
                                 percentCityFirstCnt = cityTotalFirstCnt / cityPopulationList[i]; // 1차 접종률(지역별)
@@ -337,7 +334,6 @@
                             "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                         },
                         success: function (data) {
-                            console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalSecondCnt = parseInt(data.totalSecondCnt); // 2차 접종 누적
                                 percentCitySecondCnt = cityTotalSecondCnt / cityPopulationList[i]; // 2차 접종률(지역별)

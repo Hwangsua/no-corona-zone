@@ -185,8 +185,7 @@ public class ApiController {
     }
 
     @GetMapping("/callAPI3")// https://localhost:8443/callAPI3
-//    @Scheduled(fixedRate = 1200000) // 20분
-    @Scheduled(cron = "0 5 * * * *")
+    @Scheduled(cron = "0 5 * * * *") // 매시 05 분
     public String callAPI3() {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
