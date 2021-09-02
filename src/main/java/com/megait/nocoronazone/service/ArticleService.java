@@ -24,11 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleService {
 
-
+    // window
     private final String localCsvPath = "csv/local_article.csv";
-    private final String localBatPath = "sh/local_article.sh";
+    private final String localBatPath = "bat/local_article.bat";
     private final String vaccineCsvPath = "csv/vaccine_article.csv";
-    private final String vaccineBatPath = "sh/vaccine_article.sh";
+    private final String vaccineBatPath = "bat/vaccine_article.bat";
 
 
     public String getCommandLineArg(List<String> list){
@@ -43,6 +43,7 @@ public class ArticleService {
         try {
             new FileOutputStream(csvPath).close();
 
+            // window
             process = runtime.exec(batPath + " " +  LineArg);
 
             StringBuffer stdMsg = new StringBuffer();
@@ -62,7 +63,9 @@ public class ArticleService {
             log.error("csv file not found");
             throw new IOException(); //TODO 예러날지.. 모르겠군
         }finally {
-            process.destroy();
+            if (process != null){
+                process.destroy();
+            }
         }
 
     }
@@ -95,20 +98,16 @@ public class ArticleService {
 
     public List<Article> getLocalArticleList(String mainCityName, String subCityName) throws IOException {
 
-//        String LineArg = getCommandLineArg(Arrays.asList(mainCityName,subCityName, new File(localCsvPath).getCanonicalPath()));
-//
-//        setArticleFile(LineArg,new File(localBatPath).getCanonicalPath(),localCsvPath);
-
+        String LineArg = getCommandLineArg(Arrays.asList(mainCityName,subCityName, new File(localCsvPath).getCanonicalPath()));
+        setArticleFile(LineArg,new File(localBatPath).getCanonicalPath(),localCsvPath);
         return getArticleList(localCsvPath);
 
     }
 
     public List<Article> getVaccineArticleList() throws IOException {
 
-//        String LineArg = getCommandLineArg(Arrays.asList(new File(vaccineCsvPath).getCanonicalPath()));
-//
-//        setArticleFile(LineArg,new File(vaccineBatPath).getCanonicalPath(),vaccineCsvPath);
-
+        String LineArg = getCommandLineArg(Arrays.asList(new File(vaccineCsvPath).getCanonicalPath()));
+        setArticleFile(LineArg,new File(vaccineBatPath).getCanonicalPath(),vaccineCsvPath);
         return getArticleList(vaccineCsvPath);
 
     }
