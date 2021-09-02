@@ -8,21 +8,6 @@
   <link th:href="@{/css/co_info/video.css}" rel="stylesheet">
 </head>
 <body>
-<script>
-  let apikey = "AIzaSyCdW0U4HuSoXPmWFbRy7Z-VYLxhtvtIcWM"
-  let keyword = "코로나"
-  let maxResults = 30
-  $.ajax({
-    type : "GET",
-    dataType : "JSON",
-    url : "https://www.googleapis.com/youtube/v3/search",
-    data:{part:'snippet',key:apikey,q:keyword,maxResults,type:'video'},
-    contentType : "application/json",
-    success : function(data){
-      console.log(data);
-    }
-  });
-</script>
 <div layout:fragment="content">
 
   <div class="container">

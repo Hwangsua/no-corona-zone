@@ -1,5 +1,4 @@
-package com.megait.nocoronazone.service
-        ;
+package com.megait.nocoronazone.service;
 import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
@@ -76,7 +75,7 @@ public class OAuthAttributes {
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
                 .certification(false)
-                .introduce("{noop}")
+                .introduce("")
                 .nickname(nickname)
                 .authType(authType)
                 .emailVerified(true)

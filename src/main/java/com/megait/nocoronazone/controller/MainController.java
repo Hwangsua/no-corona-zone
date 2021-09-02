@@ -44,7 +44,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class MainController {
+public class  MainController {
 
     private final DetailSafetyService detailSafetyService;
     private final SafetyService safetyService;
@@ -57,7 +57,7 @@ public class MainController {
     private final MentionService mentionService;
     private final ReMentionService reMentionService;
     private final ProfileImageService profileImageService;
-
+    private final FollowService followService;
 
     String colorConfirmed = "235, 64, 52"; // red
     String colorDensity = "168, 118, 0"; // yellow
@@ -252,18 +252,18 @@ public class MainController {
 
     // ================= 사용자 ============================
     @ResponseBody
-    @RequestMapping("/nicknameCk")
-    public String checkNickname(@RequestParam String nickname) {
+    @GetMapping("/nicknameCk")
+    public String checkNickname(String nickname) {
 
         JsonObject object = new JsonObject();
 
         try {
             memberService.checkNickname(nickname);
-            object.addProperty("result", false);
-            object.addProperty("message", "사용 불가능한 닉네임입니다.");
-        } catch (IllegalArgumentException e) {
             object.addProperty("result", true);
             object.addProperty("message", "사용 가능한 닉네임입니다.");
+        } catch (IllegalArgumentException e) {
+            object.addProperty("result", false);
+            object.addProperty("message", "사용 불가능한 닉네임입니다.");
         }
 
         return object.toString();
@@ -290,17 +290,30 @@ public class MainController {
         return "member/signup";
     }
 
+
     @PostMapping("/signup")
-    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
+    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-            System.out.println(errors);
+            log.error("signup error");
+            model.addAttribute("signupResult", false);
+            model.addAttribute("signupResultMessage", "이메일 양식을 다시 확인해주세요.");
             return "member/signup";
         }
 
-        Member member = memberService.processNewUser(signUpForm);
+        try {
+            memberService.checkEmail(signUpForm.getEmail());
+            Member member = memberService.processNewUser(signUpForm);
+            memberService.login(member);
 
-        return "/member/email_check";
+        }catch (IllegalArgumentException e){
+            log.error("email already exists");
+            model.addAttribute("signupResult", false);
+            model.addAttribute("signupResultMessage", "이미 가입된 이메일입니다.");
+            return "member/signup";
+        }
+
+        return "member/email_check";
     }
 
     @GetMapping("/login")
@@ -319,18 +332,6 @@ public class MainController {
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "index";
-    }
-
-    @GetMapping("/profile/{nickname}")
-    public String profilePage(@PathVariable String nickname, Model model, @AuthenticationMember Member member) {
-
-        List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
-        Member profileMember = memberService.getNicknameMember(nickname);
-        model.addAttribute("profileMember", profileMember);
-        model.addAttribute("memberMentionList", memberMentionList);
-        model.addAttribute("currentMember", memberService.getMember(member));
-
-        return "co_sns/profile";
     }
 
 
@@ -432,7 +433,7 @@ public class MainController {
             model.addAttribute("articleList", articleService.getLocalArticleList(mainCityName, subCityName));
         } catch (IOException e) {
             e.printStackTrace();
-            // return "점검 페이지"
+            return "redirect:/";
         }
 
         return "co_info/article :: #article-list";
@@ -521,20 +522,22 @@ public class MainController {
         return "co_sns/mention_detail";
     }
 
+    @ResponseBody
     @PostMapping("/remention")
-    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm, Model model) {
+    public String remention(@AuthenticationMember Member member, ReMentionForm reMentionForm) {
+
+        JsonObject object = new JsonObject();
 
         try {
             Mention parentMention = mentionService.getMention(reMentionForm.getParentMentionNo());
             reMentionService.saveReMention(member, parentMention, reMentionForm);
-            model.addAttribute("reMentionList", reMentionService.getReMentionList(parentMention));
-            model.addAttribute("member", memberService.getMember(member));
+            object.addProperty("result", true);
 
         } catch (IllegalArgumentException e) {
-            return "co_sns/timeline_location";
+            object.addProperty("result", false);
         }
 
-        return "co_sns/mention_detail :: #re-mention-list";
+        return object.toString();
     }
 
 
@@ -575,5 +578,63 @@ public class MainController {
         return "redirect:/timeline_follow";
     }
 
+
+    @ResponseBody
+    @PostMapping("/follow")
+    public String follow(@AuthenticationMember Member loginMember,String whomNickname){
+
+        JsonObject object = new JsonObject();
+
+        Member whomMember = memberService.getNicknameMember(whomNickname);
+        followService.follow(loginMember, whomMember);
+
+        object.addProperty("result", true);
+        object.addProperty("message", "팔로우를 했습니다.");
+        return object.toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/unfollow")
+    public String unfollow(@AuthenticationMember Member loginMember,String whomNickname){
+
+        JsonObject object = new JsonObject();
+
+        Member whomMember = memberService.getNicknameMember(whomNickname);
+
+        followService.unfollow(loginMember, whomMember);
+
+        object.addProperty("result", true);
+        object.addProperty("message", "팔로우를 취소했습니다.");
+        return object.toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/delete_follower")
+    public String deleteFollower(@AuthenticationMember Member loginMember,String whoNickname){
+
+        JsonObject object = new JsonObject();
+
+        Member whoMember = memberService.getNicknameMember(whoNickname);
+
+        followService.unfollow(whoMember, loginMember);
+
+        object.addProperty("result", true);
+        object.addProperty("message", "팔로워를 삭제했습니다.");
+        return object.toString();
+    }
+
+
+    @GetMapping("/profile/{nickname}")
+    public String profilePage(@PathVariable String nickname, Model model, @AuthenticationMember Member member) {
+
+        List<Mention> memberMentionList = mentionService.getMemberMentions(nickname);
+        Member profileMember = memberService.getNicknameMember(nickname);
+        model.addAttribute("profileMember", profileMember);
+        model.addAttribute("memberMentionList", memberMentionList);
+        model.addAttribute("currentMember", memberService.getMember(member));
+        model.addAttribute("followInfoForm",followService.getFollowInfo(member, profileMember));
+
+        return "co_sns/profile";
+    }
 
 }

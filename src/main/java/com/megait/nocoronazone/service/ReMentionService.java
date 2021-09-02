@@ -4,7 +4,6 @@ import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.domain.ReMention;
 import com.megait.nocoronazone.form.ReMentionForm;
-import com.megait.nocoronazone.repository.MentionRepository;
 import com.megait.nocoronazone.repository.ReMentionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.util.List;
 public class ReMentionService {
 
     private final ReMentionRepository reMentionRepository;
-    private final MentionRepository mentionRepository;
 
     public void saveReMention(Member member, Mention parentMention ,ReMentionForm reMentionForm){
 
@@ -49,8 +47,7 @@ public class ReMentionService {
 
             reMentionList.add(reMention);
         }
-        System.out.println(reMentionList);
-        System.out.println(reMentionList.toString());
+
         return reMentionList;
     }
 

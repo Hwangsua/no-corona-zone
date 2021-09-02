@@ -31,13 +31,20 @@
                     url : '/remention',
                     type : 'POST',
                     data : $('#re-mention-form').serialize(),
+                    dataType: 'json',
                     beforeSend: function (xhr){
                         xhr.setRequestHeader(header, token);
                     },
-                }).done(function (fragment) {
-
-                    $("#re-mention-list").replaceWith(fragment);
-                    document.getElementById("content").value= null;
+                    success:function (data){
+                        if(data.result){
+                            window.location.reload();
+                        }else{
+                            window.location.href = '../';
+                        }
+                    },
+                    error:function (){
+                        console.log(this.error);
+                    }
                 });
             });
         });
@@ -84,7 +91,6 @@
                                     <span class="nickname" th:text="${mention.member.nickname}"></span>
                                 </a>
                             </div>
-                            <div class="dot">|</div>
                             <div class="vaccine" th:if="${mention.member.certification} == true">
                                 <img src="img/vaccine.png" alt="" class="vaccine">
                             </div>
@@ -160,11 +166,11 @@
                     <div class="trend-head">
                         실시간 트렌드
                     </div>
-                    <div class="trend-rank 1">1</div>
-                    <div class="trend-rank 2">2</div>
-                    <div class="trend-rank 3">3</div>
-                    <div class="trend-rank 4">4</div>
-                    <div class="trend-rank 5">5</div>
+                    <div class="trend-rank 1">1 서울 연장</div>
+                    <div class="trend-rank 2">2 백신</div>
+                    <div class="trend-rank 3">3 거리두기</div>
+                    <div class="trend-rank 4">4 9시 이후</div>
+                    <div class="trend-rank 5">5 코로나</div>
                 </div>
             </div>
         </div>
