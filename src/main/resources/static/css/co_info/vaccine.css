@@ -1,5 +1,7 @@
 .vaccine-main {
     margin-top: 70px;
+    display: table-row;
+
 }
 .vaccine-left {
     display: flex;
@@ -262,8 +264,5 @@
     .news-content-headline {
         font-size: 1.2rem;
         font-weight: bold;
-    }
-    .news-content-source {
-
     }
 }

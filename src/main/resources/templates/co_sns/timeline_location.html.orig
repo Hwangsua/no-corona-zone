@@ -8,7 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_location.css}" rel="stylesheet">
+<<<<<<< HEAD
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=732b7bd04a77dda331bb12e7a36dc72d&libraries=services"></script>
+=======
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=kakao api 키 넣기&libraries=services"></script>
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
 
 </head>

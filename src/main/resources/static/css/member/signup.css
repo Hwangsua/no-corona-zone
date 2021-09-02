@@ -4,6 +4,7 @@
 }
 .signup-title{
     font-size: 20px;
+    font-weight: bold;
     margin-top: 20px;
     padding-top: 10px;
 }
@@ -79,9 +80,6 @@
     font-size: 12px;
     background-color: rgb(125, 204, 171);
 }
-.signup-title{
-    font-size: 20px;
-}
 .privacy-contents{
     border: 1px solid lightgray;
     width:280px;
@@ -110,9 +108,3 @@
     border: 1px solid lightgray;
     border-radius: 5px;
 }
-/*@media all and (max-width:479px){ !*0~479px해상도까지 보여줌*!*/
-/*    .container-header{*/
-/*        position: sticky;*/
-/*        top: 0;*/
-/*    }*/
-/*}*/

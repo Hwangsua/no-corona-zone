@@ -7,7 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
+<<<<<<< HEAD
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=732b7bd04a77dda331bb12e7a36dc72d&libraries=services"></script>
+=======
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=kakao api 키 넣기&libraries=services"></script>
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
     <script>
         $(document).ready(function () {
@@ -61,6 +65,10 @@
                         <div class="mention-each2" th:each="mention : ${mentionFormList}">
                             <div class="mention-left">
                                 <div class="profile-img" >
+<<<<<<< HEAD
+                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                         width="75" height="75" class="rounded border bg-light"></svg>
+=======
                                     <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)!=null}">
                                         <img th:src="${mention.member.profileImage.filename}" width="75"
                                              height="75"/>
@@ -69,6 +77,7 @@
                                         <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
                                              width="75" height="75" class="rounded border bg-light"></svg>
                                     </div>
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
                                 </div>
                             </div>
                             <div class="mention-right">

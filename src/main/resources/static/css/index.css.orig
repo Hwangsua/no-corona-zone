@@ -66,6 +66,7 @@
 .home-right {
     display: none;
 }
+<<<<<<< HEAD
 .map-standard {
     position: absolute;
     height: 10px;
@@ -75,9 +76,11 @@
     color: gray;
     font-size: 0.9rem;
     z-index: 5;
-.video-img {
+=======
+.video-img{
     width: 250px;
     height: 150px;
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
 }
 /*********************************************************************/
 @media (min-width: 940px) {

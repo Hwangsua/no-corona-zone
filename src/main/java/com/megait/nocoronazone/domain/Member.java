@@ -13,8 +13,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+@Table
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long no;
@@ -43,12 +42,9 @@ public class Member {
     private boolean emailVerified;
 
     @Enumerated(EnumType.STRING)
-    private YellowCard yellowCard;
-
-    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "member")
     private ProfileImage profileImage;
 
     public void generateEmailCheckToken(){
@@ -100,6 +96,21 @@ public class Member {
         this.password = settingForm.getPassword();
         this.introduce = settingForm.getIntroduce();
         this.certification = settingForm.isCertification();
-        this.profileImage=settingForm.getProfileImage();
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "no=" + no +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", authType=" + authType +
+                ", nickname='" + nickname + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", certification=" + certification +
+                ", emailCheckToken='" + emailCheckToken + '\'' +
+                ", emailVerified=" + emailVerified +
+                ", memberType=" + memberType;
     }
 }

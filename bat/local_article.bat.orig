@@ -1,0 +1,9 @@
+:test-absolutePath
+@echo off
+c:
+<<<<<<< HEAD
+cd C:\Users\user-pc\Desktop\ncz_python\py
+=======
+cd C:\Users\User\Desktop\ncz_python\py
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
+python local_article.py %1 %2 %3

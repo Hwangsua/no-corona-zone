@@ -433,7 +433,11 @@ public class  MainController {
             model.addAttribute("articleList", articleService.getLocalArticleList(mainCityName, subCityName));
         } catch (IOException e) {
             e.printStackTrace();
+<<<<<<< HEAD
+
+=======
             return "redirect:/";
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
         }
 
         return "co_info/article :: #article-list";

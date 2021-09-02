@@ -71,6 +71,11 @@
                 <div class="mention-content" >
                     <div class="mention-bottom">
                         <div class="mention-info">
+<<<<<<< HEAD
+                            <div class="profile-img">
+                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                     width="60" height="60" class="rounded border bg-light"></svg>
+=======
                             <div clas="profile-img">
                                 <div class="re-mention-img" th:if="${(mention.member?.profileImage?.filename)!=null}">
                                     <img th:src="${mention.member.profileImage.filename}" width="75"
@@ -80,6 +85,7 @@
                                     <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
                                          width="75" height="75" class="rounded border bg-light"></svg>
                                 </div>
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
                             </div>
 
 

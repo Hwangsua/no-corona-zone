@@ -1,16 +1,9 @@
 package com.megait.nocoronazone.form;
 
-import com.megait.nocoronazone.domain.Member;
-import com.megait.nocoronazone.domain.ProfileImage;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.time.LocalDateTime;
+
 
 @AllArgsConstructor
 @Getter
@@ -37,11 +30,6 @@ public class SettingForm {
 
     private String introduce;
 
-    private boolean certification;
-
-    private ProfileImage profileImage;
-
-
-
+    private boolean certification = false;
 
 }

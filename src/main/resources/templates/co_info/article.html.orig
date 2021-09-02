@@ -58,7 +58,13 @@
             </div>
             <div class="form-group">
                 <select name="sub-city" id="sub-city" class="form-control" onchange="getArticleList()">
+<<<<<<< HEAD
                     <option value="" disabled selected>선택해주세요</option>
+<!--                    <option>=미선택=</option>-->
+=======
+<!--                    <option value="" disabled selected>선택해주세요</option>-->
+                    <option>=미선택=</option>
+>>>>>>> 2688790a78055d5b017c6322bcda7f2bb2c58b7b
                 </select>
             </div>
         </div>
