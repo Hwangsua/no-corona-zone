@@ -10,6 +10,11 @@
     <link th:href="@{/css/member/signup.css}" rel="stylesheet">
     <script th:inline="javascript">
         $(document).ready(function (){
+
+            if ([[${signupResult}]]==false) {
+                alert([[${signupResultMessage}]]);
+            }
+
             let nicknameRegexCheck = true;
             let nicknameDuplicateCheck = false;
 
@@ -30,6 +35,7 @@
                     $('#nicknameCheck').css('color','red');
                 }
             });
+
             $("#nicknameDuplicateCheck").click(function () {
 
                 let nickname = $('#nickname').val();
@@ -38,16 +44,17 @@
                     alert('닉네임 양식에 맞추세요.');
                     return false;
                 }
-
                 $.ajax({
                     url : '/nicknameCk',
                     type : 'GET',
                     data : {'nickname':nickname},
                     contentType : 'application/json',
                     dataType: 'json',
-                    success:function (result){
-                        alert(result.message);
-                        nicknameDuplicateCheck = true;
+                    success:function (data){
+                        alert(data.message);
+                        if (data.result){
+                            nicknameDuplicateCheck = true;
+                        }
                     },
                     error:function (){
                         alert('error');

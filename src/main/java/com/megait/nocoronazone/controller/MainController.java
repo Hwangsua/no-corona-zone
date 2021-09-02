@@ -252,18 +252,18 @@ public class  MainController {
 
     // ================= 사용자 ============================
     @ResponseBody
-    @RequestMapping("/nicknameCk")
-    public String checkNickname(@RequestParam String nickname) {
+    @GetMapping("/nicknameCk")
+    public String checkNickname(String nickname) {
 
         JsonObject object = new JsonObject();
 
         try {
             memberService.checkNickname(nickname);
-            object.addProperty("result", false);
-            object.addProperty("message", "사용 불가능한 닉네임입니다.");
-        } catch (IllegalArgumentException e) {
             object.addProperty("result", true);
             object.addProperty("message", "사용 가능한 닉네임입니다.");
+        } catch (IllegalArgumentException e) {
+            object.addProperty("result", false);
+            object.addProperty("message", "사용 불가능한 닉네임입니다.");
         }
 
         return object.toString();
@@ -290,19 +290,30 @@ public class  MainController {
         return "member/signup";
     }
 
+
     @PostMapping("/signup")
-    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
+    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-            System.out.println(errors);
+            log.error("signup error");
+            model.addAttribute("signupResult", false);
+            model.addAttribute("signupResultMessage", "이메일 양식을 다시 확인해주세요.");
             return "member/signup";
         }
 
-        Member member = memberService.processNewUser(signUpForm);
+        try {
+            memberService.checkEmail(signUpForm.getEmail());
+            Member member = memberService.processNewUser(signUpForm);
+            memberService.login(member);
 
-        memberService.login(member);
+        }catch (IllegalArgumentException e){
+            log.error("email already exists");
+            model.addAttribute("signupResult", false);
+            model.addAttribute("signupResultMessage", "이미 가입된 이메일입니다.");
+            return "member/signup";
+        }
 
-        return "/member/email_check";
+        return "member/email_check";
     }
 
     @GetMapping("/login")
@@ -504,7 +515,7 @@ public class  MainController {
             object.addProperty("result", false);
         }
 
-       return object.toString();
+        return object.toString();
     }
 
 

@@ -105,12 +105,19 @@ public class MemberService implements UserDetailsService {
 
 
     public void checkNickname(String nickname) {
-
         Optional<Member> member = memberRepository.findByNickname(nickname);
-        if(member.isEmpty()){
-            throw new IllegalArgumentException("available nickname");
+        if(!member.isEmpty()){
+            throw new IllegalArgumentException("nickname already exists");
         }
     }
+
+    public void checkEmail(String email){
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if(!member.isEmpty()){
+            throw new IllegalArgumentException("email already exists");
+        }
+    }
+
 
     @Transactional
     public void checkEmailToken(String token, String email) {
