@@ -23,14 +23,11 @@ import java.util.List;
 public class DistancingSchduler {
 
     private final DistancingRepository distancingRepository;
+    private final String distancingCsvPath = new String("./social_distancing.csv".getBytes(),StandardCharsets.UTF_8);
+    private final String distancingBatPath = new String("./social_distancing.sh".getBytes(),StandardCharsets.UTF_8);
 
-    @Scheduled(cron = "0 0 0 * * *") //TODO - 나중에 바꾸기
-//    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void setSocialDistancingFile() {
-
-        // window
-        String socialCsvPath = "csv/social_distancing.csv";
-        String socialBatPath = "bat/social_distancing.bat";
 
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
@@ -38,12 +35,12 @@ public class DistancingSchduler {
 
         try {
 
-            new FileOutputStream(socialCsvPath).close();
+            new FileOutputStream(distancingCsvPath).close();
 
-            String batPath = new File(socialBatPath).getCanonicalPath();
+            String batPath = new File(distancingBatPath).getCanonicalPath();
 
-            // window
-            process = runtime.exec(batPath + " " +   new File(socialCsvPath).getCanonicalPath());
+            String[] cmd = {"/bin/sh", "-c", "sh" +" "+ batPath + " " +  new File(distancingCsvPath).getCanonicalPath()};
+            process = runtime.exec(cmd);
 
             StringBuffer stdMsg = new StringBuffer();
 
@@ -59,7 +56,7 @@ public class DistancingSchduler {
             process.destroy();
 
 
-            stringList = Files.readAllLines(Path.of(socialCsvPath), StandardCharsets.UTF_8);
+            stringList = Files.readAllLines(Path.of(distancingCsvPath), StandardCharsets.UTF_8);
 
             List<SocialDistancing> distancingList = new ArrayList<>();
 

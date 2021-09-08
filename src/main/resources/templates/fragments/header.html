@@ -42,14 +42,14 @@
             </div>
             <div class="global-nav-users">
                 <a sec:authorize="!isAuthenticated()" class="global-nav-item" style="cursor:pointer;"
-                onclick="document.getElementById('modal').style.display='block'">CO-SNS</a>
+                   onclick="document.getElementById('modal').style.display='block'">CO-SNS</a>
                 <a th:href="@{/timeline_follow}" th:classappend="${activeTab == 'timeline'}?active" sec:authorize="isAuthenticated()" class="global-nav-item">CO-SNS</a>
                 <a th:href="@{/signup}" class="global-nav-item" sec:authorize="!isAuthenticated()">회원가입</a>
                 <a th:href="@{/login}" class="global-nav-item" th:classappend="${activeTab == 'login'} ? active" sec:authorize="!isAuthenticated()">로그인</a>
-                <a class="nav-link" th:classappend="${activeTab == 'settings'} ? active"
-                   sec:authorize="isAuthenticated()" th:href="@{/settings}" sec:authentication="name">내 정보</a>
-                <form class="form-inline" th:action="@{/logout}" th:method="post">
-                    <button th:action="@{/logout}" class="global-nav-item logoutBtn" th:classappend="${activeTab == 'logout'} ? active" sec:authorize="isAuthenticated()" >로그아웃</button>
+                <a class="global-nav-item" th:classappend="${activeTab == 'settings'} ? active"
+                   sec:authorize="isAuthenticated()" th:href="@{/settings}" >내 정보</a>
+                <form class="form-inline" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
+                    <button th:action="@{/logout}" class="global-nav-item logoutBtn" th:classappend="${activeTab == 'logout'} ? active">로그아웃</button>
                 </form>
             </div>
             <!-- 우측 메뉴 (모바일) -->
@@ -72,7 +72,8 @@
     <div id="modal" class="modal" role="dialog">
         <div class="w3-modal-content">
             <div class="w3-container">
-                <span onclick="document.getElementById('modal').style.display='none'" class="closebtn">&times;</span>
+                <a th:href="@{/login}" class="closebtn">&times;</a>
+                <h4 class="cosns-ps">로그인 페이지로 이동하여 다양한 서비스를 이용해보세요.</h4>
                 <img th:src="@{/img/cosns_info.png}">
             </div>
         </div>

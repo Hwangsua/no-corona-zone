@@ -67,6 +67,7 @@
                 let email = $('#email').val();
                 let password = $('#password').val();
                 let passwordCheck = $('#passwordCheck').val();
+                let checkBox = $('#agreechk').val();
 
                 if(email == ''){
                     alert('이메일을 입력하세요');
@@ -88,10 +89,11 @@
                     return false;
                 }
 
-                if(checkBox == false){
-                    alert('약관을 읽어보시고 동의해주시기 바랍니다.');
-                    return false;
-                }
+                // if(checkBox.equals('false')){
+                //     alert('약관을 읽어보시고 동의해주시기 바랍니다.');
+                //
+                //     return false;
+                // }
 
                 $('form[name=signup]').submit();
 
@@ -166,7 +168,7 @@
                     ⑥ No-Corona-Zone은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.
                 </div>
                 <div class="signup-form2">
-                    <div class="agree-box"> <input id="agreechk" type="checkbox" th:field="*{agreeTermsOfService}" th:value="true">[필수] 약관에 동의합니다.</div>
+                    <div class="agree-box"> <input id="agreechk" type="checkbox" th:field="*{agreeTermsOfService}" th:value="false">[필수] 약관에 동의합니다.</div>
                     <button type="submit" class="signup-complete">회원가입 완료</button>
                 </div>
             </form>

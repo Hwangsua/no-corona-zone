@@ -58,12 +58,12 @@
             </div>
             <div class="form-group">
                 <select name="sub-city" id="sub-city" class="form-control" onchange="getArticleList()">
-<!--                    <option value="" disabled selected>선택해주세요</option>-->
+                    <!--                    <option value="" disabled selected>선택해주세요</option>-->
                     <option>=미선택=</option>
                 </select>
             </div>
         </div>
-        <div class="article-list">
+        <div id="article-list">
             <div th:fragment="ArticleListFragment(articleList)">
                 <div th:each="article:${articleList}">
                     <div class="article" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">

@@ -40,14 +40,14 @@ public class MemberService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 //    @PostConstruct
-    @Profile("local")
+//    @Profile("local")
     public void createNewMember(){
 
         Member member = Member.builder()
                 .email("admin@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("admin01")
+                .nickname("9sua9")
                 .authType(AuthType.GENERAL)
                 .build();
 
@@ -57,7 +57,7 @@ public class MemberService implements UserDetailsService {
                 .email("test@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("test02")
+                .nickname("shienka")
                 .authType(AuthType.GENERAL)
                 .build();
 
@@ -67,7 +67,27 @@ public class MemberService implements UserDetailsService {
                 .email("qwe@qwe.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("qwe03")
+                .nickname("기며녕")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+        member = Member.builder()
+                .email("qwe@qwe22.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("하팀장")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+        member = Member.builder()
+                .email("qwe@qwe52.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("완린이")
                 .authType(AuthType.GENERAL)
                 .build();
 
