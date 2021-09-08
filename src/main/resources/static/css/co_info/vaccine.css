@@ -47,8 +47,8 @@
     display: flex;
     justify-content: space-between;
     height: 60px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
     z-index: 1;
     font-size: 1.1rem;
     text-align: center;
@@ -82,9 +82,16 @@
 }
 .vaccine-map {
     position: absolute;
-    top: 150px;
-    margin-top: 90px;
-    margin-left: 80px;
+    max-width: 100%;
+}
+.vaccine-map svg {
+    display: block;
+    max-height: 500px;
+    max-width: 100%;
+    margin-top: 180px;
+    margin-left: 20px;
+    width: 100%;
+    height: 100%;
 }
 .land {
     fill-opacity: 1;
@@ -92,8 +99,13 @@
     stroke-opacity: 1;
     stroke-width:0.5;
 }
-.vaccine-article {
-    margin-top: 500px;
+.vaccine-standard{
+    height: 10px;
+    margin-top: 450px;
+    text-align: center;
+    color: gray;
+    font-size: 0.9rem;
+    z-index: 5;
 }
 .vaccine-right {
     display: flex;
@@ -125,7 +137,7 @@
     .vaccine-main {
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 10px;
     }
     .vaccine-left {
         display: flex;
@@ -209,15 +221,28 @@
     }
     .vaccine-map {
         position: absolute;
-        top: 150px;
-        margin-top: 90px;
-        margin-left: 80px;
+        margin-left: 50px;
+    }
+    .vaccine-map svg {
+        display: block;
+        max-height: 700px;
+        max-width: 100%;
+        margin-left: 20px;
+        height: 100%;
     }
     .land {
         fill-opacity: 1;
         stroke:white;
         stroke-opacity: 1;
         stroke-width:0.5;
+    }
+    .vaccine-standard{
+        height: 10px;
+        margin-top: 510px;
+        text-align: center;
+        color: gray;
+        font-size: 0.9rem;
+        z-index: 5;
     }
     .vaccine-right {
         display: flex;

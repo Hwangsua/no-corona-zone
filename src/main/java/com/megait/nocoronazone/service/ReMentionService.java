@@ -4,11 +4,11 @@ import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.domain.ReMention;
 import com.megait.nocoronazone.form.ReMentionForm;
-import com.megait.nocoronazone.repository.MentionRepository;
 import com.megait.nocoronazone.repository.ReMentionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +49,11 @@ public class ReMentionService {
         }
 
         return reMentionList;
+    }
+
+    @Transactional
+    public void deleteReMention(Long no) {
+        reMentionRepository.deleteByNo(no);
     }
 
 

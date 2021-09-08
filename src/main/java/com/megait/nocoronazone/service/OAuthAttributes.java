@@ -1,5 +1,4 @@
-package com.megait.nocoronazone.service
-        ;
+package com.megait.nocoronazone.service;
 import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
@@ -66,6 +65,7 @@ public class OAuthAttributes {
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
+
     public Member toEntity() {
         int num = (int)(Math.random()*100000);
         String nickname = Integer.toString(num);
@@ -74,7 +74,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
-                .certification(true)
+                .certification(false)
                 .introduce("")
                 .nickname(nickname)
                 .authType(authType)

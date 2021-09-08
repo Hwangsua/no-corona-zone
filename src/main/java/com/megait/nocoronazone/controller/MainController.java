@@ -102,12 +102,12 @@ public class  MainController {
     // ================= 메인 ============================
     @RequestMapping("/")
     public String index(Model model) {
-//        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
-//        model.addAttribute("safetyList", safetyService.getSafetyList());
-//        model.addAttribute("color", colorConfirmed);
-//        for (int i = 0; i < City.length; ++i) {
-//            model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
-//        }
+        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+        model.addAttribute("safetyList", safetyService.getSafetyList());
+        model.addAttribute("color", colorConfirmed);
+        for (int i = 0; i < City.length; ++i) {
+            model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
+        }
         return "index";
     }
 
@@ -331,7 +331,7 @@ public class  MainController {
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/";
+        return "index";
     }
 
 
@@ -340,6 +340,8 @@ public class  MainController {
         model.addAttribute("member", memberService.getMember(member));
         return "member/settings";
     }
+
+
     @PostMapping("/settings")
     public String updateMember(Model model,
                                @Valid SettingForm settingForm,
@@ -367,7 +369,7 @@ public class  MainController {
             }
 
             assert savedMemberImage != null;
-            jsonObject.addProperty("image", savedMemberImage.getFilePath());
+            jsonObject.addProperty("image", savedMemberImage.getFilename());
 
         }
 
@@ -442,7 +444,18 @@ public class  MainController {
 
     //타임라인(팔로우)
     @GetMapping("/timeline_follow")
-    public String timelineFollow(Model model) {
+    public String timelineFollow(@AuthenticationMember Member member, Model model) {
+
+        if(member==null){
+            model.addAttribute("result", false);
+            return "member/login";
+        }
+
+        if(!member.isEmailVerified()) {
+                model.addAttribute("result", false);
+                return "index";
+        }
+
         List<Mention> mentionFormList = mentionService.getMentionlist();
 
         model.addAttribute("member", memberService);
@@ -455,14 +468,16 @@ public class  MainController {
 
     //타임라인(위치)
     @GetMapping("/timeline_location")
-    public String timelineLocation(Model model) {
+    public String timelineLocation(@AuthenticationMember Member member, Model model) {
+
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
 
     }
 
     @PostMapping("/timeline_location")
-    public String searchLocation(@Valid LocationSearchForm locationSearchForm, Errors errors, Model model) {
+    public String searchLocation(@AuthenticationMember Member member, @Valid LocationSearchForm locationSearchForm, Errors errors, Model model) {
+
         System.out.println("Post");
         double lx = locationSearchForm.getLatitude();
         double ly = locationSearchForm.getLongitude();
@@ -476,10 +491,6 @@ public class  MainController {
     @PostMapping("/timeline_follow")
     public String write(@AuthenticationMember Member member, MentionForm mentionForm) {
 
-        if (member == null) {
-            return "redirect:login";
-        }
-
         mentionService.saveMention(member, mentionForm);
 
         return "redirect:timeline_follow";
@@ -487,6 +498,17 @@ public class  MainController {
 
     @GetMapping("/mention_detail/{no}")
     public String mentionDetail(@PathVariable Long no, Model model, @AuthenticationMember Member member) {
+
+        if(member==null){
+            model.addAttribute("result", false);
+            return "member/login";
+        }
+
+        if(member.isEmailVerified()==false) {
+                model.addAttribute("result", false);
+                return "index";
+        }
+
         try {
             Mention parentMention = mentionService.getMention(no);
             model.addAttribute("mention", parentMention);
@@ -520,7 +542,12 @@ public class  MainController {
 
 
     @GetMapping("/search")
-    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
+    public String search(@AuthenticationMember Member member, @RequestParam(value = "keyword") String keyword, Model model) {
+
+        if (member == null) {
+            return "login";
+        }
+
         List<Mention> mentionFormList = mentionService.searchMentions(keyword);
 
         model.addAttribute("member", memberService);
@@ -537,6 +564,15 @@ public class  MainController {
     public String delete(@PathVariable Long no, Model model) {
 
         mentionService.deleteMention(no);
+        model.addAttribute("result", true);
+
+        return "redirect:/timeline_follow";
+    }
+
+    @PostMapping("/reMention_delete/{no}")
+    public String rementionDelete(@PathVariable Long no, Model model) {
+
+        reMentionService.deleteReMention(no);
         model.addAttribute("result", true);
 
         return "redirect:/timeline_follow";

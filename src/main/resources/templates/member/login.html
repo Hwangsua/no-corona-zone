@@ -5,6 +5,14 @@
       layout:decorate="~{layout/common_layout}" th:with="activeTab='login', title='Login'">
 <head>
     <link th:href="@{/css/member/login.css}" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            if ([[${result}]]==false) {
+                alert('로그인이 필요한 서비스 입니다');
+            }
+        });
+    </script>
+
 </head>
 <body>
 <div layout:fragment="content">

@@ -57,6 +57,7 @@ function cityKindChange(e) {
 
     for (x in b) {
         var opt = document.createElement("option");
+        $("select option[value*='선택해주세요']").prop('disabled',true);
         opt.value = b[x];
         opt.innerHTML = b[x];
         target.appendChild(opt);

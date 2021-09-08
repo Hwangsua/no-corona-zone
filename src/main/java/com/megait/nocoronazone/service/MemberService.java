@@ -3,12 +3,10 @@ package com.megait.nocoronazone.service;
 import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
-import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.SettingForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.MemberRepository;
-import com.megait.nocoronazone.service.EmailService;
-import com.megait.nocoronazone.service.MemberUser;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -49,6 +47,7 @@ public class MemberService implements UserDetailsService {
                 .memberType(MemberType.ROLE_ADMIN)
                 .nickname("9sua9")
                 .authType(AuthType.GENERAL)
+                .certification(true)
                 .build();
 
         memberRepository.save(member);

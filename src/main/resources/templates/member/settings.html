@@ -10,13 +10,23 @@
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer></script>
     <script th:inline="javascript">
 
+        function toggleProfileImage(on){
+            if(on) {
+                $('#profile-preview').show();
+                $('#profile-preview-random').hide();
+            } else {
+                $('#profile-preview').hide();
+                $('#profile-preview-random').show();
+            }
+        }
+
         function uploadProfileImage() {
-            var form = $('#update-form')[0];
-            var formData = new FormData(form);
+            let form = $('#update-form')[0];
+            let formData = new FormData(form);
             formData.append("profileImg", $("#profileImg")[0].files[0]);
 
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
 
 
             $.ajax({
@@ -30,7 +40,11 @@
                 cache: false,
                 defer: false,
                 success: function (result) {
-                    $('#profile-preview').attr('src', result.image);
+                    var time 	= new Date().getTime();	// 이미지 새로고침을 위한 랜덤 값
+                    var src 	=result.image + '?time=' + time;
+
+                    $('#profile-preview').attr('src', src);
+                    toggleProfileImage(true);
                 },
                 error: function () {
                     alert('error');
@@ -109,8 +123,6 @@
 <body>
 <div layout:fragment="content">
     <div class="container">
-
-        <!-- id, enctype 값 추가했습니다 -->
         <form th:action="@{/settings}" th:object="${memberImage}" method="post" name="settings"
               enctype="multipart/form-data" id="update-form">
             <div class="settings-header">
@@ -131,22 +143,19 @@
                 </div>
                 <div class="content-list">
                     <label for="nickname" class="content-name">닉네임</label>
-                    <!-- id 추가했습니다-->
+
                     <div class="content-name-value" id="nicknameCheck" style="display: flex">
                         <input type="text" th:value="${member.nickname}" name="nickname" class="form-control"
                                id="nickname" style="width: 160px">
-
-                        <!-- id값 nickname-duplicate-check에서 nicknameDuplicateCheck으로 바꿨습니다. -->
-                        <button type="button" id="nicknameDuplicateCheck">중복확인</button>
-
                         <div class="check_font" id="nickname-check">
-
+                            <button type="button" id="nicknameDuplicateCheck">중복확인</button>
                         </div>
                     </div>
                 </div>
                 <div class="content-list">
                     <label for="password" class="content-name">비밀번호</label>
                     <div class="content-name-value">
+                        <input type="hidden" name="_password" th:value="${member.password}">
                         <input type="password" name="password" class="form-control" id="password"
                                placeholder="비밀번호를 입력하세요.">
                     </div>
@@ -154,9 +163,8 @@
                 <div class="content-list">
                     <label for="passwordCk" class="content-name">비밀번호 확인</label>
                     <div class="content-name-value">
-
-                        <!-- id값 password-ck에서 passwordCk 로 바꿨습니다. -->
-                        <input type="password" name="userPwCk" class="form-control" id="passwordCk"
+                        <input type="hidden" name="_passwordCk" th:value="${member.password}">
+                        <input type="password" name="passwordCk" class="form-control" id="passwordCk"
                                placeholder="비밀번호를 다시 입력하세요.">
                     </div>
                 </div>
@@ -173,16 +181,17 @@
                 <div class="content-list content-img">
                     <div class="content-name">
                         <div class="profile">
-                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${member.nickname}"
+                            <img id="profile-preview" th:src="@{${member?.profileImage?.filename}}" width="75"
+                                 height="75"/>
+                            <svg id="profile-preview-random" data-jdenticon-value="user" th:if="${(member?.profileImage?.filename)==null}" th:data-jdenticon-value="${member.nickname}"
                                  width="75" height="75" class="rounded border bg-light"></svg>
                         </div>
                     </div>
                     <div class="content-name-value">
                         <label for="profileImg" class="upload-btn">upload</label>
 
-                        <!-- name profileImg로 바꿨습니다-->
                         <input type="file" id="profileImg" class="form-control" accept="image/*" name="profileImg"
-                               style="display:none"/>
+                               style="display: none"/>
                     </div>
 
                 </div>
@@ -192,9 +201,21 @@
                         <input type="checkbox" name="certification" id="certification" th:value="true"> 예
                     </div>
                 </div>
+                <div class="checkbox">
+                    <input type="hidden" name="_certification" th:value="false">
+                    <input type="checkbox" name="certification" id="certification" th:value="true"> 예
+
+                </div>
             </div>
         </form>
     </div>
+    <script>
+        $(document).ready(function (){
+            var pic = "[[${member?.profileImage?.filename}]]";
+            toggleProfileImage(pic);
+        });
+
+    </script>
 </div>
 </body>
 </html>

@@ -13,7 +13,6 @@
         $(document).ready(function () {
 
             $('.submit-btn').click(function () {
-
                 console.log($('#content').val().length);
                 if($('#content').val().replace(/\s| /gi, "").length==0){
                     alert("내용을 입력해주세요.");
@@ -60,8 +59,14 @@
                         <div class="mention-each2" th:each="mention : ${mentionFormList}">
                             <div class="mention-left">
                                 <div class="profile-img" >
-                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                                         width="75" height="75" class="rounded border bg-light"></svg>
+                                    <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)!=null}">
+                                        <img th:src="${mention.member.profileImage.filename}" width="75"
+                                             height="75"/>
+                                    </div>
+                                    <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)==null}">
+                                        <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                             width="75" height="75" class="rounded border bg-light"></svg>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mention-right">

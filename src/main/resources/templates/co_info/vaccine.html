@@ -6,7 +6,6 @@
       layout:decorate="~{layout/common_layout}" th:with="activeTab='vaccine', title='Vaccine'">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
     <link th:href="@{/css/co_info/vaccine.css}" rel="stylesheet">
 </head>
 <body>
@@ -52,7 +51,7 @@
             </div>
             <div class="vaccine-map">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap"
-                     width="450" height="600px" viewBox="0 100 600 790" id="svg"
+                     viewBox="-20 100 450 790" id="svg"
                      preserveAspectRatio="xMidYMid meet"xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
                     <defs>
                         <amcharts:ammap projection="mercator" leftLongitude="125.384458" topLatitude="38.612296" rightLongitude="131.873029" bottomLatitude="33.194027"></amcharts:ammap>
@@ -78,6 +77,9 @@
                     </g>
                 </svg>
             </div>
+            <div class="vaccine-standard">
+                <span id="vaccine-standard-date">000</span>
+            </div>
         </div>
         <script th:inline="javascript">
 
@@ -101,11 +103,16 @@
 
             /* 지역별 백신 1차, 2차 총 접종자률 */
             var cityPopulationList = [[${cityPopulationList}]];
-            var date0 = new Date();
-            var day2 = date0.getDate() - 1;
-            var month2 = date0.getMonth() + 1;
+            var yesterday = new Date(Date.now() - 86400000);
+            var day2 = yesterday.getDate();
+            day2 = day2 < 10 ? '0' + day2.toString() : day2.toString();
+            var month2 = yesterday.getMonth() + 1;
             month2 = month2 < 10 ? '0' + month2.toString() : month2.toString();
-            console.log(date0.getFullYear().toString() + '-' + month2 + '-' + day2);
+            var standard = yesterday.getFullYear().toString() + '-' + month2 + '-' + day2;
+
+            document.getElementById('vaccine-standard-date').innerText = standard + " 00:00 기준";
+            console.log(standard);
+
             var city = ["서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시", "세종특별자치시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주특별자치도"];
             var percentList1 = [];
             var percentList2 = [];
@@ -118,12 +125,11 @@
                         data: {
                             "page": 1,
                             "perPage": 1,
-                            "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
+                            "cond[baseDate::GT]": yesterday.getFullYear().toString() + '-' + month2 + '-' + day2,
                             "cond[sido::EQ]": city[i],
                             "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                         },
                         success: function (data) {
-                            console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalFirstCnt = parseInt(data.totalFirstCnt); // 1차 접종 누적
                                 percentCityFirstCnt = cityTotalFirstCnt / cityPopulationList[i]; // 1차 접종률(지역별)
@@ -223,12 +229,11 @@
                         data: {
                             "page": 1,
                             "perPage": 1,
-                            "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
+                            "cond[baseDate::GT]": yesterday.getFullYear().toString() + '-' + month2 + '-' + day2,
                             "cond[sido::EQ]": city[i],
                             "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                         },
                         success: function (data) {
-                            console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalFirstCnt = parseInt(data.totalFirstCnt); // 1차 접종 누적
                                 percentCityFirstCnt = cityTotalFirstCnt / cityPopulationList[i]; // 1차 접종률(지역별)
@@ -324,12 +329,11 @@
                         data: {
                             "page": 1,
                             "perPage": 1,
-                            "cond[baseDate::GT]": date0.getFullYear().toString() + '-' + month2 + '-' + day2,
+                            "cond[baseDate::GT]": yesterday.getFullYear().toString() + '-' + month2 + '-' + day2,
                             "cond[sido::EQ]": city[i],
                             "serviceKey": "nKJcqzBiHQ7r7I6LHjqoXvfoEEBT8y4GGZ2XY+c1kROKjTipCUgGxf0LPwadVX13QXVNAFIEU8pOYekcbuuhZw=="
                         },
                         success: function (data) {
-                            console.log(data);
                             $.each(data.data, function (ii, data) {
                                 cityTotalSecondCnt = parseInt(data.totalSecondCnt); // 2차 접종 누적
                                 percentCitySecondCnt = cityTotalSecondCnt / cityPopulationList[i]; // 2차 접종률(지역별)

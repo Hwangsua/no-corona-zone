@@ -71,10 +71,18 @@
                 <div class="mention-content" >
                     <div class="mention-bottom">
                         <div class="mention-info">
-                            <div class="profile-img">
-                                <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                                     width="60" height="60" class="rounded border bg-light"></svg>
+                            <div clas="profile-img">
+                                <div class="re-mention-img" th:if="${(mention.member?.profileImage?.filename)!=null}">
+                                    <img th:src="${mention.member.profileImage.filename}" width="75"
+                                         height="75"/>
+                                </div>
+                                <div class="re-mention-img" th:if="${(mention.member?.profileImage?.filename)==null}">
+                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                         width="75" height="75" class="rounded border bg-light"></svg>
+                                </div>
                             </div>
+
+
                             <div class="content" style="height: auto" th:utext="${#strings.replace(mention.content,mention.nlString, '&lt;br /&gt;')}">내용</div>
                         </div>
                         <div class="mention-info" style="margin-top: 8px">
@@ -112,24 +120,35 @@
                         </div>
                     </form>
                 </div>
-                <h6>댓글</h6>
-            <div id = "re-mention-list">
-                <div th:each="reMention:${reMentionList}">
-                    <div class="re-mention-info">
-                        <div class="profile-img">
-                            <svg data-jdenticon-value="user" th:data-jdenticon-value="${reMention.member.nickname}"
-                                 width="60" height="60" class="rounded border bg-light"></svg>
-                        </div>
-                        <div id="re-mention-nickname">
-                            <a th:href="@{'/profile/' + ${mention.member.nickname}}">
-                                <span th:text="${reMention.member.nickname}"></span>
-                            </a>
-                        </div>
-                        <div class="dot">|</div>
-                        <div class="upload-time">
-                            <span class="viewTime" th:text="${#temporals.format(reMention.regdate,'yyyy.MM.dd HH:mm')}"></span>
-                        </div>
-                        <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
+                <div id = "re-mention-list">
+                    <div th:each="reMention:${reMentionList}">
+                        <div class="re-mention-info">
+                            <div clas="profile-img">
+                                <div class="re-mention-img" th:if="${(reMention.member?.profileImage?.filename)!=null}">
+                                    <img th:src="${reMention.member.profileImage.filename}" width="75"
+                                         height="75"/>
+                                </div>
+                                <div class="re-mention-img" th:if="${(reMention.member?.profileImage?.filename)==null}">
+                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${reMention.member.nickname}"
+                                         width="75" height="75" class="rounded border bg-light"></svg>
+                                </div>
+                            </div>
+                            <div id="re-mention-nickname">
+                                <a th:href="@{'/profile/' + ${mention.member.nickname}}">
+                                    <span th:text="${reMention.member.nickname}"></span>
+                                </a>
+                            </div>
+                            <div class="dot">|</div>
+                            <div class="upload-time">
+                                <span class="viewTime" th:text="${#temporals.format(reMention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                            </div>
+                            <div id="re-mention-content" th:utext="${#strings.replace(reMention.content,reMention.nlString, '&lt;br /&gt;')}">내용</div>
+                            <div style="float: left;" class="mention-delete" th:if="${currentMember.no==reMention.member.no}">
+                                <form id="re-mention-delete-form" th:action="@{'/reMention_delete/' + ${reMention.no}}" method="post">
+                                    <input type="hidden" name="delete_mention" value="delete"/>
+                                    <button id="re-mention-delete-btn">삭제</button>
+                                </form>
+                            </div>
                         </div>
 
                     </div>

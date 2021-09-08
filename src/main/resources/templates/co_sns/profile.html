@@ -96,9 +96,12 @@
   <div class="container">
     <div class="myhistory">
       <div class="myhistory-header">
-        <div class="myhistory-img">
-          <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
-               width="75" height="75" class="rounded border bg-light"></svg>
+        <div class="myhistory-img" th:if="${(profileMember.profileImage?.filename)!=null}">
+            <img th:src="${profileMember.profileImage.filename}" width="75" height="75"/>
+        </div>
+        <div class="myhistory-img" th:if="${(profileMember.profileImage?.filename)==null}">
+            <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
+                 width="75" height="75" class="rounded border bg-light"></svg>
         </div>
         <div class="myhistory-info">
           <div class="info-list">
@@ -138,17 +141,23 @@
       <div class="myhistory-list">
         <div class="mention-each" th:each="mention : ${memberMentionList}">
           <div class="mention-left">
-            <div class="myhistory-img">
-              <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
-                   width="75" height="75" class="rounded border bg-light"></svg>
+            <div class="profile-img">
+              <div class="member-img" th:if="${(profileMember.profileImage.filename)!=null}">
+                <img th:src="${profileMember.profileImage.filename}" width="75"
+                     height="75"/>
+              </div>
+              <div class="member-img" th:if="${(profileMember.profileImage.filename)==null}">
+                <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
+                     width="75" height="75" class="rounded border bg-light"></svg>
+              </div>
             </div>
           </div>
           <div class="mention-right">
             <div class="profile-info">
               <div class="nickname">
-                  <a th:href="@{'/profile/' + ${profileMember.nickname}}">
-                    <span th:text="${profileMember.nickname}"></span>
-                  </a>
+                <a th:href="@{'/profile/' + ${profileMember.nickname}}">
+                  <span th:text="${profileMember.nickname}"></span>
+                </a>
               </div>
               <div class="vaccine" th:if="${profileMember.certification} == true">
                 <img th:src="@{/img/vaccine.png}" alt="" class="vaccine">
@@ -157,8 +166,7 @@
                 <span th:text="${mention.location}"></span>
               </div>
               <div class="myhistory-time">
-                                <span class="viewTime"
-                                      th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
             </div>
             <div class="myhistory-content">
@@ -170,6 +178,7 @@
         </div>
       </div>
     </div>
+
     <div class="sidebar">
       <div class="search">
         <form method="get" name="search-mention" th:action="@{search}">
