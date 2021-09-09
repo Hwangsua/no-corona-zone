@@ -29,11 +29,8 @@ public class ProfileImageService {
                                 MultipartFile multipartFile) {
         try (InputStream inputStream = multipartFile.getInputStream()) {
             Path uploadPath = Paths.get(uploadDir);
-            System.out.println("uploadPath : " + uploadPath);
-
 
             Path filePath = uploadPath.resolve(fileName);
-            System.out.println("filePath : " + filePath);
             Files.copy(inputStream, filePath , StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {
             ioe.printStackTrace();
