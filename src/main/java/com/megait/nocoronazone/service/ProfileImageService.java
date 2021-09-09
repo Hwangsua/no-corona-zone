@@ -49,7 +49,6 @@ public class ProfileImageService {
         profileImage.setFilename("/" + uploadDir + imageName);
         profileImage.setMember(member);
 
-
         saveFile(uploadDir, imageName, multipartFile);
         return profileImageRepository.save(profileImage);
     }
