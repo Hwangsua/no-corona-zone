@@ -2,6 +2,7 @@ package com.megait.nocoronazone.service;
 
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.Mention;
+import com.megait.nocoronazone.form.LocationSearchForm;
 import com.megait.nocoronazone.form.MentionForm;
 import com.megait.nocoronazone.repository.MentionRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ import java.util.*;
 public class MentionService {
 
     private final MentionRepository mentionRepository;
-
 
     public void saveMention(Member member, MentionForm mentionForm){
 
@@ -56,6 +56,7 @@ public class MentionService {
         return mentionList;
     }
 
+    @Transactional
     public Mention getMention(Long no) {
         Optional<Mention> optionalMention = mentionRepository.findById(no);
 
@@ -68,14 +69,16 @@ public class MentionService {
         return parentMention;
     }
 
-
-
-
-
-    public List<Mention> getNearLocationMentionList(double currentLatitude,double currentLongitude){
+    @Transactional
+    public List<Mention> getNearLocationMentionList(LocationSearchForm locationSearchForm){
 
         List<Mention> Mentions = mentionRepository.findAll(Sort.by(Sort.Direction.DESC,"regdate"));
         List<Mention> mentionList = new ArrayList<>();
+
+        double currentLatitude = locationSearchForm.getLatitude();
+        double currentLongitude = locationSearchForm.getLongitude();
+        int radius = locationSearchForm.getRadius();
+
 
         for(Mention m : Mentions){
 
@@ -86,7 +89,7 @@ public class MentionService {
             double mentionLatitude = m.getLatitude();
             double mentionLongitude = m.getLongitude();
 
-            if(distanceInKilometerByHaversine(currentLatitude, currentLongitude, mentionLatitude, mentionLongitude)){
+            if(distanceInKilometerByHaversine(currentLatitude, currentLongitude, mentionLatitude, mentionLongitude, radius)){
 
                 Mention mention = Mention.builder()
                         .no(m.getNo())
@@ -105,9 +108,9 @@ public class MentionService {
     }
 
 
-    public boolean distanceInKilometerByHaversine(double x1, double y1, double x2, double y2) {
+    public boolean distanceInKilometerByHaversine(double x1, double y1, double x2, double y2, int radius) {
         double distance;
-        double radius = 6371; // 지구 반지름(km)
+        double earthRadius = 6371;
         double toRadian = Math.PI / 180;
 
         double deltaLatitude = Math.abs(x1 - x2) * toRadian;
@@ -117,9 +120,9 @@ public class MentionService {
         double sinDeltaLng = Math.sin(deltaLongitude / 2);
         double squareRoot = Math.sqrt(sinDeltaLat * sinDeltaLat + Math.cos(x1 * toRadian) * Math.cos(x2 * toRadian) * sinDeltaLng * sinDeltaLng);
 
-        distance = 2 * radius * Math.asin(squareRoot);
+        distance = 2 * earthRadius * Math.asin(squareRoot);
 
-        if (0 <= distance && distance <= 1) {
+        if (0 <= distance && distance <= radius) {
             return true;
         }
 

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -20,6 +21,7 @@ public class FollowService {
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Follow getFollow(Member member){
         member = memberRepository.findByNo(member.getNo()).orElseThrow();
         Optional<Follow> memberFollow = followRepository.findByWho(member);
@@ -43,6 +45,7 @@ public class FollowService {
         return false;
     }
 
+    @Transactional
     public void follow(Member who, Member whom){
         Follow findFollow = getFollow(who);
         List<Member> followList = findFollow.getWhom();
@@ -53,6 +56,7 @@ public class FollowService {
         }
     }
 
+    @Transactional
     public void unfollow(Member who, Member whom){
 
         Follow findFollow = getFollow(who);

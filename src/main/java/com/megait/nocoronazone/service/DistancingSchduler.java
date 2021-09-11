@@ -26,7 +26,7 @@ public class DistancingSchduler {
     private final String distancingCsvPath = new String("./social_distancing.csv".getBytes(),StandardCharsets.UTF_8);
     private final String distancingBatPath = new String("./social_distancing.sh".getBytes(),StandardCharsets.UTF_8);
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 3 * * *")
     public void setSocialDistancingFile() {
 
         Runtime runtime = Runtime.getRuntime();
@@ -81,12 +81,10 @@ public class DistancingSchduler {
 
     }
 
+
     public void updateDistancing(List<SocialDistancing> distancingList){
         for (SocialDistancing s : distancingList){
             distancingRepository.updateDistancing(s.getDistancingNumber(), s.getLocalName());
         }
     }
-
-
-
 }

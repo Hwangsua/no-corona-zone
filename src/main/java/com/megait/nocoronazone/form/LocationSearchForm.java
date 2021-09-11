@@ -9,4 +9,10 @@ public class LocationSearchForm {
 
     private Double longitude;
 
+    private String location;
+
+    private int radius;
+
+
+
 }

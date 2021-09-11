@@ -468,7 +468,7 @@ public class  MainController {
 
     //타임라인(위치)
     @GetMapping("/timeline_location")
-    public String timelineLocation(@AuthenticationMember Member member, Model model) {
+    public String timelineLocation(Model model) {
 
         model.addAttribute("locationSearchForm", new LocationSearchForm());
         return "co_sns/timeline_location";
@@ -476,14 +476,9 @@ public class  MainController {
     }
 
     @PostMapping("/timeline_location")
-    public String searchLocation(@AuthenticationMember Member member, @Valid LocationSearchForm locationSearchForm, Errors errors, Model model) {
+    public String searchLocation(@Valid LocationSearchForm locationSearchForm, Model model) {
 
-        System.out.println("Post");
-        double lx = locationSearchForm.getLatitude();
-        double ly = locationSearchForm.getLongitude();
-
-        model.addAttribute("mentionList", mentionService.getNearLocationMentionList(lx, ly));
-
+        model.addAttribute("mentionList", mentionService.getNearLocationMentionList(locationSearchForm));
         return "co_sns/timeline_location";
 
     }
@@ -498,7 +493,7 @@ public class  MainController {
 
     @GetMapping("/mention_detail/{no}")
     public String mentionDetail(@PathVariable Long no, Model model, @AuthenticationMember Member member) {
-
+        
         if(member==null){
             model.addAttribute("result", false);
             return "member/login";
