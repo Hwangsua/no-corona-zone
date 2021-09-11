@@ -40,6 +40,9 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+import static com.megait.nocoronazone.domain.MemberType.ROLE_ADMIN;
+import static com.megait.nocoronazone.domain.MemberType.ROLE_USER;
+
 
 @Controller
 @Slf4j
@@ -451,7 +454,7 @@ public class  MainController {
             return "member/login";
         }
 
-        if(!member.isEmailVerified()) {
+        if(member.getMemberType()==ROLE_USER && !(member.isEmailVerified())) {
                 model.addAttribute("result", false);
                 return "index";
         }
@@ -499,7 +502,7 @@ public class  MainController {
             return "member/login";
         }
 
-        if(member.isEmailVerified()==false) {
+        if(member.getMemberType()==ROLE_USER && !(member.isEmailVerified())) {
                 model.addAttribute("result", false);
                 return "index";
         }
