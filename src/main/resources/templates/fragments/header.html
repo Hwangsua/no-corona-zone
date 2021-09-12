@@ -36,10 +36,10 @@
                 <img onclick="location.href='/'" th:src="@{/img/ncz_logo.png}" alt="" class="icon-home">
             </div>
             <!-- 우측 메뉴 (데스크탑) -->
-            <div class="mobile-nav-users openbtn" onclick="openNavRight()">
-                <a>
-                    <img th:src="@{/img/social-icon.png}" alt="" class="icon-social"></a>
-            </div>
+<!--            <div class="mobile-nav-users openbtn" onclick="openNavRight()">-->
+<!--                <a>-->
+<!--                    <img th:src="@{/img/social-icon.png}" alt="" class="icon-social"></a>-->
+<!--            </div>-->
             <div class="global-nav-users">
                 <a sec:authorize="!isAuthenticated()" class="global-nav-item" style="cursor:pointer;"
                 onclick="document.getElementById('modal').style.display='block'">CO-SNS</a>
@@ -72,8 +72,9 @@
     <div id="modal" class="modal" role="dialog">
         <div class="w3-modal-content">
             <div class="w3-container">
-                <span onclick="document.getElementById('modal').style.display='none'" class="closebtn">&times;</span>
-                <img th:src="@{/img/cosns_info.png}">
+                <a th:href="@{/login}" class="closebtn">&times;</a>
+                <h4 class="cosns-ps">로그인 페이지로 이동하여 다양한 서비스를 이용해보세요.</h4>
+                <img th:src="@{/img/cosns-info.png}">
             </div>
         </div>
     </div>

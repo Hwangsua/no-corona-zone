@@ -1,4 +1,4 @@
-let apikey = "AIzaSyCSs6Im2gt7TV1FymIdkzkYRgZ0LsiIfYg "
+let apikey = "AIzaSyBArW_oqXY3ItS2SwXTIu8qqmV-SF9y9Yk"
 let keyword = "코로나"
 let maxResults = 30
 $(document).ready(function(){

@@ -256,9 +256,15 @@ a {
     .closebtn{
         display: block;
         float: right;
-        margin-top: -8px;
         font-size: 35px;
         cursor: pointer;
+    }
+    .cosns-ps{
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 15px;
+        font-weight: bold;
     }
 
 }
