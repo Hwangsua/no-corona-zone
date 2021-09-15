@@ -193,6 +193,40 @@ public class MemberService implements UserDetailsService {
 
         return optionalMember.get();
     }
+
+    public void sendCodeEmailToMember(String email) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        emailService.sendCodeEmail(optionalMember.get());
+    }
+
+    public boolean checkAuthenticationCode(String email, String code){
+
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        code = code.replaceAll(" ","");
+
+        if (optionalMember.isEmpty()){
+            throw new IllegalArgumentException("wrong email");
+        }
+
+        if (optionalMember.get().getAuthenticationCode().equals(code)){
+            return true;
+        }
+
+        return false;
+    }
+
+    @Transactional
+    public void changePassword(String email, String password){
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+
+        if (optionalMember.isEmpty()){
+            throw new IllegalArgumentException("wrong email");
+        }
+
+        Member member = optionalMember.get();
+        member.setPassword(passwordEncoder.encode(password));
+
+    }
 }
 
 

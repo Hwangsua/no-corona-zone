@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/video","/news","/article","/local_article","/svg","/vaccine",
                         "/cosns", "/timeline_location","/mention/write","/mention_detail",
                         "/timeline_follow", "/search","/remention","/follow","/unfollow","/delete_follower",
-                        "/chat", "/mention").permitAll()
+                        "/chat", "/mention","/find_pw","/create_code","/check_code","/change_pw").permitAll()
 
 
                 .mvcMatchers("https://nip.kdca.go.kr/irgd/cov19stats.do?list=all").permitAll()

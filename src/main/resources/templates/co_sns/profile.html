@@ -96,12 +96,9 @@
   <div class="container">
     <div class="myhistory">
       <div class="myhistory-header">
-        <div class="myhistory-img" th:if="${(profileMember.profileImage?.filename)!=null}">
-            <img th:src="${profileMember.profileImage.filename}" width="75" height="75"/>
-        </div>
-        <div class="myhistory-img" th:if="${(profileMember.profileImage?.filename)==null}">
-            <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
-                 width="75" height="75" class="rounded border bg-light"></svg>
+        <div class="myhistory-img">
+          <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
+               width="75" height="75" class="rounded border bg-light"></svg>
         </div>
         <div class="myhistory-info">
           <div class="info-list">
@@ -113,7 +110,7 @@
             </div>
           </div>
           <div class="info-list">자기소개
-          <span class="introduce" th:text="${profileMember.introduce}"></span>
+            <span class="introduce" th:text="${profileMember.introduce}"></span>
           </div>
           <div class="info-list">
             <span class="info-name">팔로잉</span>
@@ -136,20 +133,14 @@
           </div>
 
         </div>
-</div>
+      </div>
       <div class="hr"></div>
       <div class="myhistory-list">
         <div class="mention-each" th:each="mention : ${memberMentionList}">
           <div class="mention-left">
-            <div class="profile-img">
-              <div class="member-img" th:if="${(profileMember.profileImage.filename)!=null}">
-                <img th:src="${profileMember.profileImage.filename}" width="75"
-                     height="75"/>
-              </div>
-              <div class="member-img" th:if="${(profileMember.profileImage.filename)==null}">
-                <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
-                     width="75" height="75" class="rounded border bg-light"></svg>
-              </div>
+            <div class="myhistory-img">
+              <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
+                   width="75" height="75" class="rounded border bg-light"></svg>
             </div>
           </div>
           <div class="mention-right">
@@ -166,7 +157,8 @@
                 <span th:text="${mention.location}"></span>
               </div>
               <div class="myhistory-time">
-                <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                                <span class="viewTime"
+                                      th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
             </div>
             <div class="myhistory-content">
@@ -178,7 +170,6 @@
         </div>
       </div>
     </div>
-
     <div class="sidebar">
       <div class="search">
         <form method="get" name="search-mention" th:action="@{search}">
@@ -192,7 +183,7 @@
               팔로잉
             </div>
             <div style="display: flex;margin-bottom: 3px" th:each="following,num:${followInfoForm.followingList}">
-<!--              <div class="following-list" th:text="${following.nickname}"><a th:href="@{'/profile/' + ${following.nickname}}">nickname</a></div>-->
+              <!--              <div class="following-list" th:text="${following.nickname}"><a th:href="@{'/profile/' + ${following.nickname}}">nickname</a></div>-->
               <div class="following-list" th:text="${following.nickname}">nickname</div>
               <button type="button" class="unfollow-btn-my-following" th:id="unfollow-btn-my-following+${num.index}" th:value="${following.nickname}">팔로잉</button>
             </div>
@@ -242,7 +233,6 @@
         </div>
       </div>
     </div>
-    </div>
   </div>
 </div>
-</body>
+</div>

@@ -38,6 +38,8 @@ public class Member {
 
     private String emailCheckToken;
 
+    private String authenticationCode;
+
     @Column(nullable = false)
     private boolean emailVerified;
 
@@ -50,6 +52,8 @@ public class Member {
     public void generateEmailCheckToken(){
         emailCheckToken = UUID.randomUUID().toString();
     }
+
+    public void generateAuthenticationCode(){authenticationCode = UUID.randomUUID().toString().replace("-","");}
 
     public boolean isValidToken(String token) {
         return emailCheckToken.equals(token);
