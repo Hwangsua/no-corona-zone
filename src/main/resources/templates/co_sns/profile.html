@@ -96,7 +96,10 @@
   <div class="container">
     <div class="myhistory">
       <div class="myhistory-header">
-        <div class="myhistory-img">
+        <div class="myhistory-img" th:if="${(profileMember.profileImage?.filename)!=null}">
+          <img th:src="${profileMember.profileImage.filename}" width="75" height="75"/>
+        </div>
+        <div class="myhistory-img" th:if="${(profileMember?.profileImage?.filename)==null}">
           <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
                width="75" height="75" class="rounded border bg-light"></svg>
         </div>
@@ -131,13 +134,17 @@
               <button type="button" class="btn-style" id="my-profile-unfollow-btn">팔로우취소</button>
             </div>
           </div>
+
         </div>
       </div>
       <div class="hr"></div>
       <div class="myhistory-list">
         <div class="mention-each" th:each="mention : ${memberMentionList}">
           <div class="mention-left">
-            <div class="myhistory-img">
+            <div class="myhistory-img" th:if="${(profileMember?.profileImage?.filename)!=null}">
+              <img th:src="${profileMember.profileImage.filename}" width="75" height="75"/>
+            </div>
+            <div class="myhistory-img" th:if="${(profileMember?.profileImage?.filename)==null}">
               <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
                    width="75" height="75" class="rounded border bg-light"></svg>
             </div>
@@ -156,19 +163,18 @@
                 <span th:text="${mention.location}"></span>
               </div>
               <div class="myhistory-time">
-                                <span class="viewTime"
-                                      th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
-          </div>
+            </div>
             <div class="myhistory-content">
-            <a th:href="@{'/mention_detail/' + ${mention.no}}">
-              <span th:text="${mention.content}"></span>
-            </a>
+              <a th:href="@{'/mention_detail/' + ${mention.no}}">
+                <span th:text="${mention.content}"></span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
     <div class="sidebar">
       <div class="search">
         <form method="get" name="search-mention" th:action="@{search}">
@@ -232,5 +238,8 @@
         </div>
       </div>
     </div>
+  </div>
 </div>
 </div>
+</body>
+</html>
