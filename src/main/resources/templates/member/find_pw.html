@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}" th:with="activeTab='login', title='Login'">
+<head>
+    <link th:href="@{/css/member/login.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script>
+
+        $(document).ready(function () {
+
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+            let emailCheck = false;
+            let codeCheck = false;
+
+            $(document).on('click', '#next-btn', function(){
+
+                let step = $("#check-step").val();
+
+                if (step == 1){
+                    createCode();
+                }else if(step == 2){
+                    checkCode();
+                }else{
+                    submitForm();
+                }
+
+
+            });
+
+            function createCode() {
+
+                let email = $('#email').val();
+
+                const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+                if (!emailRegex.test(email)|| email.replace(/\s| /gi, "").length == 0) {
+                    alert('이메일 양식에 맞게 입력해주세요.');
+                    return false;
+                }
+
+                $.ajax({
+                    url: '/create_code',
+                    type: 'POST',
+                    data: $('#find-pw-form').serialize(),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    }
+                }).done(function (fragment) {
+                    $("#find-form").replaceWith(fragment);
+                }).always(function () {
+
+                    let step = $("#check-step").val();
+
+                    if (step == 1) {
+                        $('#email-found-result').text("이메일 계정을 찾을 수 없습니다.");
+                    } else {
+                        $('#email-found-result').text("");
+                        document.getElementById('next-btn').innerText = "인증코드 확인";
+                        document.getElementById('email').readOnly = true;
+                        emailCheck = true;
+                    }
+                });
+
+            }
+
+            function checkCode() {
+
+                let code = $('#user-authentication-code').val();
+                if (code.replace(/\s| /gi, "").length == 0) {
+                    alert('인증 코드를 입력해주세요.');
+                    return false;
+                }
+
+                $.ajax({
+                    url: '/check_code',
+                    type: 'POST',
+                    data: $('#find-pw-form').serialize(),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    }
+                }).done(function (fragment) {
+                    $("#find-form").replaceWith(fragment);
+                }).always(function () {
+
+                    let step = $("#check-step").val();
+
+                    if (step == 1) {
+                        $('#email-found-result').text("이메일 계정을 찾을 수 없습니다.");
+                        document.getElementById('email').readOnly = false;
+                        emailCheck = false;
+                    } else if (step == 2) {
+                        $('#code-check-result').text("잘못된 인증코드입니다.");
+                        document.getElementById('email').readOnly = true;
+                    } else {
+                        $('#code-check-result').text("");
+                        document.getElementById('email').readOnly = true;
+                        document.getElementById('next-btn').innerText = "비밀번호 변경하기";
+                        codeCheck = true;
+                    }
+                });
+
+
+            }
+
+            function submitForm() {
+
+                let password = $('#password').val();
+                let passwordCheck = $('#passwordCheck').val();
+
+                const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[#?!@$%^&*-]).{8,}$/;
+
+                if (!passwordRegex.test(password) || password.replace(/\s| /gi, "").length == 0) {
+                    alert('비밀번호 양식에 맞게 입력해주세요.');
+                    $('#pw-regex').text("영문자,숫자,특수기호를 조합하여 최소 8자 이상을 입력하셔야 합니다.");
+                    return false;
+                }
+
+                $('#pw-regex').text("");
+
+                if(password != passwordCheck){
+                    alert('두 패스워드가 일치하지 않습니다.');
+                    return false;
+                }
+
+                if (emailCheck && codeCheck){
+                    $('form[name=find-pw-form]').submit();
+                }
+
+            }
+
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="find-pw-header">
+            <h3 class="find-pw-title">비밀번호 찾기</h3>
+        </div>
+        <div class="login-form" id="find-form">
+            <form class="find-pw-form" method="post" name="find-pw-form" id="find-pw-form" th:object="${changePwForm}" th:action="@{change_pw}">
+                <div class="form-group">
+                    <input type="text" th:field="*{email}" name="user-email" class="form-control" id="email" placeholder="아이디(이메일)을 입력하세요.">
+                </div>
+                <div id="find-step">
+                    <input type="hidden" th:value="${currentStep}" id="check-step">
+                    <div th:if="${currentStep}==1">
+                        <div id="email-found-result"></div>
+                    </div>
+                    <div th:if="${currentStep}==2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="user-authentication-code"
+                                   placeholder="인증코드를 입력하세요." th:field="*{code}">
+                            <div id="code-check-result"></div>
+                        </div>
+                    </div>
+                    <div th:if="${currentStep}==3">
+                        <div class="form-group">
+                            <input type="password" name="new-pw" class="form-control" id="password"
+                                   placeholder="새로운 비밀번호를 입력하세요." th:field="*{password}">
+                            <div id="pw-regex"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="userPwCheck" class="form-control" id="passwordCheck"
+                                   placeholder="비밀번호를 다시 입력하세요.">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="item">
+                <button type="button" class="buttons" id="next-btn">인증코드 발급</button>
+            </div>
+            <div class="item">
+                <a class="signup-btn" th:href="@{/signup}">회원가입</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

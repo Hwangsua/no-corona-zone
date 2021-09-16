@@ -40,7 +40,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
-import static com.megait.nocoronazone.domain.MemberType.ROLE_ADMIN;
 import static com.megait.nocoronazone.domain.MemberType.ROLE_USER;
 
 
@@ -331,6 +330,64 @@ public class  MainController {
         return "index";
     }
 
+    @GetMapping("/find_pw")
+    public String findPwStep1(Model model) {
+        model.addAttribute("changePwForm",new ChangePwForm());
+        model.addAttribute("currentStep", 1);
+
+        return "member/find_pw";
+    }
+
+    @PostMapping("/create_code")
+    public String findPwStep2(@Valid ChangePwForm changePwForm, Model model){
+
+        try {
+            memberService.checkEmail(changePwForm.getEmail());
+            model.addAttribute("currentStep", 1);
+        }catch (IllegalArgumentException e){
+            memberService.sendCodeEmailToMember(changePwForm.getEmail());
+            model.addAttribute("currentStep", 2);
+            model.addAttribute("changePwForm", changePwForm);
+        }
+
+        return "member/find_pw :: #find-form";
+    }
+
+    @PostMapping("/check_code")
+    public String findPwStep3(@Valid ChangePwForm changePwForm, Model model) {
+
+        boolean result;
+        try {
+            result = memberService.checkAuthenticationCode(changePwForm.getEmail(), changePwForm.getCode());
+            if (result){
+                model.addAttribute("currentStep", 3);
+                model.addAttribute("changePwForm", changePwForm);
+            }else{
+                model.addAttribute("currentStep", 2);
+            }
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            model.addAttribute("currentStep", 1);
+        }
+
+        return "member/find_pw :: #find-form";
+    }
+
+    @PostMapping("/change_pw")
+    public String changePw(@Valid ChangePwForm changePwForm,Errors errors){
+
+        if (errors.hasErrors()){
+            return "redirect:find_pw";
+        }
+
+        try {
+            memberService.changePassword(changePwForm.getEmail(),changePwForm.getPassword());
+        }catch (IllegalArgumentException e){
+            return "redirect:find_pw";
+        }
+
+        return "redirect:member/login";
+    }
 
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
