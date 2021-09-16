@@ -58,26 +58,23 @@
             </div>
             <div class="form-group">
                 <select name="sub-city" id="sub-city" class="form-control" onchange="getArticleList()">
-<!--                    <option value="" disabled selected>선택해주세요</option>-->
-                    <option>=미선택=</option>
+                    <option value="" disabled selected>선택해주세요</option>
                 </select>
             </div>
         </div>
-        <div class="article-list">
+        <div id="article-list">
             <div th:fragment="ArticleListFragment(articleList)">
                 <div th:each="article:${articleList}">
-                    <div class="article" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">
+                    <div class="article-list" th:onclick="'window.open(\''+ @{${article.articleLink}} + '\')'">
                         <div class="article-thumbnail">
                             <img class="article-thumbnail-img" th:src="${article.articleImgUrl}" alt="">
                         </div>
                         <div class="article-content">
                             <div class="article-content-headline">
-                                <span th:text="${article.articleTitle}">경기 부천 28명 신규 확진...확진자 접촉 25명</span>
+                                <span th:text="${article.articleTitle}"></span>
                             </div>
                             <div class="article-content-content">
-                    <span th:text="${article.articleContent}">
-                        경기 부천시는 7일 신종 코로나바이러스 감염증(코로나19)확진자 28명이 추가 확진 판정을 받았다고 밝혔다. 이날 확진자는 부천 3820~3847번으로 ...
-                    </span>
+                    <span th:text="${article.articleContent}"></span>
                             </div>
                             <div class="article-content-source">
                                 <img class="article-content-img" th:src="${article.pressImgUrl}" alt="">

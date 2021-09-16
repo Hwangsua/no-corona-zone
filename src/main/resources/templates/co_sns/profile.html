@@ -110,7 +110,7 @@
             </div>
           </div>
           <div class="info-list">자기소개
-          <span class="introduce" th:text="${profileMember.introduce}"></span>
+            <span class="introduce" th:text="${profileMember.introduce}"></span>
           </div>
           <div class="info-list">
             <span class="info-name">팔로잉</span>
@@ -131,9 +131,8 @@
               <button type="button" class="btn-style" id="my-profile-unfollow-btn">팔로우취소</button>
             </div>
           </div>
-
         </div>
-</div>
+      </div>
       <div class="hr"></div>
       <div class="myhistory-list">
         <div class="mention-each" th:each="mention : ${memberMentionList}">
@@ -146,9 +145,9 @@
           <div class="mention-right">
             <div class="profile-info">
               <div class="nickname">
-                  <a th:href="@{'/profile/' + ${profileMember.nickname}}">
-                    <span th:text="${profileMember.nickname}"></span>
-                  </a>
+                <a th:href="@{'/profile/' + ${profileMember.nickname}}">
+                  <span th:text="${profileMember.nickname}"></span>
+                </a>
               </div>
               <div class="vaccine" th:if="${profileMember.certification} == true">
                 <img th:src="@{/img/vaccine.png}" alt="" class="vaccine">
@@ -160,16 +159,16 @@
                                 <span class="viewTime"
                                       th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
-            </div>
+          </div>
             <div class="myhistory-content">
-              <a th:href="@{'/mention_detail/' + ${mention.no}}">
-                <span th:text="${mention.content}"></span>
-              </a>
-            </div>
+            <a th:href="@{'/mention_detail/' + ${mention.no}}">
+              <span th:text="${mention.content}"></span>
+            </a>
           </div>
         </div>
       </div>
     </div>
+  </div>
     <div class="sidebar">
       <div class="search">
         <form method="get" name="search-mention" th:action="@{search}">
@@ -183,7 +182,7 @@
               팔로잉
             </div>
             <div style="display: flex;margin-bottom: 3px" th:each="following,num:${followInfoForm.followingList}">
-<!--              <div class="following-list" th:text="${following.nickname}"><a th:href="@{'/profile/' + ${following.nickname}}">nickname</a></div>-->
+              <!--              <div class="following-list" th:text="${following.nickname}"><a th:href="@{'/profile/' + ${following.nickname}}">nickname</a></div>-->
               <div class="following-list" th:text="${following.nickname}">nickname</div>
               <button type="button" class="unfollow-btn-my-following" th:id="unfollow-btn-my-following+${num.index}" th:value="${following.nickname}">팔로잉</button>
             </div>
@@ -233,7 +232,5 @@
         </div>
       </div>
     </div>
-    </div>
-  </div>
 </div>
-</body>
+</div>

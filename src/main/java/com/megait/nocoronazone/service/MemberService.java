@@ -3,12 +3,10 @@ package com.megait.nocoronazone.service;
 import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
-import com.megait.nocoronazone.domain.Mention;
 import com.megait.nocoronazone.form.SettingForm;
 import com.megait.nocoronazone.form.SignUpForm;
 import com.megait.nocoronazone.repository.MemberRepository;
-import com.megait.nocoronazone.service.EmailService;
-import com.megait.nocoronazone.service.MemberUser;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -39,7 +37,7 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-//    @PostConstruct
+    //@PostConstruct
     @Profile("local")
     public void createNewMember(){
 
@@ -47,8 +45,9 @@ public class MemberService implements UserDetailsService {
                 .email("admin@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("admin01")
+                .nickname("9sua9")
                 .authType(AuthType.GENERAL)
+                .certification(true)
                 .build();
 
         memberRepository.save(member);
@@ -57,7 +56,7 @@ public class MemberService implements UserDetailsService {
                 .email("test@test.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("test02")
+                .nickname("shienka")
                 .authType(AuthType.GENERAL)
                 .build();
 
@@ -67,7 +66,27 @@ public class MemberService implements UserDetailsService {
                 .email("qwe@qwe.com")
                 .password(passwordEncoder.encode("qwe123"))
                 .memberType(MemberType.ROLE_ADMIN)
-                .nickname("qwe03")
+                .nickname("기며녕")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+        member = Member.builder()
+                .email("qwe@qwe22.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("하팀장")
+                .authType(AuthType.GENERAL)
+                .build();
+
+        memberRepository.save(member);
+
+        member = Member.builder()
+                .email("qwe@qwe52.com")
+                .password(passwordEncoder.encode("qwe123"))
+                .memberType(MemberType.ROLE_ADMIN)
+                .nickname("완린이")
                 .authType(AuthType.GENERAL)
                 .build();
 
@@ -105,12 +124,19 @@ public class MemberService implements UserDetailsService {
 
 
     public void checkNickname(String nickname) {
-
         Optional<Member> member = memberRepository.findByNickname(nickname);
-        if(member.isEmpty()){
-            throw new IllegalArgumentException("available nickname");
+        if(!member.isEmpty()){
+            throw new IllegalArgumentException("nickname already exists");
         }
     }
+
+    public void checkEmail(String email){
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if(!member.isEmpty()){
+            throw new IllegalArgumentException("email already exists");
+        }
+    }
+
 
     @Transactional
     public void checkEmailToken(String token, String email) {

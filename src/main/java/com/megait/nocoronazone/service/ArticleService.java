@@ -18,24 +18,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 @Service
 @Validated
 @Slf4j
 @RequiredArgsConstructor
 public class ArticleService {
 
-    // window
-    private final String localCsvPath = "csv/local_article.csv";
-    private final String localBatPath = "bat/local_article.bat";
-    private final String vaccineCsvPath = "csv/vaccine_article.csv";
-    private final String vaccineBatPath = "bat/vaccine_article.bat";
-
+    private final String localCsvPath = new String("./local_article.csv".getBytes(),StandardCharsets.UTF_8);
+    private final String localBatPath = new String("./local_article.sh".getBytes(),StandardCharsets.UTF_8);
+    private final String vaccineCsvPath = new String("./vaccine_article.csv".getBytes(),StandardCharsets.UTF_8);
+    private final String vaccineBatPath = new String("./vaccine_article.sh".getBytes(),StandardCharsets.UTF_8);
 
     public String getCommandLineArg(List<String> list){
         return String.join(" ", list);
     }
 
-    public void  setArticleFile(String LineArg, String batPath, String csvPath) throws IOException {
+    public void  setArticleFile(String lineArg, String batPath, String csvPath) throws IOException {
 
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
@@ -43,8 +42,8 @@ public class ArticleService {
         try {
             new FileOutputStream(csvPath).close();
 
-            // window
-            process = runtime.exec(batPath + " " +  LineArg);
+            String[] cmd = {"/bin/sh", "-c", "sh" +" "+ batPath + " " +  lineArg};
+            process = runtime.exec(cmd);
 
             StringBuffer stdMsg = new StringBuffer();
 
@@ -61,7 +60,6 @@ public class ArticleService {
         }catch (FileNotFoundException | InterruptedException e){
             e.printStackTrace();
             log.error("csv file not found");
-            throw new IOException(); //TODO 예러날지.. 모르겠군
         }finally {
             if (process != null){
                 process.destroy();
@@ -70,11 +68,12 @@ public class ArticleService {
 
     }
 
-    public List<Article> getArticleList(String csvPath) throws IOException {
+    public List<Article> getArticleList(String csvPath) throws IOException{
 
         List<String> stringList = Files.readAllLines(Path.of(csvPath), StandardCharsets.UTF_8);
 
         List<Article> articleList = new ArrayList<>();
+
 
         for(String s : stringList){
 
@@ -87,10 +86,10 @@ public class ArticleService {
                     .articleLink(arr[4])
                     .articleImgUrl(arr[5])
                     .build();
+
             articleList.add(article);
 
         }
-
         return articleList;
 
     }
@@ -98,16 +97,16 @@ public class ArticleService {
 
     public List<Article> getLocalArticleList(String mainCityName, String subCityName) throws IOException {
 
-        String LineArg = getCommandLineArg(Arrays.asList(mainCityName,subCityName, new File(localCsvPath).getCanonicalPath()));
-        setArticleFile(LineArg,new File(localBatPath).getCanonicalPath(),localCsvPath);
+        String lineArg = getCommandLineArg(Arrays.asList(mainCityName,subCityName, new File(localCsvPath).getCanonicalPath()));
+        setArticleFile(lineArg,new File(localBatPath).getCanonicalPath(),localCsvPath);
         return getArticleList(localCsvPath);
 
     }
 
     public List<Article> getVaccineArticleList() throws IOException {
 
-        String LineArg = getCommandLineArg(Arrays.asList(new File(vaccineCsvPath).getCanonicalPath()));
-        setArticleFile(LineArg,new File(vaccineBatPath).getCanonicalPath(),vaccineCsvPath);
+        String lineArg = getCommandLineArg(Arrays.asList(new File(vaccineCsvPath).getCanonicalPath()));
+        setArticleFile(lineArg,new File(vaccineBatPath).getCanonicalPath(),vaccineCsvPath);
         return getArticleList(vaccineCsvPath);
 
     }

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ReMentionRepository extends JpaRepository<ReMention, Long> {
     List<ReMention> findByMentionOrderByRegdateDesc(Mention mention);
+    List<ReMention> deleteByNo(Long no);
 }

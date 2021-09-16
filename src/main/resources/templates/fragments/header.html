@@ -13,7 +13,7 @@
                 <a th:href="@{/vaccine}" class="global-nav-item">백신</a>
                 <a th:href="@{/clinic}" class="global-nav-item">선별진료소</a>
                 <div class="dropdown">
-                <a class="newsDropdown" onclick="myFunction()">NEWS</a>
+                <a class="global-nav-item newsDropdown" onclick="myFunction()">NEWS</a>
                     <div class="dropdown-content" id="myDropdown">
                         <a class="dropdown-item" id="detail1" th:href="@{/article}">기사</a>
                         <a class="dropdown-item" id="detail2" th:href="@{/video}">영상</a>
@@ -42,14 +42,14 @@
 <!--            </div>-->
             <div class="global-nav-users">
                 <a sec:authorize="!isAuthenticated()" class="global-nav-item" style="cursor:pointer;"
-                onclick="document.getElementById('modal').style.display='block'">CO-SNS</a>
+                   onclick="document.getElementById('modal').style.display='block'">CO-SNS</a>
                 <a th:href="@{/timeline_follow}" th:classappend="${activeTab == 'timeline'}?active" sec:authorize="isAuthenticated()" class="global-nav-item">CO-SNS</a>
                 <a th:href="@{/signup}" class="global-nav-item" sec:authorize="!isAuthenticated()">회원가입</a>
                 <a th:href="@{/login}" class="global-nav-item" th:classappend="${activeTab == 'login'} ? active" sec:authorize="!isAuthenticated()">로그인</a>
-                <a class="nav-link" th:classappend="${activeTab == 'settings'} ? active"
-                   sec:authorize="isAuthenticated()" th:href="@{/settings}" sec:authentication="name">내 정보</a>
-                <form class="form-inline" th:action="@{/logout}" th:method="post">
-                    <button th:action="@{/logout}" class="global-nav-item logoutBtn" th:classappend="${activeTab == 'logout'} ? active" sec:authorize="isAuthenticated()" >로그아웃</button>
+                <a class="global-nav-item" th:classappend="${activeTab == 'settings'} ? active"
+                   sec:authorize="isAuthenticated()" th:href="@{/settings}" >내 정보</a>
+                <form class="form-inline" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
+                    <button th:action="@{/logout}" class="global-nav-item logoutBtn" th:classappend="${activeTab == 'logout'} ? active">로그아웃</button>
                 </form>
             </div>
             <!-- 우측 메뉴 (모바일) -->
@@ -59,7 +59,6 @@
             </div>
             <div id="mySidepanel2" class="sidepanel-right">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNavRight()">X</a>
-                <span class="menu">계정 메뉴</span>
                 <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="mobile-menu-item">로그인</a>
                 <a th:href="@{/signup}" sec:authorize="!isAuthenticated()" class="mobile-menu-item">회원가입</a>
                 <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="mobile-menu-item">로그아웃</a>

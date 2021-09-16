@@ -6,8 +6,6 @@
       layout:decorate="~{layout/common_layout}" th:with="activeTab='timeline', title='Timeline'">
 <head>
     <meta charset="UTF-8">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/co_sns/timeline_follow.css}" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=732b7bd04a77dda331bb12e7a36dc72d&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.0.1" defer> </script>
@@ -15,7 +13,6 @@
         $(document).ready(function () {
 
             $('.submit-btn').click(function () {
-
                 console.log($('#content').val().length);
                 if($('#content').val().replace(/\s| /gi, "").length==0){
                     alert("내용을 입력해주세요.");
@@ -23,8 +20,6 @@
                 }
             });
         });
-
-
     </script>
 
 </head>
@@ -64,8 +59,14 @@
                         <div class="mention-each2" th:each="mention : ${mentionFormList}">
                             <div class="mention-left">
                                 <div class="profile-img" >
-                                    <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
-                                         width="75" height="75" class="rounded border bg-light"></svg>
+                                    <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)!=null}">
+                                        <img th:src="${mention.member.profileImage.filename}" width="75"
+                                             height="75"/>
+                                    </div>
+                                    <div class="mention-img" th:if="${(mention.member?.profileImage?.filename)==null}">
+                                        <svg data-jdenticon-value="user" th:data-jdenticon-value="${mention.member.nickname}"
+                                             width="75" height="75" class="rounded border bg-light"></svg>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mention-right">
@@ -137,7 +138,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="text" class="search-text3" name="location-select" id ="location-select">
+                        <input type="text" class="search-text3" name="location-select" id ="location-select" readonly>
                         <button type="button" id="location-save-btn" data-dismiss="modal">저장</button>
                     </div>
                 </div>

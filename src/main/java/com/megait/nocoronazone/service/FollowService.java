@@ -5,17 +5,13 @@ import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.form.FollowInfoForm;
 import com.megait.nocoronazone.repository.FollowRepository;
 import com.megait.nocoronazone.repository.MemberRepository;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Service
 @Validated
@@ -24,6 +20,8 @@ public class FollowService {
 
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
+
+    @Transactional
     public Follow getFollow(Member member){
         member = memberRepository.findByNo(member.getNo()).orElseThrow();
         Optional<Follow> memberFollow = followRepository.findByWho(member);
@@ -47,6 +45,7 @@ public class FollowService {
         return false;
     }
 
+    @Transactional
     public void follow(Member who, Member whom){
         Follow findFollow = getFollow(who);
         List<Member> followList = findFollow.getWhom();
@@ -57,6 +56,7 @@ public class FollowService {
         }
     }
 
+    @Transactional
     public void unfollow(Member who, Member whom){
 
         Follow findFollow = getFollow(who);
