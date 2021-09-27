@@ -24,6 +24,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -254,7 +255,7 @@ public class  MainController {
 
     // ================= 사용자 ============================
     @ResponseBody
-    @GetMapping("/nicknameCk")
+    @GetMapping("/check_nickname")
     public String checkNickname(String nickname) {
 
         JsonObject object = new JsonObject();
@@ -511,6 +512,9 @@ public class  MainController {
             return "member/login";
         }
 
+        System.out.println(member.getMemberType());
+        System.out.println(member.isEmailVerified());
+
         if(member.getMemberType()==ROLE_USER && !(member.isEmailVerified())) {
                 model.addAttribute("result", false);
                 return "index";
@@ -559,10 +563,10 @@ public class  MainController {
             return "member/login";
         }
 
-        if(member.getMemberType()==ROLE_USER && !(member.isEmailVerified())) {
-                model.addAttribute("result", false);
-                return "index";
-        }
+//        if(member.getMemberType()==ROLE_USER && !(member.isEmailVerified())) {
+//                model.addAttribute("result", false);
+//                return "index";
+//        }
 
         try {
             Mention parentMention = mentionService.getMention(no);

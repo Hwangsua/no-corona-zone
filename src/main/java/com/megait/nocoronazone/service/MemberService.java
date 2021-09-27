@@ -1,5 +1,6 @@
 package com.megait.nocoronazone.service;
 
+import com.megait.nocoronazone.controller.AuthenticationMember;
 import com.megait.nocoronazone.domain.AuthType;
 import com.megait.nocoronazone.domain.Member;
 import com.megait.nocoronazone.domain.MemberType;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -93,8 +98,6 @@ public class MemberService implements UserDetailsService {
         memberRepository.save(member);
     }
 
-
-
     public Member processNewUser(SignUpForm signUpForm){
 
         Member member = Member.builder()
@@ -137,7 +140,6 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-
     @Transactional
     public void checkEmailToken(String token, String email) {
 
@@ -153,6 +155,11 @@ public class MemberService implements UserDetailsService {
         }
 
         member.completeSignup();
+
+        MemberUser memberUser = new MemberUser(member);
+
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(memberUser, memberUser.getMember().getPassword(), memberUser.getAuthorities()));
+
     }
 
     public void login(Member member) {
@@ -227,6 +234,8 @@ public class MemberService implements UserDetailsService {
         member.setPassword(passwordEncoder.encode(password));
 
     }
+
+
 }
 
 
