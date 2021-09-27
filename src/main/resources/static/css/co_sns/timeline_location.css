@@ -6,7 +6,6 @@
     margin : auto;
     height: auto;
     display: flex;
-
     justify-content: center;
     align-items: flex-start;
 }
@@ -17,10 +16,16 @@
 }
 .timeline-header {
     display: flex;
-    justify-content: space-between;
     height: 40px;
     position: sticky;
     top: 15px;
+}
+.timeline-collect{
+    display: none;
+}
+.mention-location{
+    margin-left: 60px;
+    margin-top: 5px;
 }
 .hr {
     border: 1px solid lightgrey;
@@ -74,9 +79,6 @@
     margin-top: 10px;
     margin-left: 15px;
 }
-.mention-location input {
-    /*border: none;*/
-}
 .mention-list {
     margin-top: 10px;
 }
@@ -88,7 +90,7 @@
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
 }
-#keyword-search{
+#keyword-search, #location-search-btn{
     display: block;
     float: right;
     border: none;
@@ -114,7 +116,7 @@
     margin-top: -3px;
 }
 .search-text{
-    ackground-color: rgb(245, 245, 245);
+    background-color: white;
     border: 1px solid rgb(245, 245, 245);
     width: 200px;
     height: 23px;
@@ -127,13 +129,22 @@
     width: 200px;
     height: 23px;
     margin-top: -3px;
+    margin-left: 5px;
+    text-align: center;
+}
+.search-text4{
+    background-color: rgb(245, 245, 245);
+    border: 1px solid rgb(245, 245, 245);
+    width: 170px;
+    height: 23px;
+    margin-top: -3px;
     text-align: center;
 }
 #location-btn{
     display: block;
     height: 30px;
     width: 40px;
-    margin-right: 3px;
+    margin-left: 5px;
     background-color: #D1B6E1;
     color: white;
     font-weight: bold;
@@ -158,6 +169,7 @@
 }
 .mention-right .write-content {
     margin-top: 5px;
+    width: auto;
 }
 /*********************************************************************/
 @media (min-width: 940px) {
@@ -176,7 +188,6 @@
     }
     .timeline-header {
         display: flex;
-        justify-content: space-between;
         height: 55px;
         position: sticky;
         top: 0px;
@@ -201,7 +212,7 @@
         display: block;
         font-weight: bold;
         margin-top: 10px;
-        margin-left: 10px;
+        margin-left: 5px;
     }
     .search-box {
         border: 1px solid lightgray;
@@ -233,11 +244,10 @@
     #location-btn {
         display: block;
         height: 26px;
-        width: 85px;
-        margin-top: 23px;
-        margin-right: 3px;
+        width: 75px;
         background-color: #D1B6E1;
         color: white;
+        margin-left: 5px;
         font-weight: bold;
         border-radius: 8px;
         border:none;
@@ -261,7 +271,7 @@
         /*margin-top: 10px;*/
     }
     .search-text{
-        background-color: rgb(245, 245, 245);
+        background-color: white;
         border: 1px solid rgb(245, 245, 245);
         width: 400px;
         height: 23px;
@@ -276,12 +286,27 @@
     .search-text3{
         background-color: rgb(245, 245, 245);
         border: 1px solid rgb(245, 245, 245);
-        width: 400px;
+        width: 200px;
         height: 23px;
         margin-top: -3px;
         text-align: center;
     }
-    #keyword-search{
+    .search-text4{
+        background-color: rgb(245, 245, 245);
+        border: 1px solid rgb(245, 245, 245);
+        width: 170px;
+        height: 23px;
+        margin-top: -1px;
+        text-align: center;
+    }
+    select{
+        padding:5px;
+        border:1px solid #999;
+        border-radius:3px;
+        height: 25px;
+        font-size: 11px;
+    }
+    #keyword-search, #location-search-btn{
         display: block;
         float: right;
         border: none;
@@ -352,8 +377,9 @@
         margin-top: 10px;
         margin-left: 15px;
     }
-    .mention-location input {
-        /*border: none;*/
+    .mention-location{
+        margin-left: 50px;
+        margin-top: 20px;
     }
     .mention-list {
         margin-top: 10px;
@@ -376,13 +402,16 @@
     }
     .mention-info {
         height: auto;
+        width: auto;
         display: flex;
     }
     .mention-info .vaccine {
         height: 20px;
         width: auto;
     }
-    .mention-right .content {
+    .mention-right .write-content {
         margin-top: 5px;
+        width: auto;
+
     }
 }

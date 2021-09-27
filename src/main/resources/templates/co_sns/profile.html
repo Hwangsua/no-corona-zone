@@ -108,7 +108,7 @@
             <div class="user-nickname">
               <span th:text="${profileMember.nickname}"></span>
             </div>
-            <div class="vaccine" th:if="${profileMember.certification} == true">
+            <div class="vaccine" th:if="${#strings.equals(profileMember.certification,'yes')}">
               <img th:src="@{/img/vaccine.png}" alt="" class="vaccine">
             </div>
           </div>
@@ -156,14 +156,14 @@
                   <span th:text="${profileMember.nickname}"></span>
                 </a>
               </div>
-              <div class="vaccine" th:if="${profileMember.certification} == true">
+              <div class="vaccine" th:if="${#strings.equals(profileMember.certification,'yes')}">
                 <img th:src="@{/img/vaccine.png}" alt="" class="vaccine">
               </div>
               <div class="location">
                 <span th:text="${mention.location}"></span>
               </div>
               <div class="myhistory-time">
-                  <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
             </div>
             <div class="myhistory-content">

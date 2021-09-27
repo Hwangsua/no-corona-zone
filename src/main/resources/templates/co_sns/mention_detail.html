@@ -91,7 +91,7 @@
                                     <span class="nickname" th:text="${mention.member.nickname}"></span>
                                 </a>
                             </div>
-                            <div class="vaccine" th:if="${mention.member.certification} == true">
+                            <div class="vaccine" th:if="${#strings.equals(mention.member.certification,'yes')}">
                                 <img src="img/vaccine.png" alt="" class="vaccine">
                             </div>
                             <div class="dot">|</div>
@@ -138,7 +138,7 @@
                                     <span th:text="${reMention.member.nickname}"></span>
                                 </a>
                             </div>
-                            <div class="dot">|</div>
+                            <div class="dot" style="font-weight: bold;margin-left: 3px;margin-right: 3px;">|</div>
                             <div class="upload-time">
                                 <span class="viewTime" th:text="${#temporals.format(reMention.regdate,'yyyy.MM.dd HH:mm')}"></span>
                             </div>

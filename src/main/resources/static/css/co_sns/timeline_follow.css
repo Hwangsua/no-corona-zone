@@ -67,7 +67,7 @@
     text-align: center;
 }
 .search-text{
-    background-color: rgb(245, 245, 245);
+    background-color: white;
     border: 1px solid rgb(245, 245, 245);
     width: 200px;
     height: 23px;
@@ -339,7 +339,7 @@
         /*border:none;*/
     }
     .search-text{
-        background-color: rgb(245, 245, 245);
+        background-color: white;
         border: 1px solid rgb(245, 245, 245);
         width: 400px;
         height: 23px;

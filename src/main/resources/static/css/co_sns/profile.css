@@ -1,9 +1,12 @@
 .container{
     position: relative;
+    display: flex;
     top: 55px;
     width: 85%;
+    overflow: auto;
+    height: 500px;
     margin : auto;
-    height: auto;
+
 }
 .myhistory{
     height: auto;
@@ -19,7 +22,6 @@
 }
 .profile-info{
     display: flex;
-    width: 270px;
     height: auto;
     margin-top: 10px;
     margin-right: 3px;
@@ -80,6 +82,9 @@
     width: 55px;
     margin-top: 8px;
 }
+.location{
+    margin-left: 4px;
+}
 @media (min-width: 940px) {
     .container{
         margin-top: -35px;
@@ -111,7 +116,6 @@
     }
     .profile-info{
         display: flex;
-        width: 270px;
         height: auto;
         margin-top: 5px;
         padding-left: 10px;
@@ -145,7 +149,8 @@
     }
     .myhistory-list{
         margin-top: 10px;
-
+        width: 430px;
+        height: 370px;
     }
     .detail{
         flex-grow: 1;

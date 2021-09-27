@@ -21,9 +21,8 @@
                     <a th:href="@{timeline_follow}" class="follow">타임라인</a>
                     <a th:href="@{timeline_location}" class="location">위치검색</a>
                 </div>
-
                 <div class="mention-location">
-                    <form method="post" name="search" th:object="${locationSearchForm}" th:action="@{timeline_location}">
+                    <form style="display: flex;align-items: center;justify-content: space-between" method="post" name="search" th:object="${locationSearchForm}" th:action="@{timeline_location}">
                         <select autofocus name="location-radius" id="location-radius" th:field="*{radius}">
                             <option value="1" selected>1km</option>
                             <option value="2">2km</option>
@@ -59,11 +58,11 @@
                         </div>
                         <div class="mention-right">
                             <div class="mention-info">
-                                <div class="nickname" th:text="${mention.member.nickname}">닉네임</div>
-                                <div class="vaccine" th:if="${mention.member.certification} == true">
+                                <div class="nickname" style="margin-right: 7px" th:text="${mention.member.nickname}">닉네임</div>
+                                <div class="vaccine" th:if="${#strings.equals(mention.member.certification,'yes')}">
                                     <img src="img/vaccine.png" alt="" class="vaccine">
                                 </div>
-                                <div class="location" th:text="${mention.location}">롯데월드</div>
+                                <div class="location" style="margin-right: 7px" th:text="${mention.location}">롯데월드</div>
                                 <div class="upload-time" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}">20시간</div>
                             </div>
                             <div class="write-content" th:utext="${#strings.replace(mention.content, mention.nlString, '&lt;br /&gt;')}">가나다라마바다아자차카타파하!!!!!!!!</div>
@@ -120,7 +119,7 @@
                             <option value="8">8km</option>
                             <option value="10">10km</option>
                         </select>
-                        <input type="text" class="search-text3" id="location-select" readonly>
+                        <input type="text" class="search-text4" id="location-select" readonly>
                         <button type="button" id="location-search-btn" data-dismiss="modal">선택</button>
                     </div>
 

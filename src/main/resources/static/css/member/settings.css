@@ -111,9 +111,6 @@
 }
 
 @media (min-width: 940px) {
-    .content{
-        overflow: auto;
-    }
     .container{
         position: relative;
         top: 20px;

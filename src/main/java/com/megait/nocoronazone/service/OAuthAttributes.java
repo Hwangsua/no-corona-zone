@@ -74,7 +74,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .memberType(MemberType.ROLE_USER)
-                .certification(false)
+                .certification("no")
                 .introduce("")
                 .nickname(nickname)
                 .authType(authType)
