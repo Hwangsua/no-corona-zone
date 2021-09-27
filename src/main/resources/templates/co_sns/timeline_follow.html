@@ -76,7 +76,7 @@
                                             <div th:text="${mention.member.nickname}"></div>
                                         </a>
                                     </div>
-                                    <div class="vaccine" th:if="${mention.member.certification} == true">
+                                    <div class="vaccine" th:if="${#strings.equals(mention.member.certification,'yes')}">
                                         <img th:src="@{/img/vaccine.png}" alt="" class="vaccine">
                                     </div>
                                     <div class="location" th:if="${mention.location !=''}">

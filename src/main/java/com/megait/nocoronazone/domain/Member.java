@@ -34,7 +34,7 @@ public class Member {
 
     private String introduce;
 
-    private boolean certification;
+    private String certification;
 
     private String emailCheckToken;
 
@@ -79,11 +79,11 @@ public class Member {
         this.nickname = nickname;
     }
 
-    public boolean isCertification() {
+    public String getCertification() {
         return certification;
     }
 
-    public void setCertification(boolean certification) {
+    public void setCertification(String certification) {
         this.certification = certification;
     }
 
@@ -99,7 +99,7 @@ public class Member {
         this.nickname = settingForm.getNickname();
         this.password = settingForm.getPassword();
         this.introduce = settingForm.getIntroduce();
-        this.certification = settingForm.isCertification();
+        this.certification = settingForm.getCertification();
     }
 
     @Override

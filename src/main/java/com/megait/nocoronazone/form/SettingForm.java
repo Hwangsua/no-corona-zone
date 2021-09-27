@@ -30,6 +30,6 @@ public class SettingForm {
 
     private String introduce;
 
-    private boolean certification = false;
+    private String certification;
 
 }

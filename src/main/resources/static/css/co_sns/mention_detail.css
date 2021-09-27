@@ -123,6 +123,19 @@ h6{
     border: none;
     outline: none;
 }
+#re-mention-delete-btn{
+    display: block;
+    font-size: 13px;
+    margin-left: 10px;
+    height: 26px;
+    width: 50px;
+    background-color: #D1B6E1;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
 .profile-img {
     margin: auto 0;
 }
@@ -293,9 +306,9 @@ h6{
     }
     .remention-btn {
         display: block;
-        float: right;
         height: 26px;
         width: 55px;
+        margin-left: 527px;
         background-color: #D1B6E1;
         color: white;
         font-weight: bold;
@@ -305,7 +318,26 @@ h6{
         text-align: center;
         margin-top: 6px;
     }
-
+    .re-mention-info{
+        display: flex;
+        margin-top: 5px;
+        align-items: center;
+        margin-bottom: 10px;
+        width: auto;
+    }
+    #re-mention-delete-btn{
+        display: block;
+        font-size: 13px;
+        margin-left: 10px;
+        height: 26px;
+        width: 50px;
+        background-color: #D1B6E1;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+    }
     .sidebar {
         display: block;
         height: auto;

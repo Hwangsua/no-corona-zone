@@ -21,12 +21,12 @@
         }
 
         function uploadProfileImage() {
-            let form = $('#update-form')[0];
-            let formData = new FormData(form);
+            var form = $('#update-form')[0];
+            var formData = new FormData(form);
             formData.append("profileImg", $("#profileImg")[0].files[0]);
 
-            let token = $("meta[name='_csrf']").attr("content");
-            let header = $("meta[name='_csrf_header']").attr("content");
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
 
 
             $.ajax({
@@ -128,7 +128,6 @@
             <div class="settings-header">
                 <div class="header-item1">정보수정</div>
                 <div class="header-item2">
-
                     <button class="settingComplete" type="submit">저장</button>
                 </div>
             </div>
@@ -143,7 +142,6 @@
                 </div>
                 <div class="content-list">
                     <label for="nickname" class="content-name">닉네임</label>
-
                     <div class="content-name-value" id="nicknameCheck" style="display: flex">
                         <input type="text" th:value="${member.nickname}" name="nickname" class="form-control"
                                id="nickname" style="width: 160px">
@@ -155,7 +153,6 @@
                 <div class="content-list">
                     <label for="password" class="content-name">비밀번호</label>
                     <div class="content-name-value">
-                        <input type="hidden" name="_password" th:value="${member.password}">
                         <input type="password" name="password" class="form-control" id="password"
                                placeholder="비밀번호를 입력하세요.">
                     </div>
@@ -163,7 +160,6 @@
                 <div class="content-list">
                     <label for="passwordCk" class="content-name">비밀번호 확인</label>
                     <div class="content-name-value">
-                        <input type="hidden" name="_passwordCk" th:value="${member.password}">
                         <input type="password" name="passwordCk" class="form-control" id="passwordCk"
                                placeholder="비밀번호를 다시 입력하세요.">
                     </div>
@@ -189,22 +185,15 @@
                     </div>
                     <div class="content-name-value">
                         <label for="profileImg" class="upload-btn">upload</label>
-
                         <input type="file" id="profileImg" class="form-control" accept="image/*" name="profileImg"
-                               style="display: none"/>
+                               style="display:none"/>
                     </div>
-
                 </div>
                 <div class="content-list-small">
                     <span class="content-name">백신 여부 체크</span>
                     <div class="agree-box" style="margin-left: 5px">
-                        <input type="checkbox" name="certification" id="certification" th:value="true"> 예
+                        <input type="radio" name="certification" id="certification" value="yes"> 예
                     </div>
-                </div>
-                <div class="checkbox">
-                    <input type="hidden" name="_certification" th:value="false">
-                    <input type="checkbox" name="certification" id="certification" th:value="true"> 예
-
                 </div>
             </div>
         </form>

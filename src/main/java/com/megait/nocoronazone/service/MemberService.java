@@ -52,7 +52,7 @@ public class MemberService implements UserDetailsService {
                 .memberType(MemberType.ROLE_ADMIN)
                 .nickname("9sua9")
                 .authType(AuthType.GENERAL)
-                .certification(true)
+                .certification("no")
                 .build();
 
         memberRepository.save(member);
@@ -178,9 +178,10 @@ public class MemberService implements UserDetailsService {
 
 
     @Transactional
-    public Member updateMember(Long no, SettingForm settingForm) {
+    public Member updateMember(Long no, SettingForm settingForm, String password) {
         Member member = memberRepository.findByNo(no).get();
         member.update(settingForm);
+        member.setPassword(passwordEncoder.encode(settingForm.getPassword()));
 
         return member;
     }

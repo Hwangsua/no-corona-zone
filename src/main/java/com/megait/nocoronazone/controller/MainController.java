@@ -102,15 +102,16 @@ public class  MainController {
     // 대전
     String[] daejeonDistrict = {"Jung-gu", "Dong-gu", "Seo-gu", "Yuseong-gu", "Daedeok-gu"};
 
-    // ================= 메인 ============================
+    // ================= 메인 ============================0
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
-        model.addAttribute("safetyList", safetyService.getSafetyList());
-        model.addAttribute("color", colorConfirmed);
-        for (int i = 0; i < City.length; ++i) {
-            model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
-        }
+       model.addAttribute("confirmedSUM", safetyService.getConfirmedSUM());
+       model.addAttribute("safetyList", safetyService.getSafetyList());
+
+       model.addAttribute("color", colorConfirmed);
+       for (int i = 0; i < City.length; ++i) {
+           model.addAttribute(City2[i], safetyService.getConfirmedtoAlpha(City[i]));
+       }
         return "index";
     }
 
@@ -325,7 +326,7 @@ public class  MainController {
     }
 
     @PostMapping("/login")
-    public String login(Member member) {
+    public String login(Member member, Model model) {
         memberService.login(member);
         return "index";
     }
@@ -409,7 +410,7 @@ public class  MainController {
                                @AuthenticationMember Member member) {
 
 
-        Member updateMember = memberService.updateMember(member.getNo(), settingForm);
+        Member updateMember = memberService.updateMember(member.getNo(), settingForm, member.getPassword());
         model.addAttribute("updateMember", updateMember);
         model.addAttribute("result", true);
         return setting(model, member);
@@ -512,10 +513,7 @@ public class  MainController {
             return "member/login";
         }
 
-        System.out.println(member.getMemberType());
-        System.out.println(member.isEmailVerified());
-
-        if(member.getMemberType()==ROLE_USER && !(member.isEmailVerified())) {
+        if(member.getMemberType()==ROLE_USER && member.isEmailVerified()==false ) {
                 model.addAttribute("result", false);
                 return "index";
         }

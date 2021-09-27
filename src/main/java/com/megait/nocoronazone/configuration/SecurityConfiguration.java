@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -57,15 +59,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
 
+
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .invalidateHttpSession(true) // 로그아웃했을때 세션을 갱신
-                .logoutSuccessUrl("/"); // 로그아웃하면 메인으로 가게
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/");
 
-                http.rememberMe()
-                .userDetailsService(memberService)
-                .tokenRepository(tokenRepository());
+//                http.rememberMe()
+//                .userDetailsService(memberService)
+//                .tokenRepository(tokenRepository());
     }
 
     @Override
@@ -73,6 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+
 
     @Bean
     public PersistentTokenRepository tokenRepository() {
