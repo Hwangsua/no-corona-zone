@@ -37,8 +37,8 @@ public class MemberService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-//    @PostConstruct
-//    @Profile("local")
+    @PostConstruct
+    @Profile("local")
     public void createNewMember(){
 
         Member member = Member.builder()
@@ -171,9 +171,10 @@ public class MemberService implements UserDetailsService {
 
 
     @Transactional
-    public Member updateMember(Long no, SettingForm settingForm) {
+    public Member updateMember(Long no, SettingForm settingForm, String password) {
         Member member = memberRepository.findByNo(no).get();
         member.update(settingForm);
+        member.setPassword(passwordEncoder.encode(settingForm.getPassword()));
 
         return member;
     }

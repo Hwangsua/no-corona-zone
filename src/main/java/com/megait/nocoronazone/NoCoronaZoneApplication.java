@@ -43,10 +43,10 @@ public class NoCoronaZoneApplication {
 		return tomcat;
 	}
 
-//	@Bean
-//	public PasswordEncoder passwordEncoder(){
-//		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//	}
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 
 	private Connector createStandardConnector() {
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
@@ -56,10 +56,10 @@ public class NoCoronaZoneApplication {
 		connector.setRedirectPort(8443);
 		return connector;
 	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
-	}
+//
+//	@Bean
+//	public PasswordEncoder passwordEncoder(){
+//		PasswordEncoder encoder = new BCryptPasswordEncoder();
+//		return encoder;
+//	}
 }

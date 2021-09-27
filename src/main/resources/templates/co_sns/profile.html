@@ -96,7 +96,10 @@
   <div class="container">
     <div class="myhistory">
       <div class="myhistory-header">
-        <div class="myhistory-img">
+        <div class="myhistory-img" th:if="${(profileMember.profileImage?.filename)!=null}">
+          <img th:src="${profileMember.profileImage.filename}" width="75" height="75"/>
+        </div>
+        <div class="myhistory-img" th:if="${(profileMember?.profileImage?.filename)==null}">
           <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
                width="75" height="75" class="rounded border bg-light"></svg>
         </div>
@@ -138,7 +141,10 @@
       <div class="myhistory-list">
         <div class="mention-each" th:each="mention : ${memberMentionList}">
           <div class="mention-left">
-            <div class="myhistory-img">
+            <div class="myhistory-img" th:if="${(profileMember?.profileImage?.filename)!=null}">
+              <img th:src="${profileMember.profileImage.filename}" width="75" height="75"/>
+            </div>
+            <div class="myhistory-img" th:if="${(profileMember?.profileImage?.filename)==null}">
               <svg data-jdenticon-value="user" th:data-jdenticon-value="${profileMember.nickname}"
                    width="75" height="75" class="rounded border bg-light"></svg>
             </div>
@@ -157,8 +163,7 @@
                 <span th:text="${mention.location}"></span>
               </div>
               <div class="myhistory-time">
-                                <span class="viewTime"
-                                      th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
+                  <span class="viewTime" th:text="${#temporals.format(mention.regdate,'yyyy.MM.dd HH:mm')}"></span>
               </div>
             </div>
             <div class="myhistory-content">
@@ -236,3 +241,5 @@
   </div>
 </div>
 </div>
+</body>
+</html>

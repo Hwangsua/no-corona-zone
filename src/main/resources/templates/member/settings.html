@@ -155,7 +155,6 @@
                 <div class="content-list">
                     <label for="password" class="content-name">비밀번호</label>
                     <div class="content-name-value">
-                        <input type="hidden" name="_password" th:value="${member.password}">
                         <input type="password" name="password" class="form-control" id="password"
                                placeholder="비밀번호를 입력하세요.">
                     </div>
@@ -163,7 +162,6 @@
                 <div class="content-list">
                     <label for="passwordCk" class="content-name">비밀번호 확인</label>
                     <div class="content-name-value">
-                        <input type="hidden" name="_passwordCk" th:value="${member.password}">
                         <input type="password" name="passwordCk" class="form-control" id="passwordCk"
                                placeholder="비밀번호를 다시 입력하세요.">
                     </div>
@@ -200,11 +198,6 @@
                     <div class="agree-box" style="margin-left: 5px">
                         <input type="checkbox" name="certification" id="certification" th:value="true"> 예
                     </div>
-                </div>
-                <div class="checkbox">
-                    <input type="hidden" name="_certification" th:value="false">
-                    <input type="checkbox" name="certification" id="certification" th:value="true"> 예
-
                 </div>
             </div>
         </form>
