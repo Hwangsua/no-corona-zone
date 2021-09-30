@@ -17,6 +17,6 @@
 ### 시연영상
 
 <div>
-	<a href="https://youtu.be/8StQhMiavKE" target="_blank"><image src = "https://img.youtube.com/vi/ALRuJ5gA2ig/mqdefault.jpg"></a>	
+	<a href="https://youtu.be/8StQhMiavKE" target="_blank"><image src = "https://img.youtube.com/vi/8StQhMiavKE/mqdefault.jpg"></a>	
 
 </div>
