@@ -68,7 +68,7 @@
 
 ### 5. ERD
 
-![](D:\메가IT\final_project_nocoronazone\마무리\피피티\피티파일\erd.png)
+![erd](https://user-images.githubusercontent.com/81146582/137341200-397975be-4a60-40b1-84f1-d1e50eb08880.png)
 
 
 
