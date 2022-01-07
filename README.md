@@ -8,9 +8,9 @@
 
 <div>
 	<a href="https://youtu.be/8StQhMiavKE" target="_blank"><image src = "https://img.youtube.com/vi/8StQhMiavKE/mqdefault.jpg"></a>	
-		
+</div>
+<div>
 	<a href="https://youtu.be/LH1cPDe83Sk" target="_blank"><image src = "https://img.youtube.com/vi/8StQhMiavKE/mqdefault.jpg"></a>	
-
 </div>
 
 ### 2. 프로젝트 주제
