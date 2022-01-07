@@ -7,12 +7,14 @@
 ###### 	클릭시 해당 링크로 이동합니다
 
 <div style="display: flex;">
-<div>
-	<a href="https://youtu.be/8StQhMiavKE" target="_blank"><image src = "https://img.youtube.com/vi/8StQhMiavKE/mqdefault.jpg"></a>	
-</div>
-<div>
-	<a href="https://youtu.be/LH1cPDe83Sk" target="_blank"><image src = "https://img.youtube.com/vi/LH1cPDe83Sk/mqdefault.jpg"></a>	
-</div>
+	<div>
+		<span>전체 시연 영상<span>
+		<a href="https://youtu.be/8StQhMiavKE" target="_blank"><image src = "https://img.youtube.com/vi/8StQhMiavKE/mqdefault.jpg"></a>	
+	</div>
+	<div>
+		<span>VMware 테스트 영상<span>
+		<a href="https://youtu.be/LH1cPDe83Sk" target="_blank"><image src = "https://img.youtube.com/vi/LH1cPDe83Sk/mqdefault.jpg"></a>	
+	</div>
 </div>
 
 ### 2. 프로젝트 주제
